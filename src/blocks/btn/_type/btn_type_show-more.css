@@ -11,3 +11,7 @@
   text-align: center;
   color: var(--main-primary);
 }
+
+.btn_type_show-more:hover {
+background-color: var( --main-white-hover);
+}

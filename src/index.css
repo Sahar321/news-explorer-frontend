@@ -1,0 +1,12 @@
+/* vendor */
+@import url(./vendor/normalize.css);
+/* root */
+@import url(./blocks/root/root.css);
+
+/* Fonts */
+@import url(./fonts/inter/inter.css);
+@import url(./fonts/roboto/roboto.css);
+
+/* default components */
+@import url(./blocks/btn/btn.css);
+@import url(./blocks/btn/_type/btn_type_show-more.css);

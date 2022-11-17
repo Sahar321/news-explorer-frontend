@@ -7,6 +7,10 @@
 @import url(./fonts/inter/inter.css);
 @import url(./fonts/roboto/roboto.css);
 
-/* default components */
+/* btn */
 @import url(./blocks/btn/btn.css);
 @import url(./blocks/btn/_type/btn_type_show-more.css);
+
+/* btn-bookmark */
+@import url(./blocks/btn-bookmark/btn-bookmark.css);
+@import url(./blocks/btn-bookmark/_state/btn-bookmark_state_marked.css);

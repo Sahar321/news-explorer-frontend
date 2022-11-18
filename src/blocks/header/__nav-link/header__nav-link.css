@@ -7,9 +7,8 @@
   line-height: 24px;
   text-align: center;
   text-underline-offset: 30px;
-text-decoration-color: var(--color-white);
-text-decoration-thickness: 3px;
-
+  text-decoration-color: var(--color-white);
+  text-decoration-thickness: 3px;
 }
 /* on click / hover ? ?? : */
 /* text-underline-offset: 33px;

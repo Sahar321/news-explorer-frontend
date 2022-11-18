@@ -1,5 +1,6 @@
 @import url(../../blocks/header/header.css);
 @import url(../../blocks/header/__nav/header__nav.css);
+@import url(../../blocks/header/__nav-list/header__nav-list.css);
 @import url(../../blocks/header/__nav-item/header__nav-item.css);
 @import url(../../blocks/header/__nav-link/header__nav-link.css);
 @import url(../../blocks/header/__title/header__title.css);

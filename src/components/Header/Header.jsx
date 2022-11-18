@@ -7,24 +7,15 @@ export default function Header() {
   return (
     <header className="header">
       <h1 className="header__title">NewsExplorer</h1>
-      <nav>
-        <ul className="header__nav">
+      <nav className="header__nav">
+        <ul className="header__nav-list">
           <li className="header__nav-item">
             <a href="#" className="header__nav-link">
               Home
             </a>
           </li>
-          <li className="header__nav-item">
-            <a href="#" className="header__nav-link">
-              About
-            </a>
-          </li>
-          <li className="header__nav-item">
-            <a href="#" className="header__nav-link">
-              Contact
-            </a>
-          </li>
         </ul>
+        <button className="button button__sign-in">Sign in</button>
       </nav>
     </header>
   );

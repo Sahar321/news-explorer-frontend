@@ -1,0 +1,17 @@
+.button__sign-in {
+margin-left: 42px;
+box-sizing: border-box;
+border: 1px solid var(--color-white);
+border-radius: 100px;
+Width: 176px;
+Height: 48px;
+font-family: 'Roboto';
+font-style: normal;
+font-weight: 500;
+font-size: 18px;
+line-height: 24px;
+margin-top: 19px;
+margin-bottom: 13px;
+color: var(--color-white);
+
+}

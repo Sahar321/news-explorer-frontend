@@ -1,0 +1,18 @@
+.header__nav-link {
+  color: var(--color-white);
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  text-align: center;
+  text-underline-offset: 30px;
+text-decoration-color: var(--color-white);
+text-decoration-thickness: 3px;
+
+}
+/* on click / hover ? ?? : */
+/* text-underline-offset: 33px;
+text-decoration-color: var(--color-white);
+text-decoration-thickness: 3px;
+  text-decoration: underline; */

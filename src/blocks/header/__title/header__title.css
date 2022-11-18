@@ -1,0 +1,10 @@
+.header__title {
+  font-family: 'roboto slab';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  color: var(--color-white);
+  margin-left: 104px;
+
+}

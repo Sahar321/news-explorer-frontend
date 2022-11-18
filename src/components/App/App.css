@@ -3,4 +3,11 @@
   margin: 0 auto;
   background-color: #000000;
   min-height: 100vh;
+  background-image: url(http://localhost:3000/static/media/background_hand_hold_mobile.ab8dba5c6be45b7b3ec3.png);
+  background-repeat: no-repeat;
+  background-size: 100%  576px;
+  position: absolute;
+  width: 100%;
+  min-height: 100%;
 }
+

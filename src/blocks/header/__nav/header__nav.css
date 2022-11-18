@@ -1,7 +1,6 @@
 .header__nav {
 display: flex;
 gap: 16px;
-list-style-type: none;
 padding:0;
-margin-right: 104px;
+margin: 0 104px;
 }

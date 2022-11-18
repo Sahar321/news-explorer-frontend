@@ -7,10 +7,10 @@
 @import url(./fonts/inter/inter.css);
 @import url(./fonts/roboto/roboto.css);
 
-/* btn */
-@import url(./blocks/btn/btn.css);
-@import url(./blocks/btn/_type/btn_type_show-more.css);
+/* button */
+@import url(./blocks/button/button.css);
+@import url(./blocks/button/__show-more/button__show-more.css);
 
-/* btn-bookmark */
-@import url(./blocks/btn-bookmark/btn-bookmark.css);
-@import url(./blocks/btn-bookmark/_state/btn-bookmark_state_marked.css);
+/* button-bookmark */
+@import url(./blocks/button/__bookmark/button__bookmark.css);
+@import url(./blocks/button/__bookmark/_isMarked/button__bookmark_isMarked_true.css);

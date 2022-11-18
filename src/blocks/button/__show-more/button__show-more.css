@@ -1,4 +1,4 @@
-.btn_type_show-more {
+.button__show-more {
   background: var(--color-white);
   border-radius: 80px;
   height: 64px;
@@ -12,6 +12,6 @@
   color: var(--main-primary);
 }
 
-.btn_type_show-more:hover {
+.button__show-more:hover {
 background-color: var( --main-white-hover);
 }

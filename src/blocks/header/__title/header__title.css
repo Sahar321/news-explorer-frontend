@@ -5,6 +5,14 @@
   font-size: 20px;
   line-height: 24px;
   color: var(--color-white);
-  margin-left: 104px;
-
+  padding-top: 4px;
+  margin: 0 0 0 104px;
 }
+
+/* font-family: 'roboto slab';
+font-style: normal;
+font-weight: 700;
+font-size: 20px;
+line-height: 24px;
+color: var(--color-white);
+margin-left: 104px; */

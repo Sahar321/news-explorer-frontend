@@ -1,0 +1,12 @@
+.about__text {
+  margin: 0;
+  grid-area: about;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #1a1b22;
+  max-width: 400px;
+  grid-area: 2 / 3 / 3 / 4;
+}

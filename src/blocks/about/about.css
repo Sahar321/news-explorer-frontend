@@ -1,0 +1,14 @@
+.about {
+  margin-top: 80px;
+  min-height: 624px;
+  width: 100%;
+  background-color: white;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-columns: minmax(0, 104px) max-content minmax(0px, 56px) minmax(
+      300px,
+      auto
+    );
+}

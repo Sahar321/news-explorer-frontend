@@ -1,0 +1,9 @@
+.about__text-container {
+  grid-area: 1 / 3 / 2 / 4;
+  display: flex;
+  flex-direction: column;
+  margin-top: 131px;
+  gap: 24px;
+  grid-area: 1 / 4 / 2 / 5;
+
+}

@@ -4,4 +4,7 @@
 
   --main-primary: #1A1B22;
   --main-white-hover: #E8E8E8;
+  max-width: 1440px;
+margin: 0 auto;
 }
+

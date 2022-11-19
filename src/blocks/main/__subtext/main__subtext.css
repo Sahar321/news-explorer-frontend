@@ -1,0 +1,10 @@
+.main__subtext {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-white);
+  margin: 0 0 88px 0;
+  padding-right: 20px;
+}

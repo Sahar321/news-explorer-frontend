@@ -1,29 +1,6 @@
-.main {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 79px;
-}
+@import url(../../blocks/main/main.css);
+@import url(../../blocks/main/__subtext/main__subtext.css);
+@import url(../../blocks/main/__title/main__title.css);
 
-.title__main {
-  font-family: 'Roboto Slab';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 60px;
-  line-height: 64px;
-  max-width: 608px;
-  margin: 0 0 32px 0;
-  color: var(--color-white);
-}
 
-.title__subtext {
-  font-family: 'Roboto';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 24px;
-  color: var(--color-white);
-  margin: 0 0 88px 0;
-  padding-right: 20px;
-}
 

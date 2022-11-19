@@ -23,10 +23,9 @@ export default function App() {
             </a>
           </li>
 
-          <li className="footer__nav-item_type_github">
+          <li className="footer__nav-item footer__nav-item_type_github">
             <a href="https://github.com">
               <img
-                className="footer__nav-icon"
                 src={githubIcon}
                 alt="github link"
               />
@@ -35,7 +34,6 @@ export default function App() {
           <li className="footer__nav-item footer__nav-item_type_facebook">
             <a href="https://facebook.com">
               <img
-                className="footer__nav-icon"
                 src={facebookIcon}
                 alt="Facebook link"
               />

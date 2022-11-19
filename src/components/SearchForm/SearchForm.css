@@ -1,0 +1,9 @@
+/* @import url(../../blocks/button/__search/button__search.css);
+@import url(../../blocks/input/__search/input__search.css); */
+
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  max-width: 608px;
+}

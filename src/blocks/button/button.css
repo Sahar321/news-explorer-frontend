@@ -7,3 +7,27 @@
   outline: none;
   border: none;
 }
+
+.button__search {
+  color: var(--color-white);
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  box-sizing: border-box;
+  background: #2f71e5;
+  box-shadow: 0px 5px 15px rgba(14, 26, 57, 0.2);
+  border-radius: 100px;
+  height: 64px;
+  width: 168px;
+  grid-area: 1 / 4 / 2 / 5;
+  z-index: 1;
+}
+
+.button__search:hover {
+  background: #347eff;
+}
+.button__search:focus {
+  background-color: #2a65cc;
+}

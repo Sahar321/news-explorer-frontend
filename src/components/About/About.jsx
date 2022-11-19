@@ -5,6 +5,7 @@ import './About.css';
 export default function About() {
   return (
     <section className="about">
+      <img src={authorImage} alt="author" className="about__image" />
       <div className="about__text-container">
         <h2 className="about__title">About the author</h2>
         <p className="about__text">
@@ -13,8 +14,7 @@ export default function About() {
           can also talk about your experience with Practicum, what you learned
           there, and how you can help potential customers.
         </p>
-      </div>
-      <img src={authorImage} alt="author" className="about__image" />
+        </div>
     </section>
   );
 }

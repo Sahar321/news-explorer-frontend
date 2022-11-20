@@ -14,6 +14,11 @@ export default function Header() {
               Home
             </a>
           </li>
+          <li className="header__nav-item">
+            <a href="#" className="header__nav-link">
+            Saved articles
+            </a>
+          </li>
         </ul>
         <button className="button button__sign-in">Sign in</button>
       </nav>

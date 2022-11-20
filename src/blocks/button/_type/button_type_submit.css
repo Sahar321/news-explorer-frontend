@@ -1,0 +1,14 @@
+.button_type_submit {
+  box-sizing: border-box;
+  background: #e6e8eb;
+  border-radius: 100px;
+  width: 358px;
+  height: 64px;
+  margin-top: 39px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: #b6bcbf;
+}

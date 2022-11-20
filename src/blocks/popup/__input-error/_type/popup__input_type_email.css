@@ -1,0 +1,5 @@
+
+.popup__input-error_type_email {
+  margin-top: calc((var(--popup-input-email-margin-bottom) * -1 ) + 3px);
+  margin-bottom: 13px;
+}

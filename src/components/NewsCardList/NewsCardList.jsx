@@ -10,8 +10,7 @@ export default function NewsCardList() {
           <NewsCard />
           <NewsCard />
           <NewsCard />
-          <NewsCard />
-          <NewsCard />
+
         </div>
         <button type="button" className='button button__show-more'>Show More</button>
     </section>

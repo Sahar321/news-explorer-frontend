@@ -1,6 +1,6 @@
 .header__nav-list {
-
+  display: flex;
   list-style-type: none;
-margin: 0;
-padding-top: 11px;
+  margin: 0;
+  padding-top: 11px;
 }

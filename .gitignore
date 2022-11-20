@@ -24,3 +24,10 @@ yarn-error.log*
 
 .vscode
 todo.md
+src/images/cards/beach.jpg
+src/images/cards/chair.jpg
+src/images/cards/city.jpg
+src/images/cards/dog.png
+src/images/cards/goat.png
+src/images/cards/laptop.jpg
+src/images/cards/river.png

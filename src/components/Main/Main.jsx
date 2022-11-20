@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchForm from '../SearchForm/SearchForm.jsx';
 import About from '../About/About.jsx';
+import NewsCardList from '../NewsCardList/NewsCardList.jsx';
 import './Main.css';
 
 export default function Main() {
@@ -12,6 +13,7 @@ export default function Main() {
         account.
       </p>
       <SearchForm />
+      <NewsCardList />
       <About />
     </main>
   );

@@ -11,10 +11,8 @@
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: block;
-  margin-bottom: var( --popup-input-email-margin-bottom);
-  padding: 0;
-  padding-bottom: 10px;
   width: 358px;
+  margin-bottom: 30px;
 }
 .popup__input::placeholder {
   color: rgba(0, 0, 0, 0.2);

@@ -1,9 +1,10 @@
+/* eslint react/prop-types: 0 */
 import React from 'react';
 // import { Routes, Route } from 'react-router-dom';
 // import SavedNews from '../SavedNews/SavedNews.jsx';
 import './Header.css';
 
-export default function Header() {
+export default function Header({ OnSignInClick }) {
   return (
     <header className="header">
       <h1 className="header__title">NewsExplorer</h1>
@@ -16,11 +17,13 @@ export default function Header() {
           </li>
           <li className="header__nav-item">
             <a href="#" className="header__nav-link">
-            Saved articles
+              Saved articles
             </a>
           </li>
         </ul>
-        <button className="button button__sign-in">Sign in</button>
+        <button onClick={OnSignInClick} className="button button__sign-in">
+          Sign in
+        </button>
       </nav>
     </header>
   );

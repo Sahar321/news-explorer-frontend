@@ -6,22 +6,49 @@ import { Routes, Route } from 'react-router-dom';
 import Home from '../../pages/Home.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
 import NotFound from '../../pages/NotFound.jsx';
-import PopupWithForm from '../PopupWithForm/PopupWithForm.jsx';
-
+import SignInPopup from '../SignInPopup/SignInPopup.jsx';
+import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import './App.css';
 
 export default function App() {
   const [loggedIn, setLoggedIn] = React.useState(true);
+  const [isSignInPopupOpen, setSignInPopupOpen] = React.useState(false);
+  const [isSignUpPopupOpen, setSignUpPopupOpen] = React.useState(false);
 
-  return (<>
- <PopupWithForm />
-    <Routes>
-      <Route path="/" element={<Home loggedIn={loggedIn} />} />
-      <Route path="/SavedArticles" element={<SavedArticles />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
-     </>
+  const closeAllPopups = () => {
+    setSignUpPopupOpen(false);
+    setSignInPopupOpen(false);
+  };
+
+  const handleSignInClick = () => {
+    closeAllPopups();
+    setSignInPopupOpen(true);
+  };
+
+  const handleSignUpClick = () => {
+    closeAllPopups();
+    setSignUpPopupOpen(true);
+  };
+
+  return (
+    <>
+      <Routes>
+        <Route path="/" element={<Home OnSignInClick={handleSignInClick} />} />
+        <Route path="/SavedArticles" element={<SavedArticles />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <SignInPopup
+        onClose={closeAllPopups}
+        title='Sign In'
+        isOpen={isSignInPopupOpen}
+        onSignUpPopupClick={handleSignUpClick}
+      />
+      <SignUpPopup
+        onClose={closeAllPopups}
+        title='Sign Up'
+        isOpen={isSignUpPopupOpen}
+        onSignInPopupClick={handleSignInClick}
+      />
+    </>
   );
 }
-//    <button type="button" className="button button_type_show-more">Show More</button>
-//  <button type="button" className="button button-bookmark button-bookmark_state_marked"></button>

@@ -1,28 +1,56 @@
 /* eslint no-unused-vars: 0 */
-import React from 'react';
+/* eslint react/prop-types: 0 */
+/* eslint consistent-return: 0 */
+import React, { useEffect } from 'react';
 import './PopupWithForm.css';
 
-export default function PopupWithForm() {
+export default function PopupWithForm({
+  name,
+  submitTitle,
+  handleSubmit,
+  onClose,
+  isOpen,
+  title,
+  children,
+  bottomChildren,
+}) {
   const [loggedIn, setLoggedIn] = React.useState(true);
 
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEscClose = (evt) => {
+      if (evt.key === 'Escape') {
+        onClose();
+      }
+    };
+    document.addEventListener('keydown', handleEscClose);
+    return () => {
+      document.removeEventListener('keydown', handleEscClose);
+    };
+  }, [isOpen]);
+
   return (
-    <div className="popup">
+    <div onClick={onClose} className={`popup popup_isVisible_${isOpen}`}>
       <div className="popup__container">
-        <button type="button" className="button button_type_close"></button>
-        <h2 className="popup__title">Sign In</h2>
-        <form className="popup__form" name="sign-in" noValidate>
-          <span className="popup__field-title popup__field-title_type_email">Email</span>
-          <input type="email" className="popup__input popup__input_type_email" name="email" placeholder="Enter email" required />
-          <span className="popup__input-error popup__input-error_type_email ">Invalid email address</span>
-          <span className="popup__field-title popup__field-title_type_password">Password</span>
-          <input type="password" className="popup__input popup__input_type_password" name="password" placeholder="Enter password" required />
-          <span className="popup__input-error popup__input-error_type_password">Invalid password address</span>
-          <button type="submit" className="button button_type_submit">Sign In</button>
+        <button
+          onClick={onClose}
+          isOpen={isOpen}
+          type="button"
+          className="button button_type_close"
+        ></button>
+        <h2 className="popup__title">{title}</h2>
+        <form className="popup__form" name={name} noValidate>
+          {children}
+          <button
+            onClick={handleSubmit}
+            type="submit"
+            className="button button_type_submit"
+          >
+            {submitTitle}
+          </button>
         </form>
-        <p className="popup__text">or <a href="#" className="popup__link">Sign up</a></p>
+        {bottomChildren}
       </div>
     </div>
-
   );
 }
-//    <button type="button" className="button button_type_show-more">Show More</button>

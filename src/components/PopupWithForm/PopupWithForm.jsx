@@ -29,8 +29,14 @@ export default function PopupWithForm({
     };
   }, [isOpen]);
 
+  const handleOverlayClose = (evt) => {
+    if (evt.target.classList.contains('popup')) {
+      onClose();
+    }
+  };
+
   return (
-    <div onClick={onClose} className={`popup popup_isVisible_${isOpen}`}>
+    <div onClick={handleOverlayClose} className={`popup popup_isVisible_${isOpen}`}>
       <div className="popup__container">
         <button
           onClick={onClose}

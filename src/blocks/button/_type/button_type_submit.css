@@ -1,6 +1,5 @@
 .button_type_submit {
   box-sizing: border-box;
-  background: #e6e8eb;
   border-radius: 100px;
   width: 358px;
   height: 64px;
@@ -10,5 +9,11 @@
   font-weight: 500;
   font-size: 18px;
   line-height: 24px;
+  background: #2f80ed;
+  color: #ffffff;
+}
+
+.button_type_submit:disabled {
+  background: #e6e8eb;
   color: #b6bcbf;
 }

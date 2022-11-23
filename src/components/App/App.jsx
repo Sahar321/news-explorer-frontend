@@ -30,6 +30,12 @@ export default function App() {
     setSignUpPopupOpen(true);
   };
 
+  const handleSignInSubmit = (email, password) => {
+    console.log(`Sign in with email: ${email} and password: ${password}`);
+  };
+  const handleSignUpSubmit = (email, password, username) => {
+    console.log(`Sign up with email: ${email} and password: ${password} and username: ${username}`);
+  };
   return (
     <>
       <Routes>
@@ -39,13 +45,15 @@ export default function App() {
       </Routes>
       <SignInPopup
         onClose={closeAllPopups}
-        title='Sign In'
+        title="Sign In"
         isOpen={isSignInPopupOpen}
+        onSubmit={handleSignInSubmit}
         onSignUpPopupClick={handleSignUpClick}
       />
       <SignUpPopup
         onClose={closeAllPopups}
-        title='Sign Up'
+        onSubmit={handleSignUpSubmit}
+        title="Sign Up"
         isOpen={isSignUpPopupOpen}
         onSignInPopupClick={handleSignInClick}
       />

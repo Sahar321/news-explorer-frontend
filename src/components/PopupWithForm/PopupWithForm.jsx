@@ -1,21 +1,21 @@
 /* eslint no-unused-vars: 0 */
 /* eslint react/prop-types: 0 */
 /* eslint consistent-return: 0 */
+import { array } from 'prop-types';
 import React, { useEffect } from 'react';
 import './PopupWithForm.css';
 
 export default function PopupWithForm({
   name,
   submitTitle,
-  handleSubmit,
+  onSubmit,
   onClose,
   isOpen,
   title,
   children,
   bottomChildren,
+  isValid,
 }) {
-  const [loggedIn, setLoggedIn] = React.useState(true);
-
   useEffect(() => {
     if (!isOpen) return;
     const handleEscClose = (evt) => {
@@ -30,26 +30,34 @@ export default function PopupWithForm({
   }, [isOpen]);
 
   const handleOverlayClose = (evt) => {
-    if (evt.target.classList.contains('popup')) {
+    const popup = evt.target.classList;
+    if (popup.contains('popup')) {
       onClose();
     }
   };
 
   return (
-    <div onClick={handleOverlayClose} className={`popup popup_isVisible_${isOpen}`}>
+    <div
+      className={`popup popup_isVisible_${isOpen}`}
+      onClick={handleOverlayClose}
+    >
       <div className="popup__container">
         <button
-          onClick={onClose}
-          isOpen={isOpen}
-          type="button"
           className="button button_type_close"
+          type="button"
+          onClick={onClose}
         ></button>
         <h2 className="popup__title">{title}</h2>
-        <form className="popup__form" name={name} noValidate>
+        <form
+          className="popup__form"
+          noValidate
+          name={name}
+          onSubmit={onSubmit}
+        >
           {children}
           <button
-            onClick={handleSubmit}
             type="submit"
+            disabled={!isValid}
             className="button button_type_submit"
           >
             {submitTitle}

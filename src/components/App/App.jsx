@@ -1,6 +1,8 @@
 /* eslint no-unused-vars: 0 */
 import React from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import {
+  Routes, Route, Link,
+} from 'react-router-dom';
 // import SavedNews from '../SavedNews/SavedNews.jsx';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
@@ -18,6 +20,8 @@ export default function App() {
   const [isSignInPopupOpen, setSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = React.useState(false);
   const [isPopupWithMessageOpen, setPopupWithMessageOpen] = React.useState(false);
+
+  // const isPageSavedArticles = pathname === '/SavedArticles' && 'header_page_saved-articles';
 
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);
@@ -43,7 +47,7 @@ export default function App() {
   };
   return (
     <div className="app">
-      <Header OnSignInClick={handleSignInClick} />
+      <Header loggedIn={loggedIn} OnSignInClick={handleSignInClick} />
       <Routes>
         <Route path="/" element={<Home OnSignInClick={handleSignInClick} />} />
         <Route path="/SavedArticles" element={<SavedArticles />} />
@@ -69,11 +73,9 @@ export default function App() {
         onClose={closeAllPopups}
         isOpen={isPopupWithMessageOpen}
       >
-
-          <Link onClick={handleSignInClick} className="popup__link">
-            Sign in
-          </Link>
-
+        <Link onClick={handleSignInClick} className="popup__link">
+          Sign in
+        </Link>
       </PopupWithMessage>
     </div>
   );

@@ -1,6 +1,4 @@
 .header__nav-link_isActive_true {
-  border-bottom-color: white;
   border-bottom-style: solid;
   border-bottom-width: 3px;
-  color: var(--color-white);
 }

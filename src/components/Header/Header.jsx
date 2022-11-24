@@ -1,6 +1,10 @@
 /* eslint react/prop-types: 0 */
+/* eslint no-unused-vars: 0 */
+/* eslint operator-linebreak: 0 */
+
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import signOutImage from '../../images/icons/sign-out.svg';
 // import { Routes, Route } from 'react-router-dom';
 // import SavedNews from '../SavedNews/SavedNews.jsx';
 import './Header.css';
@@ -8,11 +12,15 @@ import './Header.css';
 /* eslint no-confusing-arrow: 0 */
 /* eslint  implicit-arrow-linebreak : 0 */
 /* className={({ isActive }) => (isActive ? 'header__nav-link' : 'header__nav-link')} */
-export default function Header({ OnSignInClick }) {
+export default function Header({ OnSignInClick, OnSignOutClick, loggedIn }) {
   const defaultClass = 'header__nav-link';
   const activeClass = 'header__nav-link header__nav-link_isActive_true';
+  const { pathname } = useLocation();
+  const savedArticlesClass =
+    pathname === '/SavedArticles' && 'header_page_saved-articles';
+
   return (
-    <header className="header">
+    <header className={`header ${savedArticlesClass}`}>
       <h1 className="header__title">NewsExplorer</h1>
       <nav className="header__nav">
         <ul className="header__nav-list">
@@ -37,9 +45,18 @@ export default function Header({ OnSignInClick }) {
             </NavLink>
           </li>
         </ul>
-        <button onClick={OnSignInClick} className="button button__sign-in">
-          Sign in
-        </button>
+        {loggedIn ? (
+          <button
+            onClick={OnSignOutClick}
+            className="button button_type_sign-out"
+          >
+            elise <img alt="Sign out" src={signOutImage} />
+          </button>
+        ) : (
+          <button onClick={OnSignInClick} className="button button__sign-in">
+            Sign in
+          </button>
+        )}
       </nav>
     </header>
   );

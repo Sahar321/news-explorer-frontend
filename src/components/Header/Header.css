@@ -6,3 +6,4 @@
 @import url(../../blocks/header/__title/header__title.css);
 @import url(../../blocks/header/__nav-link/isActive/header__nav-link_isActive_true.css);
 @import url(../../blocks/header/_page/header_page_saved-articles.css);
+@import url(../../blocks/header/_page/header_page_home.css);

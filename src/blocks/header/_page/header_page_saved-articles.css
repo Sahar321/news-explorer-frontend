@@ -1,3 +1,10 @@
-.header_page_saved-articles{
-color: #1A1B22;
+.header_page_saved-articles {
+  color: #1A1B22;
+}
+.header_page_saved-articles  .button_type_sign-out {
+  border: 1px solid #1A1B22;
+}
+
+.header_page_saved-articles .icon_type_sign-out {
+  background-image: url(../../../images/icons/sign-out_color_black.svg);
 }

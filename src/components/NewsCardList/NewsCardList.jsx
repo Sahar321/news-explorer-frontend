@@ -8,7 +8,7 @@ export default function NewsCardList({ showTitle }) {
       <h2 className={`NewsCardList__text-results NewsCardList__text-results_isVisible_${showTitle}`}>
         Search results
       </h2>
-      <div className="NewsCardList__card-container">
+      <div className="NewsCardList__card-container NewsCardList__card-container_page_savedArc">
         <NewsCard />
         <NewsCard />
         <NewsCard />

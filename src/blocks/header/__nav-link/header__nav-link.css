@@ -7,7 +7,18 @@
   text-align: center;
   text-decoration: none;
   box-sizing: border-box;
-  padding: 0 11px 24px;
+  padding-bottom: 24px;
   color: inherit;
 }
 
+.header__nav-link_type_save-article {
+  margin-right: 32px;
+  padding-right: 32px;
+  padding-left: 32px;
+
+}
+.header__nav-link_type_home {
+  margin-right: 44px;
+  padding-right: 9.5px;
+  padding-left: 9.5px;
+}

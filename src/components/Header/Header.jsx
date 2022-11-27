@@ -10,9 +10,6 @@ import './Header.css';
 
 export default function Header({ OnSignInClick, OnSignOutClick, loggedIn }) {
   const [selectedPage, setSelectedPage] = React.useState('');
-  const defaultClass = 'header__nav-link header__nav-link_type_save-article';
-  const activeClass =
-    'header__nav-link  header__nav-link_type_save-article header__nav-link_isActive_true';
   const { pathname } = useLocation();
 
   useEffect(() => {

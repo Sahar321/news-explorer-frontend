@@ -14,6 +14,10 @@ flex-direction: column;
   color: #1a1b22;
   margin-top: 80px;
   margin-left: 104px;
+  display: none;
+}
+.NewsCardList__text-results_isVisible_true {
+display: block;
 }
 
 .NewsCardList__card-container {

@@ -17,6 +17,7 @@
 @import url(./blocks/button/__sign-in/button__sign-in.css);
 @import url(./blocks/button/_type/button_type_close.css);
 @import url(./blocks/button/_type/button_type_sign-out.css);
+@import url(./blocks/button/_type/button_type_remove.css);
 
 @import url(./blocks/icon/icon.css);
 @import url(./blocks/icon/_type/icon_type_sign-out.css);

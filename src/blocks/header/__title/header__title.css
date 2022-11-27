@@ -4,7 +4,7 @@
   font-weight: 700;
   font-size: 20px;
   line-height: 24px;
-  color: var(--color-white);
+  color: inherit;
   padding-top: 4px;
   margin: 0 0 0 104px;
 }

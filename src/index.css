@@ -21,4 +21,6 @@
 @import url(./blocks/icon/icon.css);
 @import url(./blocks/icon/_type/icon_type_sign-out.css);
 
+@import url(./blocks/saved-articles/saved-articles.css);
+
 @import url(./blocks/input/input.css);

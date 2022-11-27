@@ -1,0 +1,37 @@
+.saved-articles {
+display: flex;
+flex-direction: column;
+margin-left: 104px;
+margin-top: 40px;
+}
+.saved-articles__title {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: rgba(26, 27, 34, 0.5);
+
+}
+
+.saved-articles__subtitle {
+  margin-top: 28px;
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 40px;
+  line-height: 46px;
+  color: #1A1B22;
+  max-width: 530px;
+}
+
+.saved-articles__keywords {
+  margin-top: 30px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 24px;
+  color: #1A1B22;
+}
+

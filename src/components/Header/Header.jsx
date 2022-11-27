@@ -16,7 +16,9 @@ export default function Header({ OnSignInClick, OnSignOutClick, loggedIn }) {
 
   useEffect(() => {
     if (pathname === '/') setSelectedPage('header_page_home');
-    if (pathname === '/SavedArticles') setSelectedPage('header_page_saved-articles');
+    if (pathname === '/SavedArticles') {
+      setSelectedPage('header_page_saved-articles');
+    }
   }, [pathname]);
 
   return (

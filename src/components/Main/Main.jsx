@@ -13,7 +13,7 @@ export default function Main() {
         account.
       </p>
       <SearchForm />
-      <NewsCardList />
+      <NewsCardList showTitle={true} />
       <About />
     </main>
   );

@@ -1,34 +1,6 @@
-.NewsCardList {
-  background-color: #F5F6F7;
 
-  width: 100%;
-display: flex;
-flex-direction: column;
-}
-.NewsCardList__text-results {
-  font-family: 'Roboto Slab';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 40px;
-  line-height: 46px;
-  color: #1a1b22;
-  margin: 80px 0 0 104px;
-  display: none;
-}
-.NewsCardList__text-results_isVisible_true {
-display: block;
-}
-
-.NewsCardList__card-container {
-  margin-top: 64px;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 16px;
-  align-self: center;
-  max-width: 1234px;
-}
-.NewsCardList__card-container_page_savedArc{
-  margin-top: 62px;
-margin-left: -4px;
-}
+@import url(../../blocks/card-list/card-list.css);
+@import url(../../blocks/card-list/__cards-wrapper/card-list__cards-wrapper.css);
+@import url(../../blocks/card-list/__cards-wrapper/_page/card-list__cards-wrapper_page_saved-articles.css);
+@import url(../../blocks/card-list/__search-results/card-list__search-results.css);
+@import url(../../blocks/card-list/__search-results/_isVisible/card-list__search-results_isVisible_true.css);

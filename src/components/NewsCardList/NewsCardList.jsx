@@ -4,11 +4,11 @@ import NewsCard from '../NewsCard/NewsCard.jsx';
 
 export default function NewsCardList({ showTitle }) {
   return (
-    <section className="NewsCardList">
-      <h2 className={`NewsCardList__text-results NewsCardList__text-results_isVisible_${showTitle}`}>
+    <section className="card-list">
+      <h2 className={`card-list__search-results card-list__text-search_isVisible_${showTitle}`}>
         Search results
       </h2>
-      <div className="NewsCardList__card-container NewsCardList__card-container_page_savedArc">
+      <div className="card-list__cards-wrapper card-list__cards-wrapper_page_saved-articles">
         <NewsCard />
         <NewsCard />
         <NewsCard />

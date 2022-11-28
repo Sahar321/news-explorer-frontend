@@ -1,0 +1,9 @@
+.card-list__cards-wrapper {
+  margin-top: 64px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-self: center;
+  max-width: 1234px;
+}

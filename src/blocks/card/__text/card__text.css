@@ -1,0 +1,10 @@
+.card__text {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 22px;
+  color: #1a1b22;
+  max-width: 352px;
+  margin: 16px 24px 0;
+}

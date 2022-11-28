@@ -1,0 +1,22 @@
+.card__tooltip {
+  background: #ffffff;
+  box-shadow: 0px 10px 22px rgba(59, 74, 116, 0.1);
+  border-radius: 10px;
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 14px;
+  color: #000000;
+  border-radius: 10px;
+  padding: 11px 26px;
+  margin-right: 5px;
+
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.2s linear, opacity 0.2s linear;
+}
+.button_type_remove:hover + .card__tooltip {
+  visibility: visible;
+  opacity: 1;
+}

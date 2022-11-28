@@ -1,0 +1,9 @@
+.card__controls-wrapper {
+  display: flex;
+  position: absolute;
+  top: 24px;
+  right: 0;
+  margin-right: 24px;
+  flex-direction: row-reverse;
+  width: calc(100% - 24px);
+}

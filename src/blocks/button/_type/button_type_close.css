@@ -7,5 +7,6 @@
   position: fixed;
   top: -45px;
   right: -46px;
+  display: inline-block;
 }
 

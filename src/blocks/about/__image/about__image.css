@@ -2,5 +2,12 @@
   width: 464px;
   height: 464px;
   grid-area: 1 / 2 / 3 / 3;
-  margin: 80px 0;
+  margin-top: 80px;
+}
+@media screen and (max-width: 769px) {
+  .about__image {
+    height: 232px;
+    width: 232px;
+    margin-top: 61px;
+  }
 }

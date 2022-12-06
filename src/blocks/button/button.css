@@ -6,6 +6,7 @@
   cursor: pointer;
   outline: none;
   border: none;
+  display: none;
 }
 
 .button__search {
@@ -23,6 +24,7 @@
   width: 168px;
   grid-area: 1 / 4 / 2 / 5;
   z-index: 1;
+  display: inline-block;
 }
 
 .button__search:hover {

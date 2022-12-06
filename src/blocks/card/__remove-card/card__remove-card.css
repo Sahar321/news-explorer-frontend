@@ -1,0 +1,8 @@
+.card__remove-card{
+margin-right: 24px;
+}
+@media screen and (max-width: 769px) {
+  .card__remove-card {
+    margin-right: 8px;
+  }
+}

@@ -1,0 +1,12 @@
+.header__nav-link_type_save-article {
+  margin-right: 32px;
+  min-width: 176px;
+  display: inline-block;
+}
+
+@media screen and (max-width: 769px) {
+  .header__nav-link_type_save-article  {
+    margin-right: 16px;
+    min-width: 160px;
+  }
+}

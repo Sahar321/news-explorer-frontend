@@ -11,6 +11,7 @@
   line-height: 24px;
   background: #2f80ed;
   color: #ffffff;
+  display: inline-block;
 }
 
 .button_type_submit:disabled {

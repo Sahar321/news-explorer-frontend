@@ -1,4 +1,6 @@
 .card__keyword {
+  margin: 0;
+  padding: 0;
   position: absolute;
   margin-left: 24px;
   left: 0;
@@ -12,4 +14,14 @@
   line-height: 24px;
   text-align: center;
   color: #000000;
+  transition: opacity 0.4s linear;
+}
+
+@media screen and (max-width: 769px) {
+  .card__keyword {
+    margin-left: 8px;
+  }
+}
+.button_type_remove:hover ~ .card__keyword {
+opacity: 0.3;
 }

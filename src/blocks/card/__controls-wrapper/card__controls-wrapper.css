@@ -1,9 +1,13 @@
 .card__controls-wrapper {
   display: flex;
   position: absolute;
-  top: 24px;
-  right: 0;
-  margin-right: 24px;
+  left: 0;
   flex-direction: row-reverse;
-  width: calc(100% - 24px);
+  width: 100%;
+  margin-top: 24px;
+}
+@media screen and (max-width: 769px) {
+  .card__controls-wrapper {
+    margin-top: 8px;
+  }
 }

@@ -9,3 +9,9 @@
   margin-top: 20px;
   margin-bottom: 0;
 }
+@media screen and (max-width: 769px) {
+  .card__date {
+ margin-left: 15px;
+
+  }
+}

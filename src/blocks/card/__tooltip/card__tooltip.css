@@ -11,12 +11,12 @@
   border-radius: 10px;
   padding: 11px 26px;
   margin-right: 5px;
-
+z-index: 1;
   visibility: hidden;
   opacity: 0;
   transition: visibility 0.2s linear, opacity 0.2s linear;
 }
-.button_type_remove:hover + .card__tooltip {
+.button_type_remove:hover ~ .card__tooltip {
   visibility: visible;
   opacity: 1;
 }

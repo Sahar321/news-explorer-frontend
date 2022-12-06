@@ -3,7 +3,13 @@
   background-color: var(--color-white);
   display: flex;
   justify-content: space-between;
-  padding: 0 104px;
+  padding: 0 min(7.2%, 104px);
   max-width: 100%;
   box-sizing: border-box;
+}
+@media screen and (max-width: 769px) {
+  .footer {
+    padding: 0 min(7.2%, 40px);
+    max-height: 64px;
+  }
 }

@@ -1,0 +1,12 @@
+.header__nav-link_type_home {
+  margin-right: 35px;
+  min-width: 69px;
+  display: inline-block;
+}
+
+
+@media screen and (max-width: 769px) {
+  .header__nav-link_type_home {
+    margin-right: 14px;
+  }
+}

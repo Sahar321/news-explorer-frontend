@@ -6,6 +6,7 @@
   background-image: url(../../../images/icons/bookmark/bookmark.svg);
   background-position: center;
   background-repeat: no-repeat;
+  display: inline-block;
 }
 .button__bookmark:hover {
   background-image: url(../../../images/icons/bookmark/bookmark-hover.svg);

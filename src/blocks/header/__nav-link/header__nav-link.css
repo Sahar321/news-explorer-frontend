@@ -11,14 +11,9 @@
   color: inherit;
 }
 
-.header__nav-link_type_save-article {
-  margin-right: 32px;
-  padding-right: 32px;
-  padding-left: 32px;
-
-}
-.header__nav-link_type_home {
-  margin-right: 44px;
-  padding-right: 9.5px;
-  padding-left: 9.5px;
+@media screen and (max-width: 769px) {
+  .header__nav-link {
+    font-size: 16px;
+    padding-bottom: 17px;
+  }
 }

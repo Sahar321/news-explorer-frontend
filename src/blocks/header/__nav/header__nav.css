@@ -1,5 +1,10 @@
 .header__nav {
-display: flex;
-padding:0;
-margin: 0 104px;
+  display: flex;
+  padding: 0;
+  margin: 0 104px 0 0;
+}
+@media screen and (max-width: 769px) {
+  .header__nav  {
+margin-right: 40px;
+  }
 }

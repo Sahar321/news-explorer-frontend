@@ -1,6 +1,9 @@
 :root {
   --color-black: #000000;
   --color-white: #ffffff;
+  --var-card-width: 400px;
+  --var-card-gap: 16px;
+  --var-card-card-item: 3;
 
   --main-primary: #1A1B22;
   --main-white-hover: #E8E8E8;

@@ -1,3 +1,12 @@
 .card-list__search-results_isVisible_true {
   display: block;
+align-self: self-start;
+margin-bottom: 64px;
+margin-left: min(7.224%, 104px); /* 104px in 1440px wide */
+}
+
+@media screen and (max-width: 769px) {
+  .card-list__search-results_isVisible_true {
+    margin: 40px 0 32px 40px;
+  }
 }

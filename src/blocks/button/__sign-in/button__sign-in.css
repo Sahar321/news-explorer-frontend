@@ -1,5 +1,4 @@
 .button__sign-in {
-  margin-left: 42px;
   border: 1px solid var(--color-white);
   border-radius: 100px;
   Width: 176px;
@@ -11,5 +10,6 @@
   line-height: 24px;
   color: var(--color-white);
   box-sizing: border-box;
-  margin-bottom: -4px;
+  margin-top: 19px;
+  display: inline-block;
 }

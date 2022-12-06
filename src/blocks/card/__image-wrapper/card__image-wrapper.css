@@ -3,3 +3,8 @@
   height: 272px;
   position: relative;
 }
+@media screen and (max-width: 769px) {
+  .card__image-wrapper {
+    max-height: 150px;
+  }
+}

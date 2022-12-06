@@ -11,3 +11,12 @@
       auto
     );
 }
+@media screen and (max-width: 769px) {
+  .about {
+    min-height: 354px;
+    grid-template-columns: minmax(0, 104px) max-content minmax(0px, 32px) minmax(
+      300px,
+      auto
+    );
+  }
+}

@@ -11,8 +11,8 @@
   text-align: center;
   align-self: center;
   color: var(--main-primary);
-  margin-top: 64px;
   margin-bottom: 80px;
+  display: inline-block;
 }
 
 .button__show-more:hover {

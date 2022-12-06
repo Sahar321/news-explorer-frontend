@@ -13,9 +13,9 @@ export default function SavedArticles() {
   return (
     <>
       <section className="saved-articles">
-        <h1 className="saved-articles__title">Saved Articles</h1>
-        <h2 className="saved-articles__subtitle">Elise, you have 5 saved articles</h2>
-        <h3 className='saved-articles__keywords'>By keywords: Nature, Yellowstone, and 2 other</h3>
+        <h1 className="saved-articles__title">Saved articles</h1>
+        <h2 className="saved-articles__text">Elise, you have 5 saved articles</h2>
+        <h3 className='saved-articles__keywords'>By keywords: <strong>Nature, Yellowstone, and 2 other</strong></h3>
       </section>
 
       <NewsCardList />

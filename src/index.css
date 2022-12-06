@@ -22,6 +22,12 @@
 @import url(./blocks/icon/icon.css);
 @import url(./blocks/icon/_type/icon_type_sign-out.css);
 
-@import url(./blocks/saved-articles/saved-articles.css);
+
 
 @import url(./blocks/input/input.css);
+
+
+@import url(./blocks/saved-articles/saved-articles.css);
+@import url(./blocks/saved-articles/__keywords/saved-articles__keywords.css);
+@import url(./blocks/saved-articles/__text/saved-articles__text.css);
+@import url(./blocks/saved-articles/__title/saved-articles__title.css);

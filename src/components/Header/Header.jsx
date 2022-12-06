@@ -52,8 +52,7 @@ export default function Header({ OnSignInClick, OnSignOutClick, loggedIn }) {
         {loggedIn ? (
           <button
             onClick={OnSignOutClick}
-            className="button button_type_sign-out"
-          >
+            className="button button_type_sign-out">
             elise <i className="icon icon_type_sign-out"></i>
           </button>
         ) : (

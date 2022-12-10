@@ -11,7 +11,7 @@
   grid-area: 2 / 3 / 3 / 4;
 }
 @media screen and (max-width: 769px) {
-  .aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa {
-
+  .about__text {
+width: calc(100% - 10px);
   }
 }

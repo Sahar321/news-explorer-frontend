@@ -10,3 +10,8 @@
   max-width: 100%;
 
 }
+@media screen and (max-width: 769px) {
+  .app {
+    background-size: 768px 400px;
+  }
+}

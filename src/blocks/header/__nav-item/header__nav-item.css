@@ -1,9 +1,0 @@
-.header__nav-item {
-  margin-top: 30px;
-}
-
-@media screen and (max-width: 769px) {
-  .header__nav-item {
-    margin-top: 22px;
-  }
-}

@@ -6,11 +6,21 @@
 /* eslint  implicit-arrow-linebreak : 0 */
 import React, { useEffect } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation.jsx';
+import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import './Header.css';
 
-export default function Header({ OnSignInClick, OnSignOutClick, loggedIn }) {
+export default function Header({
+  OnSignInClick,
+  OnSignOutClick,
+  loggedIn,
+  navMenuIsOpen,
+}) {
+  const mobileWidth = 590; // need to move to constants
   const [selectedPage, setSelectedPage] = React.useState('');
   const { pathname } = useLocation();
+  const [isNavMenuOpen, setIsNavMenuOpen] = React.useState(false);
+  const screenWidth = useScreenWidth();
 
   useEffect(() => {
     if (pathname === '/') setSelectedPage('header_page_home');
@@ -19,48 +29,25 @@ export default function Header({ OnSignInClick, OnSignOutClick, loggedIn }) {
     }
   }, [pathname]);
 
+  useEffect(() => {
+    if (screenWidth > mobileWidth) {
+      setIsNavMenuOpen(false);
+    }
+    console.log('screenWidth', screenWidth);
+  }, [screenWidth]);
+  const handleMenuClick = (e) => {
+    setIsNavMenuOpen(!isNavMenuOpen);
+  };
+  const menuClass = isNavMenuOpen ? 'header__title_menu_white' : '';
   return (
     <header className={`header ${selectedPage}`}>
-      <h1 className="header__title">NewsExplorer</h1>
-      <nav className="header__nav">
-        <ul className="header__nav-list">
-          <li className="header__nav-item">
-            <NavLink
-              to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? 'header__nav-link header__nav-link_type_home header__nav-link_isActive_true'
-                  : 'header__nav-link header__nav-link_type_home'
-              }
-            >
-              Home
-            </NavLink>
-          </li>
-          <li className="header__nav-item">
-            <NavLink
-              to="/SavedArticles"
-              className={({ isActive }) =>
-                isActive
-                  ? 'header__nav-link header__nav-link_type_save-article header__nav-link_isActive_true'
-                  : 'header__nav-link header__nav-link_type_save-article'
-              }
-            >
-              Saved articles
-            </NavLink>
-          </li>
-        </ul>
-        {loggedIn ? (
-          <button
-            onClick={OnSignOutClick}
-            className="button button_type_sign-out">
-            elise <i className="icon icon_type_sign-out"></i>
-          </button>
-        ) : (
-          <button onClick={OnSignInClick} className="button button__sign-in">
-            Sign in
-          </button>
-        )}
-      </nav>
+      <h1 className={`header__title ${menuClass}`}>NewsExplorer</h1>
+      <button
+        type="button"
+        className="button header__nav_type_mobile"
+        onClick={handleMenuClick}
+      />
+      <Navigation showNav={isNavMenuOpen} />
     </header>
   );
 }

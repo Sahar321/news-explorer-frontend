@@ -5,3 +5,14 @@
   max-width: 608px;
   margin-bottom: 80px;
 }
+@media screen and (max-width: 769px) {
+  .search-form  {
+
+  }
+}@media screen and (max-width: 769px) {
+  .search-form {
+ max-width: 448px;
+ max-height: 56px;
+ margin-left: 160px;
+  }
+}

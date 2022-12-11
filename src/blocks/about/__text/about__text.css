@@ -14,4 +14,8 @@
   .about__text {
 width: calc(100% - 10px);
   }
+}@media screen and (max-width: 480px) {
+  .about__text {
+    width:288px
+  }
 }

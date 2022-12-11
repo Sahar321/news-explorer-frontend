@@ -1,6 +1,5 @@
 .input {
   outline: none;
-
 }
 .input__search {
   box-sizing: border-box;
@@ -19,10 +18,18 @@
   text-overflow: ellipsis;
   max-width: 600px;
   max-height: inherit;
+  padding-right: 150px;
 }
 
 @media screen and (max-width: 769px) {
   .input__search {
- max-width: 420px;
+    max-width: 420px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .input__search {
+    padding: 17px 16px;
+    width: 288px;
+    max-height: 56px;
   }
 }

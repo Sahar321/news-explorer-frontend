@@ -14,3 +14,10 @@
     min-height: 204px;
   }
 }
+@media screen and (max-width: 480px) {
+  .saved-articles  {
+align-items: center;
+margin: 0;
+padding: 8px 0 32px 0;
+  }
+}

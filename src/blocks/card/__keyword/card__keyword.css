@@ -16,12 +16,17 @@
   color: #000000;
   transition: opacity 0.4s linear;
 }
-
+.button_type_remove:hover ~ .card__keyword {
+  opacity: 0.3;
+  }
 @media screen and (max-width: 769px) {
   .card__keyword {
     margin-left: 8px;
   }
 }
-.button_type_remove:hover ~ .card__keyword {
-opacity: 0.3;
+@media screen and (max-width: 480px) {
+  .card__keyword  {
+    margin-left: 16px;
+  }
 }
+

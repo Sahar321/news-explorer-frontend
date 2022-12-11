@@ -13,3 +13,11 @@
     min-height: 296px;
   }
 }
+@media screen and (max-width: 480px) {
+  .main__heading {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+  }
+}

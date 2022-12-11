@@ -12,3 +12,9 @@
     margin-top: 16px;
   }
 }
+@media screen and (max-width: 480px) {
+  .saved-articles__keywords {
+width: 288px;
+margin-top: 50px;
+  }
+}

@@ -6,3 +6,9 @@ margin-right: 24px;
     margin-right: 8px;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .card__remove-card {
+    margin-right: 16px;
+  }
+}

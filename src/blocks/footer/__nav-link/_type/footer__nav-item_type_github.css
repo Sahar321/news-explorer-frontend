@@ -1,3 +1,11 @@
 .footer__nav-item_type_github {
   margin-left: 41.89px;
 }
+@media screen and (max-width: 480px) {
+  .footer__nav-item_type_github {
+    margin: 0;
+    justify-self: end;
+    grid-area: 1 / 2 / 2 / 3;
+    padding-top: 1px;
+  }
+}

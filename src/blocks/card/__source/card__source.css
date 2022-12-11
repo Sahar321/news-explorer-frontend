@@ -18,3 +18,8 @@
     margin: 12px 0 0 16px;
   }
 }
+@media screen and (max-width: 480px) {
+  .card__source {
+margin-top: 8px;
+  }
+}

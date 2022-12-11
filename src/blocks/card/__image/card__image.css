@@ -6,6 +6,13 @@
 }
 @media screen and (max-width: 769px) {
   .card__image {
-max-height: 150px;
+    max-height: 150px;
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .card__image {
+    max-height: 196px;
+    height: 196px;
   }
 }

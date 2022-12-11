@@ -17,4 +17,8 @@
     max-height: 66px;
   }
 }
-
+@media screen and (max-width: 480px) {
+  .header {
+    max-height: 56px;
+  }
+}

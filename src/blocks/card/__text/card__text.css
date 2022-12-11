@@ -27,3 +27,11 @@
     max-width: 192px;
   }
 }
+@media screen and (max-width: 480px) {
+  .card__text  {
+width: 258px;
+max-width: none;
+margin-top: 14px;
+-webkit-line-clamp: 4;
+  }
+}

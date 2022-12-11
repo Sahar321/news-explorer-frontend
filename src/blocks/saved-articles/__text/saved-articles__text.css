@@ -20,3 +20,8 @@
     max-width: 336px;
   }
 }
+@media screen and (max-width: 480px) {
+  .saved-articles__text  {
+width: 288px;
+  }
+}

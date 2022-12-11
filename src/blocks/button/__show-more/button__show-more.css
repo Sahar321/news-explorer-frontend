@@ -18,3 +18,11 @@
 .button__show-more:hover {
 background-color: var( --main-white-hover);
 }
+
+@media screen and (max-width: 480px) {
+  .button__show-more {
+height: 56px;
+margin-bottom: 24px;
+margin-top: 0;
+  }
+}

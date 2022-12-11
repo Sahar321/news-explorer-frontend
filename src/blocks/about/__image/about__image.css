@@ -6,8 +6,15 @@
 }
 @media screen and (max-width: 769px) {
   .about__image {
-    height: 232px;
-    width: 232px;
+    height: auto;
+    width: 100%;
     margin-top: 61px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .about__image {
+    margin-top: 32px;
+width: 272px;
+height: 272px;
   }
 }

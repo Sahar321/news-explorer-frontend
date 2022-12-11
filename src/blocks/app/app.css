@@ -8,10 +8,14 @@
   display: flex;
   flex-direction: column;
   max-width: 100%;
-
 }
 @media screen and (max-width: 769px) {
   .app {
     background-size: 768px 400px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .app {
+    background-size: 480px 536px;
   }
 }

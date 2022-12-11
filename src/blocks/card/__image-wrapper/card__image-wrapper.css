@@ -8,3 +8,8 @@
     max-height: 150px;
   }
 }
+@media screen and (max-width: 480px) {
+  .card__image-wrapper {
+    max-height: 196px;
+  }
+}

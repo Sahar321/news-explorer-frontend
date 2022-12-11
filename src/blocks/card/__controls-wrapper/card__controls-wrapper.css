@@ -11,3 +11,9 @@
     margin-top: 8px;
   }
 }
+
+@media screen and (max-width: 480px) {
+  .card__controls-wrapper {
+    margin-top: 16px;
+  }
+}

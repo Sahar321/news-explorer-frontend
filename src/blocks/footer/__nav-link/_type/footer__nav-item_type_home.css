@@ -1,0 +1,5 @@
+@media screen and (max-width: 480px) {
+    .footer__nav-item_type_home {
+        grid-area: 1 / 1 / 2 / 2;
+    }
+  }

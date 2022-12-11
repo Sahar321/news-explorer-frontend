@@ -1,3 +1,8 @@
 .card-list__cards-wrapper_page_home{
   margin-bottom: 64px;
 }
+@media screen and (max-width: 480px) {
+  .card-list__cards-wrapper_page_home {
+margin-bottom: 21px;
+  }
+}

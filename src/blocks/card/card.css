@@ -10,13 +10,12 @@
 }
 
 @media screen and (max-width: 769px) {
-  .card{
+  .card {
     width: 224px;
   }
-
 }
 @media screen and (max-width: 480px) {
   .card {
-width: 288px;
+    width: 288px;
   }
 }

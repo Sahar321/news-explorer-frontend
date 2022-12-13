@@ -4,24 +4,33 @@
 /* eslint react/prop-types: 0 */
 /* eslint no-confusing-arrow: 0 */
 /* eslint  implicit-arrow-linebreak : 0 */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navigation.css';
 
-export default function Navigation({ showNav }) {
-  const refMenu = React.useRef();
+export default function Navigation({
+  showMobileMenu,
+  OnSignOutClick,
+  OnSignInClick,
+  isMobileType,
+  onItemClick,
+}) {
+  const loggedIn = false;
 
-  const loggedIn = true;
-  const OnSignOutClick = () => {};
-  const OnSignInClick = () => {};
-  const showActiveStyle = showNav ? '' : 'navigation__link_isActive_true';
+  const showActiveStyle = !isMobileType && 'navigation__link_isActive_true'; // don't show active style on mobile
+  const showMobileMenuClass = showMobileMenu && 'navigation_mobile_show'; // show mobile menu on button click
+
+  const navigationType = isMobileType
+    ? 'navigation_type_mobile'
+    : 'navigation_type_desktop';
 
   return (
     <>
-      <nav ref={refMenu} className={`navigation navMenu_isOpen_${showNav}`}>
+      <nav className={`navigation ${navigationType} ${showMobileMenuClass}`}>
         <ul className="navigation__items">
           <li>
             <NavLink
+              onClick={onItemClick}
               to="/"
               className={({ isActive }) =>
                 isActive
@@ -34,6 +43,7 @@ export default function Navigation({ showNav }) {
           </li>
           <li>
             <NavLink
+              onClick={onItemClick}
               to="/SavedArticles"
               className={({ isActive }) =>
                 isActive

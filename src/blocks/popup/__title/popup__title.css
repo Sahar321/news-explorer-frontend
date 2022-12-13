@@ -12,3 +12,9 @@
   margin-top: 34px;
   align-items: flex-start;
 }
+@media screen and (max-width: 480px) {
+  .popup__title {
+    margin-top: 16px;
+    margin-left: 17px;
+  }
+}

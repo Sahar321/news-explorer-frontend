@@ -16,3 +16,9 @@
   color: rgba(0, 0, 0, 0.2);
 }
 
+@media screen and (max-width: 480px) {
+  .popup__input {
+    width: 288px;
+    margin-bottom: 31px;
+  }
+}

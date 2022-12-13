@@ -2,5 +2,5 @@
 const RegexPatterns = {
   EMAIL: /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
 };
-
-export default RegexPatterns;
+const MOBILE_MENU_WIDTH = 590;
+export { RegexPatterns, MOBILE_MENU_WIDTH };

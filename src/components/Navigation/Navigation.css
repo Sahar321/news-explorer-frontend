@@ -1,7 +1,30 @@
 .navigation {
-  display: flex;
+ display: none;
   padding: 0;
   margin: 0 104px 0 0;
+  z-index: 9;
+}
+
+.navigation_type_desktop{
+  display: flex;
+}
+
+.navigation_type_mobile {
+  margin: 0;
+  background-color: #1a1b22;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: none;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 56px 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  color: white;
+}
+.navigation_mobile_show{
+  display: grid;
 }
 @media screen and (max-width: 769px) {
   .navigation {
@@ -12,19 +35,8 @@
   .navigation.navMenu_isOpen_false {
     display: none;
   }
-  .navigation.navMenu_isOpen_true {
-    margin: 0;
-    background-color: #1a1b22;
-    width: 100%;
-    position: fixed;
-    top: 0;
-    left: 0;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: 56px 1fr;
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
-  }
+
+
 }
 
 /* ----------27.941-------------------------------------------------------------------- */
@@ -66,6 +78,7 @@
   text-decoration: inherit;
   color: inherit;
 }
+
 .navigation__link_isActive_true {
   border-bottom-style: solid;
   border-bottom-width: 3px;
@@ -123,23 +136,33 @@
     text-align: left;
     display: flex;
     align-items: center;
-  }
-}
-@media screen and (max-width: 590px) {
-  .header__nav_type_mobile {
-    display: block;
-    height: 24px;
-    width: 24px;
-    border-radius: 8px;
-    background-image: url(../../images/icons/menu.svg);
-    background-position: center;
-    background-repeat: no-repeat;
-    display: inline-block;
-    margin-right: 16px;
-    z-index: 1;
+    font-size: 18px;
+line-height: 56px;
+margin-top: 16px;
   }
 }
 
+  .header__nav_type_mobile {
+    height: 24px;
+    width: 24px;
+    border-radius: 8px;
+
+    background-position: center;
+    background-repeat: no-repeat;
+    margin-right: 16px;
+    z-index: 10;
+    display: none;
+  }
+  .header__nav_type_mobile_visible {
+    display: inline-block;
+  }
+
+  .header__nav_mobile_white {
+    background-image: url(../../images/icons/menu-white.svg);
+  }
+  .header__nav_mobile_black {
+    background-image: url(../../images/icons/menu-black.svg);
+  }
 /* .header__nav_type_mobile {
     display: none;
   } */

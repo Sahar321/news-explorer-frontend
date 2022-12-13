@@ -1,0 +1,22 @@
+.popup__button-close {
+    height: 40px;
+    width: 40px;
+    position: fixed;
+    top: -45px;
+    right: -46px;
+    display: inline-block;
+  }
+
+  @media screen and (max-width: 590px) {
+    .popup__button-close  {
+      right: calc(50% - 20px);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .popup__button-close  {
+      right: 0px;
+    }
+  }
+
+

@@ -43,7 +43,7 @@ export default function PopupWithForm({
     >
       <div className="popup__container">
         <button
-          className="button button_type_close"
+          className="button button_type_close popup__button-close"
           type="button"
           onClick={onClose}
         ></button>

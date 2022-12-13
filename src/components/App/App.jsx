@@ -1,8 +1,6 @@
 /* eslint no-unused-vars: 0 */
 import React from 'react';
-import {
-  Routes, Route, Link,
-} from 'react-router-dom';
+import { Routes, Route, Link } from 'react-router-dom';
 // import SavedNews from '../SavedNews/SavedNews.jsx';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
@@ -20,22 +18,25 @@ export default function App() {
   const [isSignInPopupOpen, setSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = React.useState(false);
   const [isPopupWithMessageOpen, setPopupWithMessageOpen] = React.useState(false);
-
+  const [hideMobileMenuButton, setHideMobileMenuButton] = React.useState(false);
   // const isPageSavedArticles = pathname === '/SavedArticles' && 'header_page_saved-articles';
 
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
     setPopupWithMessageOpen(false);
+    setHideMobileMenuButton(false);
   };
 
   const handleSignInClick = () => {
     closeAllPopups();
+    setHideMobileMenuButton(true);
     setSignInPopupOpen(true);
   };
 
   const handleSignUpClick = () => {
     closeAllPopups();
+    setHideMobileMenuButton(true);
     setSignUpPopupOpen(true);
   };
 
@@ -47,9 +48,14 @@ export default function App() {
   };
   return (
     <div className="app">
-      <Header loggedIn={loggedIn} OnSignInClick={handleSignInClick} />
+      <Header
+        loggedIn={loggedIn}
+        OnSignInClick={handleSignInClick}
+        OnSignUpClick={handleSignUpClick}
+        hideMobileMenuButton={hideMobileMenuButton}
+      />
       <Routes>
-        <Route path="/" element={<Home OnSignInClick={handleSignInClick} />} />
+        <Route path="/" element={<Home />} />
         <Route path="/SavedArticles" element={<SavedArticles />} />
         <Route path="*" element={<NotFound />} />
       </Routes>

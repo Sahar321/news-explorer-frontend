@@ -13,14 +13,14 @@
   display: inline-block;
 }
 
-@media screen and (max-width: 590px) {
+@media screen and (max-width: 769px) {
   .button__sign-in {
     font-size: 16px;
     height: 40px;
     width: 152px;
   }
 }
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 590px) {
   .button__sign-in {
     height: 56px;
     width: 288px;

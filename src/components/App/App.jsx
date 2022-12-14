@@ -37,12 +37,11 @@ export default function App() {
     setSignUpPopupOpen(true);
   };
 
-  const handleSignInSubmit = (email, password) => {
-    console.log(`Sign in with email: ${email} and password: ${password}`);
+  /*   const handleSignInSubmit = (email, password) => {
   };
   const handleSignUpSubmit = (email, password, username) => {
-    console.log(`${email} and password: ${password} and username: ${username}`);
-  };
+
+  }; */
   return (
     <div className="app">
       <Header
@@ -61,12 +60,12 @@ export default function App() {
         onClose={closeAllPopups}
         title="Sign In"
         isOpen={isSignInPopupOpen}
-        onSubmit={handleSignInSubmit}
+      /*   onSubmit={handleSignInSubmit} */
         onSignUpPopupClick={handleSignUpClick}
       />
       <SignUpPopup
         onClose={closeAllPopups}
-        onSubmit={handleSignUpSubmit}
+      /*   onSubmit={handleSignUpSubmit} */
         title="Sign Up"
         isOpen={isSignUpPopupOpen}
         onSignInPopupClick={handleSignInClick}

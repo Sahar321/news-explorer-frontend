@@ -13,18 +13,18 @@ export default function App() {
       <nav>
         <ul className="footer__nav-list">
           <li className="footer__nav-item footer__nav-item_type_home">
-            <a className="footer__nav-link" href="/">
+            <a className="footer__nav-link" target="_self" href="/">
               Home
             </a>
           </li>
           <li className="footer__nav-item footer__nav-item_type_practicum">
-            <a className="footer__nav-link" href="https://practicum.com">
+            <a className="footer__nav-link" href="https://practicum.com" target="_blank" rel="noreferrer">
               Practicum
             </a>
           </li>
 
           <li className="footer__nav-item footer__nav-item_type_github">
-            <a href="https://github.com">
+            <a href="https://github.com" target="_blank" rel="noreferrer">
               <img
                 src={githubIcon}
                 alt="github link"

@@ -18,7 +18,7 @@ export default function NewsCard() {
           <span className="card__tooltip">Remove from saved</span>
           <span className="card__keyword">Nature</span>
         </div>
-        <img className="card__image" src={imgBeach} alt="beach" />
+        <img className="card__image" src={imgBeach} alt="card" />
       </div>
       <div className="card__text-wrapper">
         <p className="card__date">November 4, 2020</p>

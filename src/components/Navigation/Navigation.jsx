@@ -8,9 +8,8 @@ export default function Navigation({
   OnSignInClick,
   isMobileType,
   onItemClick,
+  loggedIn,
 }) {
-  const loggedIn = false;
-
   const showActiveStyle = !isMobileType && 'navigation__link_isActive_true'; // don't show active style on mobile
   const showMobileMenuClass = showMobileMenu && 'navigation_mobile_show'; // show mobile menu on button click
 

@@ -17,7 +17,6 @@ export default function App() {
   const [isSignUpPopupOpen, setSignUpPopupOpen] = React.useState(false);
   const [isPopupWithMessageOpen, setPopupWithMessageOpen] = React.useState(false);
   const [hideMobileMenuButton, setHideMobileMenuButton] = React.useState(false);
-  // const isPageSavedArticles = pathname === '/SavedArticles' && 'header_page_saved-articles';
 
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);

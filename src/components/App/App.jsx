@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 import React from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 // import SavedNews from '../SavedNews/SavedNews.jsx';
@@ -14,7 +13,6 @@ import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
 import './App.css';
 
 export default function App() {
-  const [loggedIn, setLoggedIn] = React.useState(true);
   const [isSignInPopupOpen, setSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = React.useState(false);
   const [isPopupWithMessageOpen, setPopupWithMessageOpen] = React.useState(false);
@@ -49,7 +47,7 @@ export default function App() {
   return (
     <div className="app">
       <Header
-        loggedIn={loggedIn}
+        loggedIn={true}
         OnSignInClick={handleSignInClick}
         OnSignUpClick={handleSignUpClick}
         hideMobileMenuButton={hideMobileMenuButton}

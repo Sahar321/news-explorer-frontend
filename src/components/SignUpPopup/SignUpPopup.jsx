@@ -1,9 +1,6 @@
-/* eslint no-unused-vars: 0 */
-/* eslint react/prop-types: 0 */
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PopupWithForm from '../PopupWithForm/PopupWithForm.jsx';
-import { RegexPatterns } from '../../constants/constants';
 
 export default function SignUpPopup({
   onSubmit,

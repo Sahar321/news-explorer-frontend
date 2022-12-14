@@ -1,7 +1,3 @@
-/* eslint no-unused-vars: 0 */
-/* eslint react/prop-types: 0 */
-/* eslint consistent-return: 0 */
-import { array } from 'prop-types';
 import React, { useEffect } from 'react';
 import './PopupWithMessage.css';
 
@@ -19,6 +15,7 @@ export default function Popup({
       }
     };
     document.addEventListener('keydown', handleEscClose);
+    // eslint-disable-next-line consistent-return
     return () => {
       document.removeEventListener('keydown', handleEscClose);
     };

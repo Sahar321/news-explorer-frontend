@@ -1,9 +1,3 @@
-/* eslint react/prop-types: 0 */
-/* eslint no-unused-vars: 0 */
-/* eslint operator-linebreak: 0 */
-/* eslint react/prop-types: 0 */
-/* eslint no-confusing-arrow: 0 */
-/* eslint  implicit-arrow-linebreak : 0 */
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import './Navigation.css';
@@ -32,10 +26,9 @@ export default function Navigation({
             <NavLink
               onClick={onItemClick}
               to="/"
-              className={({ isActive }) =>
-                isActive
-                  ? `navigation__link navigation__link_type_home ${showActiveStyle}`
-                  : 'navigation__link navigation__link_type_home'
+              className={({ isActive }) => (isActive
+                ? `navigation__link navigation__link_type_home ${showActiveStyle}`
+                : 'navigation__link navigation__link_type_home')
               }
             >
               Home
@@ -45,10 +38,9 @@ export default function Navigation({
             <NavLink
               onClick={onItemClick}
               to="/SavedArticles"
-              className={({ isActive }) =>
-                isActive
-                  ? `navigation__link navigation__link_type_saved-articles ${showActiveStyle}`
-                  : 'navigation__link navigation__link_type_saved-articles'
+              className={({ isActive }) => (isActive
+                ? `navigation__link navigation__link_type_saved-articles ${showActiveStyle}`
+                : 'navigation__link navigation__link_type_saved-articles')
               }
             >
               Saved articles
@@ -59,7 +51,7 @@ export default function Navigation({
             <li className="">
               <button
                 onClick={OnSignOutClick}
-                className="button button_type_sign-out type_mobi"
+                className="button button_type_sign-out"
               >
                 elise <i className="icon icon_type_sign-out"></i>
               </button>
@@ -68,7 +60,7 @@ export default function Navigation({
             <li>
               <button
                 onClick={OnSignInClick}
-                className="button button__sign-in type_mobi"
+                className="button button__sign-in"
               >
                 Sign in
               </button>

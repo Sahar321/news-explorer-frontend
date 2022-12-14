@@ -1,9 +1,3 @@
-/* eslint react/prop-types: 0 */
-/* eslint no-unused-vars: 0 */
-/* eslint operator-linebreak: 0 */
-/* eslint react/prop-types: 0 */
-/* eslint no-confusing-arrow: 0 */
-/* eslint  implicit-arrow-linebreak : 0 */
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation.jsx';
@@ -19,8 +13,7 @@ export default function Header({ OnSignInClick, hideMobileMenuButton }) {
   const [isMobileType, setIsMobileType] = React.useState(false);
   const [itemsMobileColor, setItemsMobileColor] = React.useState('');
   const [mobileMenuButtonColor, setMobileMenuButtonColor] = React.useState('');
-  const [isMobileMenuButtonVisible, setIsMobileMenuButtonVisible] =
-    React.useState(false);
+  const [isMobileMenuButtonVisible, setIsMobileMenuButtonVisible] = React.useState(false);
   useEffect(() => {
     switch (pathname) {
       case '/':
@@ -55,12 +48,11 @@ export default function Header({ OnSignInClick, hideMobileMenuButton }) {
     }
   }, [screenWidth]);
 
-  const handleMenuClick = (e) => {
+  const handleMenuClick = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const isMobileMenuButtonClass =
-    isMobileMenuButtonVisible && !hideMobileMenuButton && 'header_mobile_visible';
+  const isMobileMenuButtonClass = isMobileMenuButtonVisible && !hideMobileMenuButton && 'header_mobile_visible';
   const headerMobileMenuClass = isMobileMenuOpen && 'header__title_menu_white';
 
   const handleItemClick = () => {

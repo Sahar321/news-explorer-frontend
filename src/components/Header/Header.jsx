@@ -63,6 +63,7 @@ export default function Header({ OnSignInClick, hideMobileMenuButton }) {
     <header className={`header ${selectedPage}`}>
       <h1 className={`header__title ${headerMobileMenuClass}`}>NewsExplorer</h1>
       <button
+        aria-label="Mobile Menu"
         type="button"
         className={`button header_type_mobile ${isMobileMenuButtonClass} ${
           isMobileMenuOpen ? 'button_type_close' : mobileMenuButtonColor

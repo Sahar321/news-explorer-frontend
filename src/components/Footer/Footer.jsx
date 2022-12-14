@@ -44,5 +44,3 @@ export default function App() {
     </footer>
   );
 }
-//    <button type="button" className="button button_type_show-more">Show More</button>
-//  <button type="button" className="button button-bookmark button-bookmark_state_marked"></button>

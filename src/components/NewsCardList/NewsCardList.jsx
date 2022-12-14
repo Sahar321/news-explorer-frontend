@@ -24,7 +24,7 @@ export default function NewsCardList() {
         <NewsCard />
       </div>
       {isHomePage && (
-        <button type="button" className="button button__show-more">
+        <button aria-label="Show More" type="button" className="button button__show-more">
           Show more
         </button>
       )}

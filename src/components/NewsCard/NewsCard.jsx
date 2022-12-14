@@ -14,7 +14,7 @@ export default function NewsCard() {
     <article className="card">
       <div className="card__image-wrapper">
         <div className="card__controls-wrapper">
-          <button className="button button_type_remove card__remove-card" />
+          <button aria-label="Remove Card" className="button button_type_remove card__remove-card" />
           <span className="card__tooltip">Remove from saved</span>
           <span className="card__keyword">Nature</span>
         </div>

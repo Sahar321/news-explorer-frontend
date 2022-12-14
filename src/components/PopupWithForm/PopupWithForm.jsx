@@ -40,6 +40,7 @@ export default function PopupWithForm({
     >
       <div className="popup__container">
         <button
+          aria-label="Close Popup"
           className="button button_type_close popup__button-close"
           type="button"
           onClick={onClose}
@@ -53,6 +54,7 @@ export default function PopupWithForm({
         >
           {children}
           <button
+            aria-label="submit"
             type="submit"
             disabled={!isValid}
             className="button button_type_submit"

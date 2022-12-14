@@ -120,4 +120,3 @@ export default function SignUpPopup({
     </PopupWithForm>
   );
 }
-//    <button type="button" className="button button_type_show-more">Show More</button>

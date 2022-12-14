@@ -50,6 +50,7 @@ export default function Navigation({
           {loggedIn ? (
             <li className="">
               <button
+                aria-label="Sign Out"
                 onClick={OnSignOutClick}
                 className="button button_type_sign-out"
               >
@@ -59,6 +60,7 @@ export default function Navigation({
           ) : (
             <li>
               <button
+                aria-label="Sign In"
                 onClick={OnSignInClick}
                 className="button button__sign-in"
               >

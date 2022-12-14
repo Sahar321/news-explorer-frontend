@@ -25,10 +25,10 @@ export default function Header({ OnSignInClick, hideMobileMenuButton }) {
     switch (pathname) {
       case '/':
         setSelectedPage('header_page_home');
-        setMobileMenuButtonColor('header__nav_mobile_white');
+        setMobileMenuButtonColor('header_mobile_white');
         break;
       case '/SavedArticles':
-        setMobileMenuButtonColor('header__nav_mobile_black');
+        setMobileMenuButtonColor('header_mobile_black');
         setSelectedPage('header_page_saved-articles');
         setItemsMobileColor('navigation__items_color_white');
         break;
@@ -60,7 +60,7 @@ export default function Header({ OnSignInClick, hideMobileMenuButton }) {
   };
 
   const isMobileMenuButtonClass =
-    isMobileMenuButtonVisible && !hideMobileMenuButton && 'header__nav_type_mobile_visible';
+    isMobileMenuButtonVisible && !hideMobileMenuButton && 'header_mobile_visible';
   const headerMobileMenuClass = isMobileMenuOpen && 'header__title_menu_white';
 
   const handleItemClick = () => {
@@ -72,7 +72,7 @@ export default function Header({ OnSignInClick, hideMobileMenuButton }) {
       <h1 className={`header__title ${headerMobileMenuClass}`}>NewsExplorer</h1>
       <button
         type="button"
-        className={`button header__nav_type_mobile ${isMobileMenuButtonClass} ${
+        className={`button header_type_mobile ${isMobileMenuButtonClass} ${
           isMobileMenuOpen ? 'button_type_close' : mobileMenuButtonColor
         }`}
         onClick={handleMenuClick}

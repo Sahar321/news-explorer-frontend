@@ -1,14 +1,14 @@
-.card__remove-card{
+.card__button{
 margin-right: 24px;
 }
 @media screen and (max-width: 769px) {
-  .card__remove-card {
+  .card__button {
     margin-right: 8px;
   }
 }
 
 @media screen and (max-width: 480px) {
-  .card__remove-card {
+  .card__button {
     margin-right: 16px;
   }
 }

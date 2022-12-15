@@ -8,5 +8,6 @@
 @import url(../../blocks/card/__text/card__text.css);
 @import url(../../blocks/card/__title/card__title.css);
 @import url(../../blocks/card/__tooltip/card__tooltip.css);
-@import url(../../blocks/card/__remove-card/card__remove-card.css);
+@import url(../../blocks/card/__button/card__button.css);
 @import url(../../blocks/card/__keyword/card__keyword.css);
+@import url(../../blocks/card/__keyword/_visibility/card_keyword_visibility_hide.css);

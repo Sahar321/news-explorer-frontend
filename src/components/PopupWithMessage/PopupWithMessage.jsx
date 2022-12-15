@@ -36,7 +36,7 @@ export default function Popup({
       <div className="popup__container popup__container_type_message">
         <button
           aria-label="Close Message Popup"
-          className="button button_type_close"
+          className="button button_type_close popup__button-close"
           type="button"
           onClick={onClose}
         ></button>

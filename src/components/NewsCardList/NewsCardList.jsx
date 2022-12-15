@@ -7,7 +7,7 @@ export default function NewsCardList() {
   const { pathname } = useLocation();
   const isHomePage = pathname === '/';
   const selectedPage = isHomePage ? 'home' : 'saved-articles';
-
+  const cardButtonType = isHomePage ? 'bookmark' : 'remove';
   return (
     <section className="card-list">
       <h2
@@ -18,13 +18,17 @@ export default function NewsCardList() {
       <div
         className={`card-list__cards-wrapper card-list__cards-wrapper_page_${selectedPage}`}
       >
-        <NewsCard />
-        <NewsCard />
-        <NewsCard />
-        <NewsCard />
+        <NewsCard buttonType={cardButtonType} />
+        <NewsCard buttonType={cardButtonType} />
+        <NewsCard buttonType={cardButtonType} />
+        <NewsCard buttonType={cardButtonType} />
       </div>
       {isHomePage && (
-        <button aria-label="Show More" type="button" className="button button__show-more">
+        <button
+          aria-label="Show More"
+          type="button"
+          className="button button__show-more"
+        >
           Show more
         </button>
       )}

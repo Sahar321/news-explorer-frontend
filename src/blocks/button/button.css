@@ -11,7 +11,7 @@
 
 .button__search {
   color: var(--color-white);
-  font-family: 'Roboto';
+  font-family: 'Roboto', Arial, sans-serif;
   font-style: normal;
   font-weight: 500;
   font-size: 18px;
@@ -39,6 +39,5 @@
     margin-top: 16px;
     width: 288px;
     height: 56px;
-
   }
 }

@@ -61,7 +61,7 @@ export default function Header({ OnSignInClick, hideMobileMenuButton, loggedIn }
 
   return (
     <header className={`header ${selectedPage}`}>
-      <h1 className={`header__title ${headerMobileMenuClass}`}>NewsExplorer</h1>
+      <span className={`header__title ${headerMobileMenuClass}`}>NewsExplorer</span>
       <button
         aria-label="Mobile Menu"
         type="button"

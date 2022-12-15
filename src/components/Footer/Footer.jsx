@@ -32,7 +32,7 @@ export default function App() {
             </a>
           </li>
           <li className="footer__nav-item footer__nav-item_type_facebook">
-            <a href="https://facebook.com">
+            <a href="https://facebook.com" target="_blank" rel="noreferrer">
               <img
                 src={facebookIcon}
                 alt="Facebook link"

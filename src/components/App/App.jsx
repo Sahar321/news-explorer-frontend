@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Link } from 'react-router-dom';
 // import SavedNews from '../SavedNews/SavedNews.jsx';
 import Header from '../Header/Header.jsx';
@@ -18,6 +18,12 @@ export default function App() {
   const [isPopupWithMessageOpen, setPopupWithMessageOpen] = React.useState(false);
   const [hideMobileMenuButton, setHideMobileMenuButton] = React.useState(false);
 
+  useEffect(() => {
+    if (isSignInPopupOpen || isSignUpPopupOpen || isPopupWithMessageOpen) {
+      setHideMobileMenuButton(true);
+    }
+  }, [isSignInPopupOpen, isSignUpPopupOpen, isPopupWithMessageOpen]);
+
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
@@ -27,25 +33,18 @@ export default function App() {
 
   const handleSignInClick = () => {
     closeAllPopups();
-    setHideMobileMenuButton(true);
     setSignInPopupOpen(true);
   };
 
   const handleSignUpClick = () => {
     closeAllPopups();
-    setHideMobileMenuButton(true);
     setSignUpPopupOpen(true);
   };
 
-  /*   const handleSignInSubmit = (email, password) => {
-  };
-  const handleSignUpSubmit = (email, password, username) => {
-
-  }; */
   return (
     <div className="app">
       <Header
-        loggedIn={true}
+        loggedIn={false}
         OnSignInClick={handleSignInClick}
         OnSignUpClick={handleSignUpClick}
         hideMobileMenuButton={hideMobileMenuButton}
@@ -60,12 +59,12 @@ export default function App() {
         onClose={closeAllPopups}
         title="Sign In"
         isOpen={isSignInPopupOpen}
-      /*   onSubmit={handleSignInSubmit} */
+        /*   onSubmit={handleSignInSubmit} */
         onSignUpPopupClick={handleSignUpClick}
       />
       <SignUpPopup
         onClose={closeAllPopups}
-      /*   onSubmit={handleSignUpSubmit} */
+        /*   onSubmit={handleSignUpSubmit} */
         title="Sign Up"
         isOpen={isSignUpPopupOpen}
         onSignInPopupClick={handleSignInClick}
@@ -75,7 +74,10 @@ export default function App() {
         onClose={closeAllPopups}
         isOpen={isPopupWithMessageOpen}
       >
-        <Link onClick={handleSignInClick} className="popup__link">
+        <Link
+          onClick={handleSignInClick}
+          className="popup__link popup__link_type_message"
+        >
           Sign in
         </Link>
       </PopupWithMessage>

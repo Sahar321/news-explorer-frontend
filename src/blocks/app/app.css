@@ -11,11 +11,13 @@
 }
 @media screen and (max-width: 769px) {
   .app {
-    background-size: 768px 400px;
+    background-image: url(../../images/backgrounds/background-top-main-768-400.png);
+      background-size: 768px 400px;
   }
 }
 @media screen and (max-width: 480px) {
   .app {
-    background-size: 480px 536px;
+    background-image: url(../../images/backgrounds/background-top-main-320-536.png);
+    background-size: 320px 536px;
   }
 }

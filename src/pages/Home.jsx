@@ -1,10 +1,10 @@
 import React from 'react';
 import Main from '../components/Main/Main.jsx';
 
-export default function Home() {
+export default function Home({ onSearchSumbit }) {
   return (
     <>
-      <Main />
+      <Main onSearchSumbit={onSearchSumbit} />
     </>
   );
 }

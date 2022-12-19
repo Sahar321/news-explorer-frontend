@@ -30,7 +30,7 @@
 .button__search:hover {
   background: #347eff;
 }
-.button__search:focus {
+.button__search:active {
   background-color: #2a65cc;
 }
 

@@ -4,12 +4,10 @@
   --var-card-width: 400px;
   --var-card-gap: 16px;
   --var-card-card-item: 3;
-
   --main-primary: #1A1B22;
   --main-white-hover: #E8E8E8;
   --popup-input-email-margin-bottom: 31px;
   max-width: 1440px;
-margin: 0 auto;
+  margin: 0 auto;
 
 }
-

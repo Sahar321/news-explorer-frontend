@@ -1,10 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import SearchForm from '../SearchForm/SearchForm.jsx';
 import About from '../About/About.jsx';
 import NewsCardList from '../NewsCardList/NewsCardList.jsx';
+import NotFound from '../NotFound/NotFound.jsx';
+import SearchPreloader from '../SearchPreloader/SearchPreloader.jsx';
 import './Main.css';
 
 export default function Main() {
+  // should be to removed:
+  // reviewr: Please, add some logic to the page to display "Preloader" and "Nothing found"
+  const [displayComponet, setDisplayComponet] = useState(<NewsCardList showTitle={true} />);
+  const handleSearchSumbit = () => {
+    setDisplayComponet(<SearchPreloader />);
+    setTimeout(() => {
+      setDisplayComponet(<NotFound />);
+    }, 2500);
+  };
   return (
     <main className="main">
       <div className="main__heading">
@@ -13,10 +24,10 @@ export default function Main() {
           Find the latest news on any topic and save them in your personal
           account.
         </p>
-        <SearchForm />
+        <SearchForm onSearchSumbit={handleSearchSumbit} />
       </div>
 
-      <NewsCardList showTitle={true} />
+      {displayComponet}
       <About />
     </main>
   );

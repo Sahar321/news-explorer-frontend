@@ -4,7 +4,7 @@
   background-color: #000000;
   background-image: url(../../images/backgrounds/background-top-main.png);
   background-repeat: no-repeat;
-  background-size: 100% 576px;
+  background-size: auto auto;
   display: flex;
   flex-direction: column;
   max-width: 100%;
@@ -12,12 +12,10 @@
 @media screen and (max-width: 769px) {
   .app {
     background-image: url(../../images/backgrounds/background-top-main-768-400.png);
-      background-size: 768px 400px;
   }
 }
 @media screen and (max-width: 480px) {
   .app {
     background-image: url(../../images/backgrounds/background-top-main-320-536.png);
-    background-size: 320px 536px;
   }
 }

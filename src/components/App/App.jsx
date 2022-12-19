@@ -9,7 +9,6 @@ import NotFound from '../NotFound/NotFound.jsx';
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
-import Preloader from '../Preloader/Preloader.jsx';
 import './App.css';
 
 export default function App() {
@@ -49,7 +48,6 @@ export default function App() {
         OnSignUpClick={handleSignUpClick}
         hideMobileMenuButton={hideMobileMenuButton}
       />
-      <Preloader isVisible={false} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/SavedArticles" element={<SavedArticles />} />

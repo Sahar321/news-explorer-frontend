@@ -1,0 +1,8 @@
+.not-found__icon {
+    background-image: url('../../../images/icons/search-not-found.svg');
+    background-size: 82.5px 82.5px;
+    background-repeat: no-repeat;
+    width: 82.5px;
+    height: 82.5px;
+    margin-top: 86px;
+}

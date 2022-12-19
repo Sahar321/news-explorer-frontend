@@ -1,0 +1,9 @@
+.search-loading {
+    width: 100%;
+    min-height: 282px;
+    background: #F5F6F7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import './SearchForm.css';
 
-export default function SearchForm({ onSearchSumbit }) {
+export default function SearchForm({ onSearchSubmit }) {
   const [keyword, setKeyword] = useState('');
 
   const handleSumbit = (e) => {
     e.preventDefault();
-    onSearchSumbit(keyword);
+    onSearchSubmit(keyword);
   };
   return (
     <form onSubmit={handleSumbit} className="search-form">

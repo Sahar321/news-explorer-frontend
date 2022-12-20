@@ -8,12 +8,12 @@ import './Main.css';
 
 export default function Main() {
   // should be to removed:
-  // reviewr: Please, add some logic to the page to display "Preloader" and "Nothing found"
-  const [displayComponet, setDisplayComponet] = useState(<NewsCardList showTitle={true} />);
-  const handleSearchSumbit = () => {
-    setDisplayComponet(<SearchPreloader />);
+  // reviewer: Please, add some logic to the page to display "Preloader" and "Nothing found"
+  const [displayComponent, setDisplayComponent] = useState(<NewsCardList showTitle={true} />);
+  const handleSearchSubmit = () => {
+    setDisplayComponent(<SearchPreloader />);
     setTimeout(() => {
-      setDisplayComponet(<NotFound />);
+      setDisplayComponent(<NotFound />);
     }, 2500);
   };
   return (
@@ -24,10 +24,10 @@ export default function Main() {
           Find the latest news on any topic and save them in your personal
           account.
         </p>
-        <SearchForm onSearchSumbit={handleSearchSumbit} />
+        <SearchForm onSearchSubmit={handleSearchSubmit} />
       </div>
 
-      {displayComponet}
+      {displayComponent}
       <About />
     </main>
   );

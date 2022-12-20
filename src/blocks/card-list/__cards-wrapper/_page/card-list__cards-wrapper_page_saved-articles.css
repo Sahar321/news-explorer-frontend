@@ -1,0 +1,16 @@
+.card-list__cards-wrapper_page_saved-articles{
+  margin-top: 62px;
+  margin-bottom: 62px;
+}
+
+@media screen and (max-width: 769px) {
+  .card-list__cards-wrapper_page_saved-articles {
+    margin-bottom: 32px;
+    margin-top: 32px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .card-list__cards-wrapper_page_saved-articles {
+    margin-top: 24px;
+  }
+}

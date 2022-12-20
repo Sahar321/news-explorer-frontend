@@ -1,0 +1,11 @@
+.search-loading__text {
+    min-width: 280px;
+    font-family: 'Roboto';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 24px;
+    text-align: center;
+    color: #B6BCBF;
+    margin-top: 24px;
+}

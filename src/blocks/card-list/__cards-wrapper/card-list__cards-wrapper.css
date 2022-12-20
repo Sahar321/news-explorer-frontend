@@ -1,0 +1,29 @@
+.card-list__cards-wrapper {
+  --n: 4;
+  display: grid;
+  justify-items:center;
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(max(224px, 100% / var(--n)), 1fr)
+  );
+  gap: 16px;
+  width: 100%;
+  max-width: 1234px;
+}
+@media screen and (max-width: 769px) {
+  .card-list__cards-wrapper {
+    gap: 8px;
+    max-width: 688px;
+
+
+  }
+}
+@media screen and (max-width: 480px) {
+  .card-list__cards-wrapper {
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    align-items: center;
+    gap:10px;
+  }
+}

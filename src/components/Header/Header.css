@@ -1,0 +1,10 @@
+@import url(../../blocks/header/header.css);
+@import url(../../blocks/header/_type/header_type_mobile.css);
+@import url(../../blocks/header/_mobile/header_mobile_black.css);
+@import url(../../blocks/header/_mobile/header_mobile_visible.css);
+@import url(../../blocks/header/_mobile/header_mobile_white.css);
+@import url(../../blocks/header/__title/header__title.css);
+@import url(../../blocks/header/_page/header_page_saved-articles.css);
+@import url(../../blocks/header/_page/header_page_home.css);
+@import url(../../blocks/header/__title/_menu/header__title_menu_white.css);
+

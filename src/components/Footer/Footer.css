@@ -1,0 +1,8 @@
+@import url(../../blocks/footer/footer.css);
+@import url(../../blocks/footer/__copyrights/footer__copyrights.css);
+@import url(../../blocks/footer/__nav-link/footer__nav-link.css);
+@import url(../../blocks/footer/__nav-link/_type/footer__nav-item_type_home.css);
+@import url(../../blocks/footer/__nav-link/_type/footer__nav-item_type_facebook.css);
+@import url(../../blocks/footer/__nav-link/_type/footer__nav-item_type_github.css);
+@import url(../../blocks/footer/__nav-link/_type/footer__nav-item_type_practicum.css);
+@import url(../../blocks/footer/__nav-list/footer__nav-list.css);

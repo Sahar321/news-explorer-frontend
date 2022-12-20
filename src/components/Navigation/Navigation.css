@@ -1,0 +1,10 @@
+@import url(../../blocks/navigation/navigation.css);
+@import url(../../blocks/navigation/__items/navigation__items.css);
+@import url(../../blocks/navigation/__link/_isActive/navigation__link_isActive_true.css);
+@import url(../../blocks/navigation/__link/navigation__link.css);
+@import url(../../blocks/navigation/__link/_type/navigation__link_type_home.css);
+@import url(../../blocks/navigation/__link/_type/navigation__link_type_saved-articles.css);
+@import url(../../blocks/navigation/_type/navigation_type_desktop.css);
+@import url(../../blocks/navigation/_type/navigation_type_mobile.css);
+@import url(../../blocks/navigation/_mobile/navigation_mobile_show.css);
+

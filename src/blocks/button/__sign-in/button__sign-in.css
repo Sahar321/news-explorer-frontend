@@ -1,0 +1,30 @@
+.button__sign-in {
+  border: 1px solid var(--color-white);
+  border-radius: 100px;
+  width: 176px;
+  height: 48px;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 24px;
+  color: var(--color-white);
+  box-sizing: border-box;
+  display: inline-block;
+}
+
+@media screen and (max-width: 769px) {
+  .button__sign-in {
+    font-size: 16px;
+    height: 40px;
+    width: 152px;
+  }
+}
+@media screen and (max-width: 590px) {
+  .button__sign-in {
+    height: 56px;
+    width: 288px;
+    margin-top: 6px;
+    margin-bottom: 24px;
+  }
+}

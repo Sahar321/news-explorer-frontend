@@ -1,0 +1,28 @@
+.search-form {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: 1fr;
+  max-width: 608px;
+  margin-bottom: 80px;
+}
+@media screen and (max-width: 769px) {
+  .search-form {
+    max-width: 448px;
+    max-height: 56px;
+    margin-left: min(160px, 21%);
+  }
+}
+@media screen and (max-width: 480px) {
+  .search-form {
+    max-height: none;
+    margin-left: 0;
+    margin-bottom: 32px;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    box-sizing: border-box;
+    width: 288px;
+    margin-top: 0;
+  }
+}

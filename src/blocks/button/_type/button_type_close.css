@@ -1,0 +1,17 @@
+.button_type_close {
+  height: 40px;
+  width: 40px;
+  background-image: url(../../../images/icons/close.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+
+
+@media screen and (max-width: 480px) {
+  .button_type_close {
+    background-image: url(../../../images/icons/close_24_24.svg);
+  }
+}
+
+

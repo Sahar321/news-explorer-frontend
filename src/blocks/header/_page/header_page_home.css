@@ -1,0 +1,12 @@
+.header_page_home {
+  color: white;
+  box-shadow: inset 0px -1px 0px rgba(255, 255, 255, 0.2);
+
+}
+
+.header_page_home .button_type_sign-out {
+  border: 1px solid white;
+}
+.header_page_home .icon_type_sign-out {
+  background-image: url(../../../images/icons/sign-out_color_white.svg);
+}

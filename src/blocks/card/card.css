@@ -1,0 +1,21 @@
+.card {
+  max-width: 400px;
+  background-color: white;
+  border-radius: 16px;
+  display: flex;
+  flex-direction: column;
+}
+.card:hover {
+  box-shadow: rgba(8, 29, 45, 0.1) 0px 20px 55px;
+}
+
+@media screen and (max-width: 769px) {
+  .card {
+    width: 224px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .card {
+    width: 288px;
+  }
+}

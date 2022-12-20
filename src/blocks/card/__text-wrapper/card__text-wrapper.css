@@ -1,0 +1,10 @@
+.card__text-wrapper{
+
+
+padding-bottom: 24px;
+}
+@media screen and (max-width: 769px) {
+  .card__text-wrapper {
+    padding-bottom: 16px;
+  }
+}

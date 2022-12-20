@@ -1,0 +1,7 @@
+
+@import url(../../blocks/card-list/card-list.css);
+@import url(../../blocks/card-list/__cards-wrapper/card-list__cards-wrapper.css);
+@import url(../../blocks/card-list/__cards-wrapper/_page/card-list__cards-wrapper_page_saved-articles.css);
+@import url(../../blocks/card-list/__cards-wrapper/_page/card-list__cards-wrapper_page_home.css);
+@import url(../../blocks/card-list/__search-results/card-list__search-results.css);
+@import url(../../blocks/card-list/__search-results/_isVisible/card-list__search-results_isVisible_true.css);

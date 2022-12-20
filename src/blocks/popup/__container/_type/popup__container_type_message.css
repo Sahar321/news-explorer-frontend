@@ -1,0 +1,12 @@
+.popup__container_type_message {
+  min-height: 182px;
+  margin-top: 9px;
+  padding-top: 9px;
+  box-sizing: border-box;
+}
+
+@media screen and (max-width: 480px) {
+  .popup__container_type_message {
+    margin-top: 56px;
+  }
+}

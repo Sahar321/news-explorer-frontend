@@ -1,0 +1,29 @@
+.navigation__link_type_saved-articles {
+    margin-right: -12px;
+    min-width: 178px;
+    margin-top: 29px;
+    padding-bottom: 26px;
+    display: inline-block;
+  }
+  @media screen and (max-width: 769px) {
+    .navigation__link_type_saved-articles {
+      min-width: 160px;
+      margin-right: 0;
+      padding-bottom: 17px;
+      margin-top: 22px;
+    }
+  }
+  @media screen and (max-width: 590px) {
+    .navigation__link_type_saved-articles {
+      margin: 0;
+      padding: 0;
+      min-width: 288px;
+      min-height: 56px;
+      text-align: left;
+      display: flex;
+      align-items: center;
+      font-size: 18px;
+      line-height: 56px;
+      margin-top: 16px;
+    }
+  }

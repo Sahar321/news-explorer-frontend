@@ -1,0 +1,29 @@
+.about {
+  min-height: 624px;
+  width: 100%;
+  background-color: white;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-column-gap: 0px;
+  grid-row-gap: 0px;
+  grid-template-columns: minmax(0, 104px) max-content minmax(0px, 56px) minmax(
+      300px,
+      auto
+    );
+}
+@media screen and (max-width: 769px) {
+  .about {
+    min-height: 354px;
+    grid-template-columns:
+      minmax(0, 104px) minmax(180px, 232px) minmax(0px, 32px)
+      minmax(240px, auto);
+  }
+}
+@media screen and (max-width: 480px) {
+  .about {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+padding-bottom: 128px;
+  }
+}

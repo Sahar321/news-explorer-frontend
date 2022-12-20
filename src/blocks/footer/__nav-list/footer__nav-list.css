@@ -1,0 +1,23 @@
+.footer__nav-list {
+  list-style-type: none;
+  display: flex;
+  padding: 0;
+  margin: 0;
+  margin-top: 30px;
+}
+
+@media screen and (max-width: 769px) {
+  .footer__nav-list {
+    margin-top: 22px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .footer__nav-list {
+    display: grid;
+    grid-template-columns: 1fr repeat(2, 24px);
+    grid-template-rows: repeat(2, 1fr);
+    grid-column-gap: 16px;
+    grid-row-gap: 0px;
+    justify-items: start;
+  }
+}

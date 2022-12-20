@@ -1,0 +1,14 @@
+.button_type_remove {
+  height: 40px;
+  width: 40px;
+  border-radius: 8px;
+  background: var(--color-white);
+  background-image: url(../../../images/icons/trash/trash.svg);
+  background-position: center;
+  background-repeat: no-repeat;
+  display: inline-block;
+}
+.button_type_remove:hover {
+  background-image: url(../../../images/icons/trash/trash-hover.svg);
+
+}

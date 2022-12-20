@@ -1,0 +1,14 @@
+.navigation_type_mobile {
+    margin: 0;
+    background-color: #1a1b22;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    display: none;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 56px 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    color: white;
+  }

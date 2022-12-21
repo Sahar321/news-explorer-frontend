@@ -42,7 +42,7 @@ export default function SignInPopup({
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!isValidForm) return;
-    onSubmit(email, password);
+    onSubmit({ email, password });
   };
 
   return (

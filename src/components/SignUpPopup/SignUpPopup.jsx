@@ -48,7 +48,12 @@ export default function SignUpPopup({
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!isValidForm) return;
-    onSubmit(email, password, username);
+
+    onSubmit({
+      email,
+      password,
+      name: username,
+    });
   };
 
   return (
@@ -99,7 +104,7 @@ export default function SignUpPopup({
         Invalid password address
       </span>
       <label htmlFor="popup-signup-username" className="popup__field-label">
-        Password
+        Username
       </label>
       <input
         id="popup-signup-username"

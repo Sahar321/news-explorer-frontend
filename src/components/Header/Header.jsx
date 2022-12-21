@@ -5,7 +5,7 @@ import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import { MOBILE_MENU_WIDTH } from '../../constants/constants';
 import './Header.css';
 
-export default function Header({ OnSignInClick, hideMobileMenuButton, loggedIn }) {
+export default function Header({ OnSignInClick, hideMobileMenuButton }) {
   const screenWidth = useScreenWidth();
   const { pathname } = useLocation();
   const [selectedPage, setSelectedPage] = React.useState('');
@@ -76,7 +76,6 @@ export default function Header({ OnSignInClick, hideMobileMenuButton, loggedIn }
         isMobileType={isMobileType}
         itemsMobileColor={itemsMobileColor}
         onItemClick={handleItemClick}
-        loggedIn={loggedIn}
       />
     </header>
   );

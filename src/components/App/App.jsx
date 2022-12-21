@@ -15,6 +15,7 @@ import './App.css';
 
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(false);
+  const [currentUser, setCurrentUser] = useState(null);
   const [isSignInPopupOpen, setSignInPopupOpen] = React.useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = React.useState(false);
   const [popupWithMessage, setPopupWithMessage] = React.useState({

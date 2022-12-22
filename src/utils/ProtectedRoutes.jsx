@@ -5,12 +5,12 @@ import PagePreloader from '../components/PagePreloader/PagePreloader.jsx';
 
 export default function ProtectedRoutes({ loggedIn }) {
   if (loggedIn === LoginState.PENDING) {
-    return <PagePreloader/>;
+    return <PagePreloader />;
   }
   if (loggedIn === LoginState.LOGGED_IN) {
     return <Outlet />;
   }
   if (loggedIn === LoginState.LOGGED_OUT) {
-    return <Navigate to="/" />;
+    return <Navigate to="/" state={{ shouldOpenSignInPopup: true }} />;
   }
 }

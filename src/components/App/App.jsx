@@ -1,6 +1,6 @@
 /* eslint-disable */
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Link } from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import ProtectedRoutes from '../../utils/ProtectedRoutes.jsx';
 import Home from '../../pages/Home.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
@@ -27,6 +27,16 @@ export default function App() {
   });
   const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
   const token = localStorage.getItem('jwt');
+  let location = useLocation();
+
+  React.useEffect(() => {
+    const { shouldOpenSignInPopup } = location.state || false;
+    if (shouldOpenSignInPopup) {
+      setSignUpPopupOpen(true);
+    }
+
+    window.history.replaceState({}, document.title);
+  }, [location]);
 
   useEffect(() => {
     if (token) {

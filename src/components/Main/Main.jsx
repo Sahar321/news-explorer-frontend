@@ -1,3 +1,4 @@
+/*eslint-disable*/
 import React, { useState } from 'react';
 import SearchForm from '../SearchForm/SearchForm.jsx';
 import About from '../About/About.jsx';
@@ -6,10 +7,11 @@ import NotFound from '../NotFound/NotFound.jsx';
 import SearchPreloader from '../SearchPreloader/SearchPreloader.jsx';
 import './Main.css';
 
-export default function Main() {
+export default function Main({ loggedIn, onCardBookmarkClick }) {
   // should be to removed:
   // reviewer: Please, add some logic to the page to display "Preloader" and "Nothing found"
-  const [displayComponent, setDisplayComponent] = useState(<NewsCardList showTitle={true} />);
+  console.log('main-loggedIn', loggedIn);
+  const [displayComponent, setDisplayComponent] = useState();
   const handleSearchSubmit = () => {
     setDisplayComponent(<SearchPreloader />);
     setTimeout(() => {
@@ -26,8 +28,12 @@ export default function Main() {
         </p>
         <SearchForm onSearchSubmit={handleSearchSubmit} />
       </div>
-
-      {displayComponent}
+      <NewsCardList
+        onCardBookmarkClick={onCardBookmarkClick}
+        loggedIn={loggedIn}
+        showTitle={true}
+      />
+      {/*    {displayComponent} */}
       <About />
     </main>
   );

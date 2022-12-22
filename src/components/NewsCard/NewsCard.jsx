@@ -9,7 +9,7 @@ import imgLaptop from '../../images/cards/laptop.jpg';
 import imgRiver from '../../images/cards/river.png';
  */
 
-export default function NewsCard({ buttonType }) {
+export default function NewsCard({ buttonType, loggedIn, onCardBookmarkClick }) {
   const [buttonClass, setButtonClass] = React.useState('');
   const [tooltip, setTooltip] = React.useState('');
   useEffect(() => {
@@ -34,8 +34,10 @@ export default function NewsCard({ buttonType }) {
           <button
             aria-label={`${buttonType} Card`}
             className={`button ${buttonClass} card__button`}
+            disabled={!loggedIn}
+            onClick={onCardBookmarkClick}
           />
-          <span className="card__tooltip">{tooltip}</span>
+          {!loggedIn && <span className="card__tooltip">{tooltip}</span>}
           <span
             className={`card__keyword ${
               buttonType !== 'remove' && 'card_keyword_visibility_hide'

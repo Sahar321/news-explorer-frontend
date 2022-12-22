@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard.jsx';
 
-export default function NewsCardList() {
+export default function NewsCardList({ loggedIn, onCardBookmarkClick }) {
   const { pathname } = useLocation();
   const isHomePage = pathname === '/';
   const selectedPage = isHomePage ? 'home' : 'saved-articles';
@@ -18,10 +18,26 @@ export default function NewsCardList() {
       <div
         className={`card-list__cards-wrapper card-list__cards-wrapper_page_${selectedPage}`}
       >
-        <NewsCard buttonType={cardButtonType} />
-        <NewsCard buttonType={cardButtonType} />
-        <NewsCard buttonType={cardButtonType} />
-        <NewsCard buttonType={cardButtonType} />
+        <NewsCard
+          onCardBookmarkClick={onCardBookmarkClick}
+          loggedIn={loggedIn}
+          buttonType={cardButtonType}
+        />
+        <NewsCard
+          onCardBookmarkClick={onCardBookmarkClick}
+          loggedIn={loggedIn}
+          buttonType={cardButtonType}
+        />
+        <NewsCard
+          onCardBookmarkClick={onCardBookmarkClick}
+          loggedIn={loggedIn}
+          buttonType={cardButtonType}
+        />
+        <NewsCard
+          onCardBookmarkClick={onCardBookmarkClick}
+          loggedIn={loggedIn}
+          buttonType={cardButtonType}
+        />
       </div>
       {isHomePage && (
         <button

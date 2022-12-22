@@ -113,6 +113,10 @@ export default function App() {
     setCurrentUser(null);
     setLoggedIn(loginState.LOGGED_OUT);
   };
+  const handleCardBookmarkClick = (e) => {
+
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -124,7 +128,15 @@ export default function App() {
           hideMobileMenuButton={hideMobileMenuButton}
         />
         <Routes>
-          <Route path="/" element={<Home loggedIn={loggedIn} />} />
+          <Route
+            path="/"
+            element={
+              <Home
+                onCardBookmarkClick={handleCardBookmarkClick}
+                loggedIn={loggedIn}
+              />
+            }
+          />
           <Route path="*" element={<NotFound />} />
           <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
             <Route path="/SavedArticles" element={<SavedArticles />} />

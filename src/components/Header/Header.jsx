@@ -1,19 +1,26 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation.jsx';
 import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import { MOBILE_MENU_WIDTH } from '../../constants/constants';
+
 import './Header.css';
 
-export default function Header({ OnSignInClick, hideMobileMenuButton }) {
+export default function Header({
+  OnSignInClick,
+  OnSignOutClick,
+  hideMobileMenuButton,
+  loggedIn,
+}) {
   const screenWidth = useScreenWidth();
   const { pathname } = useLocation();
-  const [selectedPage, setSelectedPage] = React.useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
-  const [isMobileType, setIsMobileType] = React.useState(false);
-  const [itemsMobileColor, setItemsMobileColor] = React.useState('');
-  const [mobileMenuButtonColor, setMobileMenuButtonColor] = React.useState('');
-  const [isMobileMenuButtonVisible, setIsMobileMenuButtonVisible] = React.useState(false);
+  const [selectedPage, setSelectedPage] = useState('');
+
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileType, setIsMobileType] = useState(false);
+  const [itemsMobileColor, setItemsMobileColor] = useState('');
+  const [mobileMenuButtonColor, setMobileMenuButtonColor] = useState('');
+  const [isMobileMenuButtonVisible, setIsMobileMenuButtonVisible] = useState(false);
   useEffect(() => {
     switch (pathname) {
       case '/':
@@ -61,7 +68,9 @@ export default function Header({ OnSignInClick, hideMobileMenuButton }) {
 
   return (
     <header className={`header ${selectedPage}`}>
-      <span className={`header__title ${headerMobileMenuClass}`}>NewsExplorer</span>
+      <span className={`header__title ${headerMobileMenuClass}`}>
+        NewsExplorer
+      </span>
       <button
         aria-label="Mobile Menu"
         type="button"
@@ -72,10 +81,12 @@ export default function Header({ OnSignInClick, hideMobileMenuButton }) {
       />
       <Navigation
         OnSignInClick={handleSignInClick}
+        OnSignOutClick={OnSignOutClick}
         showMobileMenu={isMobileMenuOpen}
         isMobileType={isMobileType}
         itemsMobileColor={itemsMobileColor}
         onItemClick={handleItemClick}
+        loggedIn={loggedIn}
       />
     </header>
   );

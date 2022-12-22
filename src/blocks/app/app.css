@@ -14,8 +14,14 @@
     background-image: url(../../images/backgrounds/background-top-main-768-400.png);
   }
 }
+
 @media screen and (max-width: 480px) {
+  .app {
+    background-size: auto 536px;
+  }
+@media screen and (max-width: 320px) {
   .app {
     background-image: url(../../images/backgrounds/background-top-main-320-536.png);
   }
+}
 }

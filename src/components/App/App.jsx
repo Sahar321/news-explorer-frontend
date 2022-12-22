@@ -12,10 +12,12 @@ import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
 import mainApi from '../../utils/MainApi.js';
 import CurrentUserContext from '../../contexts/CurrentUserContext.js';
+import LoginState from '../../constants/enums/LoginState';
 import './App.css';
-
+import loginState from '../../constants/enums/LoginState';
+import PagePreloader from '../../components/PagePreloader/PagePreloader.jsx';
 export default function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
@@ -23,7 +25,7 @@ export default function App() {
     isOpen: false,
     title: '',
   });
-  const [hideMobileMenuButton, setHideMobileMenuButton] = React.useState(false);
+  const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
   const token = localStorage.getItem('jwt');
 
   useEffect(() => {
@@ -33,12 +35,14 @@ export default function App() {
         .then((res) => {
           if (res._id) {
             setCurrentUser(res);
-            setLoggedIn(true);
+            setLoggedIn(LoginState.LOGGED_IN);
           }
         })
         .catch(({ message }) => {
           console.log('getUserInfo', message);
         });
+    } else {
+      setLoggedIn(LoginState.LOGGED_OUT);
     }
   }, [token]);
 
@@ -72,6 +76,7 @@ export default function App() {
         if (res.token) {
           closeAllPopups();
           localStorage.setItem('jwt', res.token);
+          setLoggedIn(loginState.LOGGED_IN);
           console.log('Login Success!', res);
         }
       })
@@ -93,18 +98,25 @@ export default function App() {
       });
   };
 
+  const handleSignOutClick = () => {
+    localStorage.removeItem('jwt');
+    setCurrentUser(null);
+    setLoggedIn(loginState.LOGGED_OUT);
+  };
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Header
+          OnSignOutClick={handleSignOutClick}
           OnSignInClick={handleSignInClick}
           OnSignUpClick={handleSignUpClick}
+          loggedIn={loggedIn}
           hideMobileMenuButton={hideMobileMenuButton}
         />
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<Home loggedIn={loggedIn} />} />
           <Route path="*" element={<NotFound />} />
-          <Route element={<ProtectedRoutes />}>
+          <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
             <Route path="/SavedArticles" element={<SavedArticles />} />
           </Route>
         </Routes>

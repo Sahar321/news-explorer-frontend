@@ -20,6 +20,7 @@ const ENGLISH_MONTHS = [
 ];
 
 const CARDS_PAR_PAGE = 3;
+
 export {
   RegexPatterns, MOBILE_MENU_WIDTH, ENGLISH_MONTHS, CARDS_PAR_PAGE,
 };

@@ -34,6 +34,25 @@ class MainApi {
       headers: this._headers.headers,
     });
   };
+
+  saveArticle = (article) => {
+    return this.customFetch(`${this._baseUrl}/articles`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(article),
+    });
+  };
+
+  deleteArticle = (articleId) => {
+    return this.customFetch(`${this._baseUrl}/articles/${articleId}`, {
+      method: 'DELETE',
+      headers: this._headers.headers,
+    });
+  };
+  getAllArticles = () => {
+    return this.customFetch(`${this._baseUrl}/articles`, this._headers);
+  };
+
   getUserInfo() {
     return this.customFetch(`${this._baseUrl}/users/me`, this._headers);
   }

@@ -1,8 +1,12 @@
-import React, { useEffect } from 'react';
+/*eslint-disable*/
+import React, { useEffect, useContext } from 'react';
 import NewsCardList from '../components/NewsCardList/NewsCardList.jsx';
+import CurrentUserContext from '../contexts/CurrentUserContext';
+import CardType from '../constants/enums/CardType';
 
-export default function SavedArticles() {
-  // const [loggedIn, setLoggedIn] = React.useState(false);
+export default function SavedArticles({ savedCards, onCardRemoveClick }) {
+  const currentUser = useContext(CurrentUserContext);
+  const [keywords, setKeywords] = React.useState([]);
   useEffect(() => {
     const app = document.querySelector('.app');
     app.classList.add('app_page_saved-articles');
@@ -10,15 +14,34 @@ export default function SavedArticles() {
       app.classList.remove('app_page_saved-articles');
     };
   }, []);
+  useEffect(() => {
+
+    savedCards.forEach((card) => {
+      if (!keywords.includes(card.keyword)) {
+        keywords.push(card.keyword);
+      }
+    });
+    console.log('keywords', keywords);
+  }, [savedCards]);
   return (
     <>
       <section className="saved-articles">
         <span className="saved-articles__title">Saved articles</span>
-        <h1 className="saved-articles__text">Elise, you have 5 saved articles</h1>
-        <h2 className='saved-articles__keywords'>By keywords: <strong>Nature, Yellowstone, and 2 other</strong></h2>
+        <h1 className="saved-articles__text">
+          {currentUser.name}, you have {savedCards.length} saved articles
+        </h1>
+        <h2 className="saved-articles__keywords">
+          By keywords: <strong>{keywords[0]}, {keywords[1]}, and {keywords.length} other</strong>
+        </h2>
       </section>
 
-      <NewsCardList />
+      <NewsCardList
+        pageClassName="card-list__cards-wrapper_page_saved-articles"
+        cardType={CardType.REMOVE}
+        cardsToShow={savedCards}
+        showKeyword={true}
+        onCardRemoveClick={onCardRemoveClick}
+      />
     </>
   );
 }

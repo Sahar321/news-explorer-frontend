@@ -22,6 +22,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
+  const [savedCards, setSavedCards] = useState([]);
   const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
   const [cardsToShow, setCardsToShow] = useState([]);
@@ -51,6 +52,14 @@ export default function App() {
     }
   }, []);
   useEffect(() => {
+    if (loggedIn === LoginState.LOGGED_IN) {
+      mainApi.getAllArticles().then((res) => {
+        setSavedCards(res);
+      });
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
     showMoreCards();
   }, [cards]);
 
@@ -71,6 +80,21 @@ export default function App() {
       setLoggedIn(LoginState.LOGGED_OUT);
     }
   }, [token]);
+
+  useEffect(() => {
+    if (loggedIn === LoginState.LOGGED_IN) {
+      mainApi
+        .getAllArticles(token)
+        .then((res) => {
+          if (res) {
+            setSavedCards(res);
+          }
+        })
+        .catch(({ message }) => {
+          console.log('getArticles', message);
+        });
+    }
+  }, [loggedIn]);
 
   useEffect(() => {
     if (isSignInPopupOpen || isSignUpPopupOpen || popupWithMessage.isOpen) {
@@ -142,22 +166,10 @@ export default function App() {
 
   const handleCardBookmarkClick = (e) => {
     console.log(e);
-    /* const card = cards.find((card) => card._id === e.target.dataset.id);
-    if (card) {
-      mainApi
-        .deleteArticle(card._id, token)
-        .then((res) => {
-          if (res._id) {
-            const newCards = cards.filter((card) => card._id !== res._id);
-            setCards(newCards);
-            setCardsToShow(newCards);
-            console.log('Delete Article Success!', res);
-          }
-        })
-        .catch(({ message }) => {
-          console.log('handleCardBookmarkClick', message);
-        });
-    } */
+    mainApi.saveArticle(e).then((res) => {
+      setSavedCards([...savedCards, res]);
+    });
+
   };
   const handleSearchSubmit = (searchInput) => {
     setSearchPreloaderVisible(true);
@@ -206,6 +218,16 @@ export default function App() {
   const handleShowMoreCards = () => {
     showMoreCards();
   };
+  const handleCardRemoveClick = (card) => {
+    if (card) {
+      mainApi.deleteArticle(card._id).then((res) => {
+        console.log(savedCards);
+        setSavedCards((state) =>
+        state.filter((currentCard) => currentCard._id !== res._id)
+        );
+      });
+    }
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -236,7 +258,15 @@ export default function App() {
           />
           <Route path="*" element={<NotFound />} />
           <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
-            <Route path="/SavedArticles" element={<SavedArticles />} />
+            <Route
+              path="/SavedArticles"
+              element={
+                <SavedArticles
+                  onCardRemoveClick={handleCardRemoveClick}
+                  savedCards={savedCards}
+                />
+              }
+            />
           </Route>
         </Routes>
 

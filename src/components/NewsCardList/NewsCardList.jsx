@@ -1,7 +1,5 @@
 /* eslint-disable  */
 import React from 'react';
-import { useLocation } from 'react-router-dom';
-
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard.jsx';
 
@@ -11,22 +9,23 @@ export default function NewsCardList({
   onCardBookmarkClick,
   onShowMoreClick,
   cards,
+  cardType,
+  pageClassName,
+  onCardRemoveClick,
+  showKeyword,
 }) {
-  const { pathname } = useLocation();
-  const isHomePage = pathname === '/';
-  const selectedPage = isHomePage ? 'home' : 'saved-articles';
   return (
     <section className="card-list">
-      <div
-        className={`card-list__cards-wrapper card-list__cards-wrapper_page_${selectedPage}`}
-      >
+      <div className={`card-list__cards-wrapper ${pageClassName}`}>
         {cardsToShow?.map((card, index) => (
           <NewsCard
             key={index}
             cardData={card}
-            cardType={'bookmark'}
+            cardType={cardType}
             loggedIn={loggedIn}
+            onCardRemoveClick={onCardRemoveClick}
             onCardBookmarkClick={onCardBookmarkClick}
+            showKeyword={showKeyword}
           />
         ))}
       </div>

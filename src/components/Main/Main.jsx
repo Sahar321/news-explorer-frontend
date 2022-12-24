@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import SearchForm from '../SearchForm/SearchForm.jsx';
 import SearchPreloader from '../../components/SearchPreloader/SearchPreloader.jsx';
 import About from '../About/About.jsx';
+import CardType from '../../constants/enums/CardType';
 import NewsCardList from '../NewsCardList/NewsCardList.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import SearchSection from '../SearchSection/SearchSection.jsx';
@@ -40,8 +41,10 @@ export default function Main({
             loggedIn={loggedIn}
             showTitle={true}
             cards={cards}
+            cardType={CardType.BOOKMARK}
             cardsToShow={cardsToShow}
             onShowMoreClick={onShowMoreClick}
+            pageClassName="card-list__cards-wrapper_page_home"
           />
         </>
       )}

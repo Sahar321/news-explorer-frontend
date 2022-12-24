@@ -19,7 +19,7 @@ const ENGLISH_MONTHS = [
   'December',
 ];
 
-const CARDS_PAR_PAGE = 30;
+const CARDS_PAR_PAGE = 3;
 export {
   RegexPatterns, MOBILE_MENU_WIDTH, ENGLISH_MONTHS, CARDS_PAR_PAGE,
 };

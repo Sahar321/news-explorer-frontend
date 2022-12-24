@@ -8,7 +8,6 @@ export default function NewsCardList({ cards, loggedIn, onCardBookmarkClick }) {
   const { pathname } = useLocation();
   const isHomePage = pathname === '/';
   const selectedPage = isHomePage ? 'home' : 'saved-articles';
-  const cardButtonType = isHomePage ? 'bookmark' : 'remove';
   return (
     <section className="card-list">
       <div

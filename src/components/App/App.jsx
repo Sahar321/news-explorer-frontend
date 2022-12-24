@@ -43,6 +43,16 @@ export default function App() {
     window.history.replaceState({}, document.title);
   }, [location]);
 
+  const cardsStorage = JSON.parse(localStorage.getItem('cards'));
+  useEffect(() => {
+    if (cards && cardsStorage) {
+      setCards(cardsStorage);
+    }
+  }, []);
+  useEffect(() => {
+    showMoreCards();
+  }, [cards]);
+
   useEffect(() => {
     if (token) {
       mainApi
@@ -129,7 +139,25 @@ export default function App() {
     } ${date.getDate()}, ${date.getFullYear()}`;
   };
 
-  const handleCardBookmarkClick = (e) => {};
+  const handleCardBookmarkClick = (e) => {
+    console.log(e);
+    /* const card = cards.find((card) => card._id === e.target.dataset.id);
+    if (card) {
+      mainApi
+        .deleteArticle(card._id, token)
+        .then((res) => {
+          if (res._id) {
+            const newCards = cards.filter((card) => card._id !== res._id);
+            setCards(newCards);
+            setCardsToShow(newCards);
+            console.log('Delete Article Success!', res);
+          }
+        })
+        .catch(({ message }) => {
+          console.log('handleCardBookmarkClick', message);
+        });
+    } */
+  };
   const handleSearchSubmit = (searchInput) => {
     newsApi.everything(searchInput).then(({ articles }) => {
       const cardListData = [];
@@ -144,18 +172,20 @@ export default function App() {
           image: element.urlToImage || imageNotAvailable,
         });
       });
+      setCardsToShow([]);
+      setCards(cardListData);
+      showMoreCards();
       localStorage.setItem('cards', JSON.stringify(cardListData));
-      localStorage.setItem('cardsLength', cardListData.length);
-      handleShowMoreCards();
     });
   };
-  const handleShowMoreCards = () => {
-    const cardsFromStorage = JSON.parse(localStorage.getItem('cards'));
-    const cards = cardsFromStorage.splice(0, CARDS_PAR_PAGE);
 
-    localStorage.setItem('cards', JSON.stringify(cardsFromStorage));
-    localStorage.setItem('cardsLength', cardsFromStorage.length);
-    setCards((prevState) => [...prevState, ...cards]);
+  const showMoreCards = () => {
+    const car = cards.splice(0, CARDS_PAR_PAGE);
+    setCardsToShow((prevState) => [...prevState, ...car]);
+  };
+
+  const handleShowMoreCards = () => {
+    showMoreCards();
   };
 
   return (
@@ -177,6 +207,7 @@ export default function App() {
                 onCardBookmarkClick={handleCardBookmarkClick}
                 loggedIn={loggedIn}
                 onSearchSubmit={handleSearchSubmit}
+                cardsToShow={cardsToShow}
                 cards={cards}
                 onShowMoreClick={handleShowMoreCards}
               />

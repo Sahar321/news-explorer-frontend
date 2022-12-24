@@ -5,21 +5,22 @@ import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard.jsx';
 
 export default function NewsCardList({
-  cards,
+  cardsToShow,
   loggedIn,
   onCardBookmarkClick,
   onShowMoreClick,
+  cards,
 }) {
   const { pathname } = useLocation();
   const isHomePage = pathname === '/';
   const selectedPage = isHomePage ? 'home' : 'saved-articles';
-  const cardsLength = localStorage.getItem('cardsLength');
+  const cardsLength = cardsToShow.length;
   return (
     <section className="card-list">
       <div
         className={`card-list__cards-wrapper card-list__cards-wrapper_page_${selectedPage}`}
       >
-        {cards?.map((card, index) => (
+        {cardsToShow?.map((card, index) => (
           <NewsCard
             key={index}
             cardData={card}
@@ -29,7 +30,7 @@ export default function NewsCardList({
           />
         ))}
       </div>
-      {cardsLength != 0 && (
+      {cards.length > 0 && (
         <button
           aria-label="Show More"
           type="button"

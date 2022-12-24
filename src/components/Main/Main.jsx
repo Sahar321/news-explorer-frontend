@@ -8,11 +8,12 @@ import SearchSection from '../SearchSection/SearchSection.jsx';
 import './Main.css';
 
 export default function Main({
-  cards,
+  cardsToShow,
   loggedIn,
   onCardBookmarkClick,
   onSearchSubmit,
   onShowMoreClick,
+  cards,
 }) {
   return (
     <main className="main">
@@ -29,6 +30,7 @@ export default function Main({
         loggedIn={loggedIn}
         showTitle={true}
         cards={cards}
+        cardsToShow={cardsToShow}
         onShowMoreClick={onShowMoreClick}
       />
       <About />

@@ -8,16 +8,21 @@ export default function NewsCard({
   loggedIn,
   onCardBookmarkClick,
   onCardRemoveClick,
+  isBookmarked,
 }) {
+
+  const handleCardBookmarkClick = () => {
+    onCardBookmarkClick(cardData);
+  };
   const { keyword, title, text, date, source, link, image } = cardData;
 
   const bookmarkButton = (
     <>
       <button
         aria-label="bookmark Card"
-        className="button button__bookmark card__button"
+        className={`button button__bookmark button__bookmark_isActive_${isBookmarked} card__button`}
         disabled={!loggedIn}
-        onClick={onCardBookmarkClick}
+        onClick={handleCardBookmarkClick}
       />
       {!loggedIn && (
         <span className="card__tooltip">Sign in to save articles</span>

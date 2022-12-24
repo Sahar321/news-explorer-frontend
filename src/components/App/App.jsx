@@ -15,7 +15,6 @@ import CurrentUserContext from '../../contexts/CurrentUserContext.js';
 import LoginState from '../../constants/enums/LoginState';
 import './App.css';
 import loginState from '../../constants/enums/LoginState';
-import PagePreloader from '../../components/PagePreloader/PagePreloader.jsx';
 import { ENGLISH_MONTHS, CARDS_PAR_PAGE } from '../../constants/constants.js';
 import imageNotAvailable from '../../images/Image_not_available.png';
 import Main from '../Main/Main.jsx';
@@ -23,6 +22,8 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
+  const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
+  const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
   const [cardsToShow, setCardsToShow] = useState([]);
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
@@ -159,24 +160,42 @@ export default function App() {
     } */
   };
   const handleSearchSubmit = (searchInput) => {
-    newsApi.everything(searchInput).then(({ articles }) => {
-      const cardListData = [];
-      articles.forEach((element) => {
-        cardListData.push({
-          keyword: searchInput,
-          title: element.title,
-          text: element.description,
-          date: setCardDateFormat(element.publishedAt),
-          source: element.source?.name,
-          link: element.url,
-          image: element.urlToImage || imageNotAvailable,
+    setSearchPreloaderVisible(true);
+    setIsSearchNotFoundVisible(false);
+    setCards([]);
+    setCardsToShow([]);
+    localStorage.removeItem('cards');
+    newsApi
+      .everything(searchInput)
+      .then(({ articles, status }) => {
+        if (status !== 'ok') {
+          throw new Error('NewsApi Error');
+        }
+        if (articles.length === 0) {
+          setSearchPreloaderVisible(false);
+          setIsSearchNotFoundVisible(true);
+          return;
+        }
+        const cardListData = [];
+        articles.forEach((element) => {
+          cardListData.push({
+            keyword: searchInput,
+            title: element.title,
+            text: element.description,
+            date: setCardDateFormat(element.publishedAt),
+            source: element.source?.name,
+            link: element.url,
+            image: element.urlToImage || imageNotAvailable,
+          });
         });
+        setCards(cardListData);
+        showMoreCards();
+        localStorage.setItem('cards', JSON.stringify(cardListData));
+        setSearchPreloaderVisible(false);
+      })
+      .catch((err) => {
+        console.log(err);
       });
-      setCardsToShow([]);
-      setCards(cardListData);
-      showMoreCards();
-      localStorage.setItem('cards', JSON.stringify(cardListData));
-    });
   };
 
   const showMoreCards = () => {
@@ -210,6 +229,8 @@ export default function App() {
                 cardsToShow={cardsToShow}
                 cards={cards}
                 onShowMoreClick={handleShowMoreCards}
+                isSearchPreloaderVisible={isSearchPreloaderVisible}
+                isSearchNotFoundVisible={isSearchNotFoundVisible}
               />
             }
           />

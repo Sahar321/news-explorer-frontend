@@ -1,6 +1,7 @@
 /*eslint-disable*/
 import React, { useState } from 'react';
 import SearchForm from '../SearchForm/SearchForm.jsx';
+import SearchPreloader from '../../components/SearchPreloader/SearchPreloader.jsx';
 import About from '../About/About.jsx';
 import NewsCardList from '../NewsCardList/NewsCardList.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
@@ -14,7 +15,11 @@ export default function Main({
   onSearchSubmit,
   onShowMoreClick,
   cards,
+  isSearchPreloaderVisible,
+  isSearchNotFoundVisible,
 }) {
+
+  const hasCardsToShow = cardsToShow.length > 0;
   return (
     <main className="main">
       <SearchSection
@@ -24,15 +29,22 @@ export default function Main({
       >
         <SearchForm onSearchSubmit={onSearchSubmit} />
       </SearchSection>
-      <h2 className={`card-list__search-results`}>Search results</h2>
-      <NewsCardList
-        onCardBookmarkClick={onCardBookmarkClick}
-        loggedIn={loggedIn}
-        showTitle={true}
-        cards={cards}
-        cardsToShow={cardsToShow}
-        onShowMoreClick={onShowMoreClick}
-      />
+        <NotFound isVisible={isSearchNotFoundVisible} />
+        <SearchPreloader isVisible={isSearchPreloaderVisible} />
+
+      {hasCardsToShow && (
+        <>
+          <h2 className={`card-list__search-results`}>Search results</h2>
+          <NewsCardList
+            onCardBookmarkClick={onCardBookmarkClick}
+            loggedIn={loggedIn}
+            showTitle={true}
+            cards={cards}
+            cardsToShow={cardsToShow}
+            onShowMoreClick={onShowMoreClick}
+          />
+        </>
+      )}
       <About />
     </main>
   );

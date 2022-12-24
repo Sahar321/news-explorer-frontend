@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import ProtectedRoutes from '../../utils/ProtectedRoutes.jsx';
-import Home from '../../pages/Home.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
@@ -11,14 +10,19 @@ import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
 import mainApi from '../../utils/MainApi.js';
+import newsApi from '../../utils/NewsApi.js';
 import CurrentUserContext from '../../contexts/CurrentUserContext.js';
 import LoginState from '../../constants/enums/LoginState';
 import './App.css';
 import loginState from '../../constants/enums/LoginState';
 import PagePreloader from '../../components/PagePreloader/PagePreloader.jsx';
+import { ENGLISH_MONTHS } from '../../constants/constants.js';
+import imageNotAvailable from '../../images/Image_not_available.png';
+import Main from '../Main/Main.jsx';
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
+  const [cards, setCards] = useState([]);
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
   const [popupWithMessage, setPopupWithMessage] = useState({
@@ -113,8 +117,34 @@ export default function App() {
     setCurrentUser(null);
     setLoggedIn(loginState.LOGGED_OUT);
   };
-  const handleCardBookmarkClick = (e) => {
 
+  const setCardDateFormat = (dateStr) => {
+    if (!dateStr) {
+      return '';
+    }
+    const date = new Date(dateStr);
+    return `${
+      ENGLISH_MONTHS[date.getMonth()]
+    } ${date.getDate()}, ${date.getFullYear()}`;
+  };
+
+  const handleCardBookmarkClick = (e) => {};
+  const handleSearchSubmit = (searchInput) => {
+    newsApi.everything(searchInput).then(({ articles }) => {
+      const cardListData = [];
+      articles.forEach((element) => {
+        cardListData.push({
+          keyword: searchInput,
+          title: element.title,
+          text: element.description,
+          date: setCardDateFormat(element.publishedAt),
+          source: element.source?.name,
+          link: element.url,
+          image: element.urlToImage || imageNotAvailable,
+        });
+      });
+      setCards(cardListData);
+    });
   };
 
   return (
@@ -127,13 +157,16 @@ export default function App() {
           loggedIn={loggedIn}
           hideMobileMenuButton={hideMobileMenuButton}
         />
+
         <Routes>
           <Route
             path="/"
             element={
-              <Home
+              <Main
                 onCardBookmarkClick={handleCardBookmarkClick}
                 loggedIn={loggedIn}
+                onSearchSubmit={handleSearchSubmit}
+                cards={cards}
               />
             }
           />
@@ -142,6 +175,7 @@ export default function App() {
             <Route path="/SavedArticles" element={<SavedArticles />} />
           </Route>
         </Routes>
+
         <Footer />
         <SignInPopup
           onClose={closeAllPopups}

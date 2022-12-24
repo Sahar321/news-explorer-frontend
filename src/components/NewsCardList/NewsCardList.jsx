@@ -1,9 +1,10 @@
+/* eslint-disable  */
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard.jsx';
 
-export default function NewsCardList({ loggedIn, onCardBookmarkClick }) {
+export default function NewsCardList({ cards, loggedIn, onCardBookmarkClick }) {
   const { pathname } = useLocation();
   const isHomePage = pathname === '/';
   const selectedPage = isHomePage ? 'home' : 'saved-articles';
@@ -18,26 +19,15 @@ export default function NewsCardList({ loggedIn, onCardBookmarkClick }) {
       <div
         className={`card-list__cards-wrapper card-list__cards-wrapper_page_${selectedPage}`}
       >
-        <NewsCard
-          onCardBookmarkClick={onCardBookmarkClick}
-          loggedIn={loggedIn}
-          buttonType={cardButtonType}
-        />
-        <NewsCard
-          onCardBookmarkClick={onCardBookmarkClick}
-          loggedIn={loggedIn}
-          buttonType={cardButtonType}
-        />
-        <NewsCard
-          onCardBookmarkClick={onCardBookmarkClick}
-          loggedIn={loggedIn}
-          buttonType={cardButtonType}
-        />
-        <NewsCard
-          onCardBookmarkClick={onCardBookmarkClick}
-          loggedIn={loggedIn}
-          buttonType={cardButtonType}
-        />
+        {cards?.map((card, index) => (
+          <NewsCard
+            key={index}
+            cardData={card}
+            cardType={'bookmark'}
+            loggedIn={loggedIn}
+            onCardBookmarkClick={onCardBookmarkClick}
+          />
+        ))}
       </div>
       {isHomePage && (
         <button

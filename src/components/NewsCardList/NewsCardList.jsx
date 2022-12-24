@@ -3,11 +3,18 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard.jsx';
+import { useEffect } from 'react';
 
-export default function NewsCardList({ cards, loggedIn, onCardBookmarkClick }) {
+export default function NewsCardList({
+  cards,
+  loggedIn,
+  onCardBookmarkClick,
+  onShowMoreClick,
+}) {
   const { pathname } = useLocation();
   const isHomePage = pathname === '/';
   const selectedPage = isHomePage ? 'home' : 'saved-articles';
+
   return (
     <section className="card-list">
       <div
@@ -28,6 +35,7 @@ export default function NewsCardList({ cards, loggedIn, onCardBookmarkClick }) {
           aria-label="Show More"
           type="button"
           className="button button__show-more"
+          onClick={onShowMoreClick}
         >
           Show more
         </button>

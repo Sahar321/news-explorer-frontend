@@ -12,6 +12,7 @@ export default function Main({
   loggedIn,
   onCardBookmarkClick,
   onSearchSubmit,
+  onShowMoreClick,
 }) {
   return (
     <main className="main">
@@ -28,6 +29,7 @@ export default function Main({
         loggedIn={loggedIn}
         showTitle={true}
         cards={cards}
+        onShowMoreClick={onShowMoreClick}
       />
       <About />
     </main>

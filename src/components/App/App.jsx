@@ -16,13 +16,14 @@ import LoginState from '../../constants/enums/LoginState';
 import './App.css';
 import loginState from '../../constants/enums/LoginState';
 import PagePreloader from '../../components/PagePreloader/PagePreloader.jsx';
-import { ENGLISH_MONTHS } from '../../constants/constants.js';
+import { ENGLISH_MONTHS, CARDS_PAR_PAGE } from '../../constants/constants.js';
 import imageNotAvailable from '../../images/Image_not_available.png';
 import Main from '../Main/Main.jsx';
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
+  const [cardsToShow, setCardsToShow] = useState([]);
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
   const [popupWithMessage, setPopupWithMessage] = useState({
@@ -143,10 +144,18 @@ export default function App() {
           image: element.urlToImage || imageNotAvailable,
         });
       });
-      setCards(cardListData);
+      localStorage.setItem('cards', JSON.stringify(cardListData));
+      localStorage.setItem('cards-length', cardListData.length);
+      handleShowMoreCards();
     });
   };
+  const handleShowMoreCards = () => {
+    const cardsFromStorage = JSON.parse(localStorage.getItem('cards'));
+    const cards = cardsFromStorage.splice(0, CARDS_PAR_PAGE);
 
+    localStorage.setItem('cards', JSON.stringify(cardsFromStorage));
+    setCards((prevState) => [...prevState, ...cards]);
+  };
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
@@ -167,6 +176,7 @@ export default function App() {
                 loggedIn={loggedIn}
                 onSearchSubmit={handleSearchSubmit}
                 cards={cards}
+                onShowMoreClick={handleShowMoreCards}
               />
             }
           />

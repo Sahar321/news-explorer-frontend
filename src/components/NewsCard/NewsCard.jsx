@@ -11,7 +11,6 @@ export default function NewsCard({
 }) {
   const { keyword, title, text, date, source, link, image } = cardData;
 
-
   const bookmarkButton = (
     <>
       <button
@@ -37,18 +36,12 @@ export default function NewsCard({
       <span className="card__tooltip">Remove from saved</span>
     </>
   );
-
   return (
     <article className="card">
       <div className="card__image-wrapper">
         <div className="card__controls-wrapper">
           {cardType === 'remove' ? removeButton : bookmarkButton}
-          <span
-            className={`card__keyword card_keyword_isVisible_${showKeyword}`}
-          >
-            {keyword}
-          </span>
-          ;
+          {showKeyword && <span className={`card__keyword`}>{keyword}</span>}
         </div>
         <img className="card__image" src={image} alt="card" />
       </div>
@@ -56,7 +49,9 @@ export default function NewsCard({
         <p className="card__date">{date}</p>
         <h3 className="card__title">{title}</h3>
         <p className="card__text">{text}</p>
-        <p className="card__source">{source}</p>
+        <a className="card__source" target="_blank" href={link}>
+          {source}
+        </a>
       </div>
     </article>
   );

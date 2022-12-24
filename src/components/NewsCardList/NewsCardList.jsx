@@ -11,11 +11,6 @@ export default function NewsCardList({ cards, loggedIn, onCardBookmarkClick }) {
   const cardButtonType = isHomePage ? 'bookmark' : 'remove';
   return (
     <section className="card-list">
-      <h2
-        className={`card-list__search-results card-list__search-results_isVisible_${isHomePage}`}
-      >
-        Search results
-      </h2>
       <div
         className={`card-list__cards-wrapper card-list__cards-wrapper_page_${selectedPage}`}
       >

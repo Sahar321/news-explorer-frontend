@@ -3,7 +3,6 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard.jsx';
-import { useEffect } from 'react';
 
 export default function NewsCardList({
   cards,
@@ -14,7 +13,7 @@ export default function NewsCardList({
   const { pathname } = useLocation();
   const isHomePage = pathname === '/';
   const selectedPage = isHomePage ? 'home' : 'saved-articles';
-
+  const cardsLength = localStorage.getItem('cardsLength');
   return (
     <section className="card-list">
       <div
@@ -30,7 +29,7 @@ export default function NewsCardList({
           />
         ))}
       </div>
-      {isHomePage && (
+      {cardsLength != 0 && (
         <button
           aria-label="Show More"
           type="button"

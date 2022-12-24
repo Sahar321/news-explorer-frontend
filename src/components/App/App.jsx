@@ -145,7 +145,7 @@ export default function App() {
         });
       });
       localStorage.setItem('cards', JSON.stringify(cardListData));
-      localStorage.setItem('cards-length', cardListData.length);
+      localStorage.setItem('cardsLength', cardListData.length);
       handleShowMoreCards();
     });
   };
@@ -154,8 +154,10 @@ export default function App() {
     const cards = cardsFromStorage.splice(0, CARDS_PAR_PAGE);
 
     localStorage.setItem('cards', JSON.stringify(cardsFromStorage));
+    localStorage.setItem('cardsLength', cardsFromStorage.length);
     setCards((prevState) => [...prevState, ...cards]);
   };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">

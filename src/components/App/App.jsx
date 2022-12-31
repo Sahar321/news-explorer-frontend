@@ -39,7 +39,7 @@ export default function App() {
     if (cards.length > 0) {
       const newCards = cards.splice(0, CARDS_PAR_PAGE);
       console.log('cardsToShow', cardsToShow);
-       setCardsToShow((prvCards) => [...prvCards, ...newCards]);
+      setCardsToShow((prvCards) => [...prvCards, ...newCards]);
     }
   };
   React.useEffect(() => {
@@ -51,9 +51,8 @@ export default function App() {
     window.history.replaceState({}, document.title);
   }, [location]);
 
-
   useEffect(() => {
-     const cardsStorage = JSON.parse(localStorage.getItem('cards'));
+    const cardsStorage = JSON.parse(localStorage.getItem('cards'));
     if (cards && cardsStorage) {
       setCards(cardsStorage);
     }
@@ -171,8 +170,10 @@ export default function App() {
     } ${date.getDate()}, ${date.getFullYear()}`;
   };
 
-  const handleCardBookmarkClick = (e) => {
-    mainApi.saveArticle(e).then((res) => {
+  const handleCardBookmarkClick = (e, data) => {
+    console.log('handleCardBookmarkClick', e);
+    mainApi.saveArticle(data).then((res) => {
+      e.target.classList.add('button__bookmark_isActive_true');
       setSavedCards([...savedCards, res]);
     });
   };
@@ -207,7 +208,7 @@ export default function App() {
         });
         setCards(cardListData);
         localStorage.setItem('cards', JSON.stringify(cardListData));
-       /*  showMoreCards(true); */
+        /*  showMoreCards(true); */
         setSearchPreloaderVisible(false);
       })
       .catch((err) => {

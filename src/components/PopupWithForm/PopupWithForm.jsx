@@ -11,6 +11,7 @@ export default function PopupWithForm({
   children,
   bottomChildren,
   isValid,
+  /* ServerError, */
 }) {
   useEffect(() => {
     if (!isOpen) return;
@@ -53,6 +54,11 @@ export default function PopupWithForm({
           onSubmit={onSubmit}
         >
           {children}
+     {/*      {ServerError.show && (
+            <span className="server-error" id="popup-signin-email-error">
+              {ServerError.message}
+            </span>
+          )} */}
           <button
             aria-label="submit"
             type="submit"

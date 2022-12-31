@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React from 'react';
 import './NewsCard.css';
-import CardType  from '../../constants/enums/CardType.js';
+import CardType from '../../constants/enums/CardType.js';
 export default function NewsCard({
   cardData,
   cardType,
@@ -9,11 +9,11 @@ export default function NewsCard({
   loggedIn,
   onCardBookmarkClick,
   onCardRemoveClick,
-  isBookmarked,
 }) {
+  const handleCardBookmarkClick = (e) => {
+    console.log('handleCardBookmarkClick', e);
 
-  const handleCardBookmarkClick = () => {
-    onCardBookmarkClick(cardData);
+    onCardBookmarkClick(e,cardData);
   };
   const handleCardRemoveClick = () => {
     console.log('handleCardRemoveClick', cardData);
@@ -25,7 +25,7 @@ export default function NewsCard({
     <>
       <button
         aria-label="bookmark Card"
-        className={`button button__bookmark button__bookmark_isActive_${isBookmarked} card__button`}
+        className={`button button__bookmark card__button`}
         disabled={!loggedIn}
         onClick={handleCardBookmarkClick}
       />
@@ -50,8 +50,7 @@ export default function NewsCard({
       <div className="card__image-wrapper">
         <div className="card__controls-wrapper">
           {cardType === CardType.REMOVE ? removeButton : bookmarkButton}
-         {/*  {showKeyword && <span className={`card__keyword`}>{keyword}</span>} */}
-         {<span className={`card__keyword`}>{keyword}</span>}
+          {showKeyword && <span className={`card__keyword`}>{keyword}</span>}
         </div>
         <img className="card__image" src={image} alt="card" />
       </div>

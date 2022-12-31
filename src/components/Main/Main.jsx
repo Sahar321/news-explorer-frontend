@@ -19,7 +19,6 @@ export default function Main({
   isSearchPreloaderVisible,
   isSearchNotFoundVisible,
 }) {
-
   const hasCardsToShow = cardsToShow.length > 0;
   return (
     <main className="main">
@@ -30,8 +29,8 @@ export default function Main({
       >
         <SearchForm onSearchSubmit={onSearchSubmit} />
       </SearchSection>
-        <NotFound isVisible={isSearchNotFoundVisible} />
-        <SearchPreloader isVisible={isSearchPreloaderVisible} />
+      <NotFound isVisible={isSearchNotFoundVisible} />
+      <SearchPreloader isVisible={isSearchPreloaderVisible} />
 
       {hasCardsToShow && (
         <>
@@ -41,6 +40,7 @@ export default function Main({
             loggedIn={loggedIn}
             showTitle={true}
             cards={cards}
+            showKeyword={false}
             cardType={CardType.BOOKMARK}
             cardsToShow={cardsToShow}
             onShowMoreClick={onShowMoreClick}

@@ -1,4 +1,4 @@
-/* eslint-disable */
+/*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import ProtectedRoutes from '../../utils/ProtectedRoutes.jsx';
@@ -9,15 +9,15 @@ import NotFound from '../NotFound/NotFound.jsx';
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
-import mainApi from '../../utils/MainApi.js';
-import newsApi from '../../utils/NewsApi.js';
-import CurrentUserContext from '../../contexts/CurrentUserContext.js';
+import mainApi from '../../utils/MainApi';
+import newsApi from '../../utils/NewsApi';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 import LoginState from '../../constants/enums/LoginState';
 import './App.css';
-import loginState from '../../constants/enums/LoginState';
-import { ENGLISH_MONTHS, CARDS_PAR_PAGE } from '../../constants/constants.js';
+import { ENGLISH_MONTHS, CARDS_PAR_PAGE } from '../../constants/constants';
 import imageNotAvailable from '../../images/Image_not_available.png';
 import Main from '../Main/Main.jsx';
+
 export default function App() {
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
@@ -34,8 +34,14 @@ export default function App() {
   });
   const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
   const token = localStorage.getItem('jwt');
-  let location = useLocation();
-
+  const location = useLocation();
+  const showMoreCards = () => {
+    if (cards.length > 0) {
+      const newCards = cards.splice(0, CARDS_PAR_PAGE);
+      console.log('cardsToShow', cardsToShow);
+       setCardsToShow((prvCards) => [...prvCards, ...newCards]);
+    }
+  };
   React.useEffect(() => {
     const { shouldOpenSignInPopup } = location.state || false;
     if (shouldOpenSignInPopup) {
@@ -45,8 +51,9 @@ export default function App() {
     window.history.replaceState({}, document.title);
   }, [location]);
 
-  const cardsStorage = JSON.parse(localStorage.getItem('cards'));
+
   useEffect(() => {
+     const cardsStorage = JSON.parse(localStorage.getItem('cards'));
     if (cards && cardsStorage) {
       setCards(cardsStorage);
     }
@@ -126,7 +133,7 @@ export default function App() {
         if (res.token) {
           closeAllPopups();
           localStorage.setItem('jwt', res.token);
-          setLoggedIn(loginState.LOGGED_IN);
+          setLoggedIn(LoginState.LOGGED_IN);
           console.log('Login Success!', res);
         }
       })
@@ -144,14 +151,14 @@ export default function App() {
         }
       })
       .catch(({ message }) => {
-        console.log('handleSignUpSubmit', message);
+        console.log('handleSignInSubmit', message);
       });
   };
 
   const handleSignOutClick = () => {
     localStorage.removeItem('jwt');
     setCurrentUser(null);
-    setLoggedIn(loginState.LOGGED_OUT);
+    setLoggedIn(LoginState.LOGGED_OUT);
   };
 
   const setCardDateFormat = (dateStr) => {
@@ -165,11 +172,9 @@ export default function App() {
   };
 
   const handleCardBookmarkClick = (e) => {
-    console.log(e);
     mainApi.saveArticle(e).then((res) => {
       setSavedCards([...savedCards, res]);
     });
-
   };
   const handleSearchSubmit = (searchInput) => {
     setSearchPreloaderVisible(true);
@@ -201,18 +206,13 @@ export default function App() {
           });
         });
         setCards(cardListData);
-        showMoreCards();
         localStorage.setItem('cards', JSON.stringify(cardListData));
+       /*  showMoreCards(true); */
         setSearchPreloaderVisible(false);
       })
       .catch((err) => {
         console.log(err);
       });
-  };
-
-  const showMoreCards = () => {
-    const car = cards.splice(0, CARDS_PAR_PAGE);
-    setCardsToShow((prevState) => [...prevState, ...car]);
   };
 
   const handleShowMoreCards = () => {
@@ -223,7 +223,7 @@ export default function App() {
       mainApi.deleteArticle(card._id).then((res) => {
         console.log(savedCards);
         setSavedCards((state) =>
-        state.filter((currentCard) => currentCard._id !== res._id)
+          state.filter((currentCard) => currentCard._id !== res._id)
         );
       });
     }

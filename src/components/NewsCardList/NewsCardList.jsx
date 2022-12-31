@@ -25,7 +25,7 @@ export default function NewsCardList({
             loggedIn={loggedIn}
             onCardRemoveClick={onCardRemoveClick}
             onCardBookmarkClick={onCardBookmarkClick}
-            showKeyword={showKeyword}
+            showKeyword
           />
         ))}
       </div>

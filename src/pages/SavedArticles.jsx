@@ -1,12 +1,14 @@
 /*eslint-disable*/
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import NewsCardList from '../components/NewsCardList/NewsCardList.jsx';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import CardType from '../constants/enums/CardType';
 
 export default function SavedArticles({ savedCards, onCardRemoveClick }) {
   const currentUser = useContext(CurrentUserContext);
-  const [keywords, setKeywords] = React.useState([]);
+  const keywords = [];
+  const [keywordText, setKeywordText] = useState('');
+
   useEffect(() => {
     const app = document.querySelector('.app');
     app.classList.add('app_page_saved-articles');
@@ -15,14 +17,24 @@ export default function SavedArticles({ savedCards, onCardRemoveClick }) {
     };
   }, []);
   useEffect(() => {
-
     savedCards.forEach((card) => {
       if (!keywords.includes(card.keyword)) {
         keywords.push(card.keyword);
       }
     });
-    console.log('keywords', keywords);
   }, [savedCards]);
+  useEffect(() => {
+    const { length } = keywords;
+    if (length === 1) {
+      setKeywordText(`${keywords[0]}`);
+    } else if (length === 2) {
+      setKeywordText(`${keywords[0]}, ${keywords[1]}`);
+    } else if (length >= 3) {
+      setKeywordText(
+        `${keywords[0]}, ${keywords[1]}, and ${keywords.length - 2} others`
+      );
+    }
+  }, [keywords]);
   return (
     <>
       <section className="saved-articles">
@@ -30,8 +42,9 @@ export default function SavedArticles({ savedCards, onCardRemoveClick }) {
         <h1 className="saved-articles__text">
           {currentUser.name}, you have {savedCards.length} saved articles
         </h1>
+
         <h2 className="saved-articles__keywords">
-          By keywords: <strong>{keywords[0]}, {keywords[1]}, and {keywords.length} other</strong>
+          By keywords: <strong>{keywordText}</strong>
         </h2>
       </section>
 

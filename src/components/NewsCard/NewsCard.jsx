@@ -50,7 +50,8 @@ export default function NewsCard({
       <div className="card__image-wrapper">
         <div className="card__controls-wrapper">
           {cardType === CardType.REMOVE ? removeButton : bookmarkButton}
-          {showKeyword && <span className={`card__keyword`}>{keyword}</span>}
+         {/*  {showKeyword && <span className={`card__keyword`}>{keyword}</span>} */}
+         {<span className={`card__keyword`}>{keyword}</span>}
         </div>
         <img className="card__image" src={image} alt="card" />
       </div>

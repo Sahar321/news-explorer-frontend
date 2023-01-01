@@ -1,7 +1,7 @@
-/*eslint-disable*/
 import React from 'react';
 import './NewsCard.css';
-import CardType from '../../constants/enums/CardType.js';
+import CardType from '../../constants/enums/CardType';
+
 export default function NewsCard({
   cardData,
   cardType,
@@ -11,21 +11,20 @@ export default function NewsCard({
   onCardRemoveClick,
 }) {
   const handleCardBookmarkClick = (e) => {
-    console.log('handleCardBookmarkClick', e);
-
-    onCardBookmarkClick(e,cardData);
+    onCardBookmarkClick(e, cardData);
   };
   const handleCardRemoveClick = () => {
-    console.log('handleCardRemoveClick', cardData);
     onCardRemoveClick(cardData);
   };
-  const { keyword, title, text, date, source, link, image } = cardData;
+  const {
+    keyword, title, text, date, source, link, image,
+  } = cardData;
 
   const bookmarkButton = (
     <>
       <button
         aria-label="bookmark Card"
-        className={`button button__bookmark card__button`}
+        className={'button button__bookmark card__button'}
         disabled={!loggedIn}
         onClick={handleCardBookmarkClick}
       />
@@ -50,7 +49,7 @@ export default function NewsCard({
       <div className="card__image-wrapper">
         <div className="card__controls-wrapper">
           {cardType === CardType.REMOVE ? removeButton : bookmarkButton}
-          {showKeyword && <span className={`card__keyword`}>{keyword}</span>}
+          {showKeyword && <span className="card__keyword">{keyword}</span>}
         </div>
         <img className="card__image" src={image} alt="card" />
       </div>
@@ -58,7 +57,12 @@ export default function NewsCard({
         <p className="card__date">{date}</p>
         <h3 className="card__title">{title}</h3>
         <p className="card__text">{text}</p>
-        <a className="card__source" target="_blank" href={link}>
+        <a
+          className="card__source"
+          target="_blank"
+          rel="noreferrer"
+          href={link}
+        >
           {source}
         </a>
       </div>

@@ -20,12 +20,5 @@
 
 @import url(../../blocks/popup/__container/_type/popup__container_type_message.css);
 @import url(../../blocks/popup/__button-close/__button-close.css);
+@import url(../../blocks/popup/__server-error/popup__server-error.css);
 
-.server-error {
-  color: red;
-  font-size: 14px;
-  font-weight: 400;
-  display: block;
-  text-align: center;
-  margin-top: 17px;
-}

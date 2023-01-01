@@ -34,7 +34,7 @@ class NewsApi {
 }
 
 const newsApi = new NewsApi({
-  baseUrl: 'http://localhost:3001/news',
+  baseUrl: 'https://api.samnews.students.nomoredomainssbs.ru/news',
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

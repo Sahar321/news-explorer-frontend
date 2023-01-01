@@ -7,6 +7,7 @@ export default function SignInPopup({
   onClose,
   isOpen,
   onSignUpPopupClick,
+  onError,
 }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -55,6 +56,7 @@ export default function SignInPopup({
       isValid={isValidForm}
       onSubmit={handleSubmit}
       bottomChildren={children2}
+      onError={onError}
     >
       <label htmlFor="popup-signin-email" className="popup__field-label">
         Email

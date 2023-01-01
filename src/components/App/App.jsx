@@ -1,6 +1,7 @@
-/*eslint-disable*/
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import {
+  Routes, Route, Link, useLocation,
+} from 'react-router-dom';
 import ProtectedRoutes from '../../utils/ProtectedRoutes.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
 import Header from '../Header/Header.jsx';
@@ -26,6 +27,10 @@ export default function App() {
   const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
   const [cardsToShow, setCardsToShow] = useState([]);
+  const [authErrorMessage, setAuthErrorMessage] = useState({
+    message: '',
+    isShown: false,
+  });
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
   const [popupWithMessage, setPopupWithMessage] = useState({
@@ -38,9 +43,16 @@ export default function App() {
   const showMoreCards = () => {
     if (cards.length > 0) {
       const newCards = cards.splice(0, CARDS_PAR_PAGE);
-      console.log('cardsToShow', cardsToShow);
       setCardsToShow((prvCards) => [...prvCards, ...newCards]);
     }
+  };
+  const handleMainError = ({ message, type }) => {
+    if (type === 'auth') {
+      setAuthErrorMessage({ message, isShown: true });
+      return;
+    }
+
+    console.log(message); // todo: custom error message
   };
   React.useEffect(() => {
     const { shouldOpenSignInPopup } = location.state || false;
@@ -59,9 +71,12 @@ export default function App() {
   }, []);
   useEffect(() => {
     if (loggedIn === LoginState.LOGGED_IN) {
-      mainApi.getAllArticles().then((res) => {
-        setSavedCards(res);
-      });
+      mainApi
+        .getAllArticles()
+        .then((res) => {
+          setSavedCards(res);
+        })
+        .catch(handleMainError);
     }
   }, [loggedIn]);
 
@@ -79,9 +94,7 @@ export default function App() {
             setLoggedIn(LoginState.LOGGED_IN);
           }
         })
-        .catch(({ message }) => {
-          console.log('getUserInfo', message);
-        });
+        .catch(handleMainError);
     } else {
       setLoggedIn(LoginState.LOGGED_OUT);
     }
@@ -96,9 +109,7 @@ export default function App() {
             setSavedCards(res);
           }
         })
-        .catch(({ message }) => {
-          console.log('getArticles', message);
-        });
+        .catch(handleMainError);
     }
   }, [loggedIn]);
 
@@ -111,6 +122,7 @@ export default function App() {
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
+    setAuthErrorMessage({ message: '', isShown: false });
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
   };
@@ -133,11 +145,10 @@ export default function App() {
           closeAllPopups();
           localStorage.setItem('jwt', res.token);
           setLoggedIn(LoginState.LOGGED_IN);
-          console.log('Login Success!', res);
         }
       })
       .catch(({ message }) => {
-        console.log('handleSignInSubmit', message);
+        handleMainError({ message, type: 'auth' });
       });
   };
   const handleSignUpSubmit = (data) => {
@@ -146,11 +157,11 @@ export default function App() {
       .then((res) => {
         if (res._id) {
           closeAllPopups();
-          console.log('Register Success!', res);
+          setPopupWithMessage({ isOpen: true, title: 'Register Success!' });
         }
       })
       .catch(({ message }) => {
-        console.log('handleSignInSubmit', message);
+        handleMainError({ message, type: 'auth' });
       });
   };
 
@@ -171,12 +182,15 @@ export default function App() {
   };
 
   const handleCardBookmarkClick = (e, data) => {
-    console.log('handleCardBookmarkClick', e);
-    mainApi.saveArticle(data).then((res) => {
-      e.target.classList.add('button__bookmark_isActive_true');
-      setSavedCards([...savedCards, res]);
-    });
+    mainApi
+      .saveArticle(data)
+      .then((res) => {
+        e.target.classList.add('button__bookmark_isActive_true');
+        setSavedCards([...savedCards, res]);
+      })
+      .catch(handleMainError);
   };
+
   const handleSearchSubmit = (searchInput) => {
     setSearchPreloaderVisible(true);
     setIsSearchNotFoundVisible(false);
@@ -208,25 +222,23 @@ export default function App() {
         });
         setCards(cardListData);
         localStorage.setItem('cards', JSON.stringify(cardListData));
-        /*  showMoreCards(true); */
         setSearchPreloaderVisible(false);
       })
-      .catch((err) => {
-        console.log(err);
-      });
+      .catch(handleMainError);
   };
 
   const handleShowMoreCards = () => {
     showMoreCards();
   };
+
   const handleCardRemoveClick = (card) => {
     if (card) {
-      mainApi.deleteArticle(card._id).then((res) => {
-        console.log(savedCards);
-        setSavedCards((state) =>
-          state.filter((currentCard) => currentCard._id !== res._id)
-        );
-      });
+      mainApi
+        .deleteArticle(card._id)
+        .then((res) => {
+          setSavedCards((state) => state.filter((currentCard) => currentCard._id !== res._id));
+        })
+        .catch(handleMainError);
     }
   };
 
@@ -278,6 +290,7 @@ export default function App() {
           isOpen={isSignInPopupOpen}
           onSubmit={handleSignInSubmit}
           onSignUpPopupClick={handleSignUpClick}
+          onError={authErrorMessage}
         />
         <SignUpPopup
           onClose={closeAllPopups}
@@ -285,6 +298,7 @@ export default function App() {
           title="Sign Up"
           isOpen={isSignUpPopupOpen}
           onSignInPopupClick={handleSignInClick}
+          onError={authErrorMessage}
         />
         <PopupWithMessage
           title={popupWithMessage.title}

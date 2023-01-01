@@ -1,7 +1,6 @@
-/*eslint-disable*/
-import React, { useState } from 'react';
+import React from 'react';
 import SearchForm from '../SearchForm/SearchForm.jsx';
-import SearchPreloader from '../../components/SearchPreloader/SearchPreloader.jsx';
+import SearchPreloader from '../SearchPreloader/SearchPreloader.jsx';
 import About from '../About/About.jsx';
 import CardType from '../../constants/enums/CardType';
 import NewsCardList from '../NewsCardList/NewsCardList.jsx';
@@ -34,7 +33,7 @@ export default function Main({
 
       {hasCardsToShow && (
         <>
-          <h2 className={`card-list__search-results`}>Search results</h2>
+          <h2 className={'card-list__search-results'}>Search results</h2>
           <NewsCardList
             onCardBookmarkClick={onCardBookmarkClick}
             loggedIn={loggedIn}

@@ -1,4 +1,3 @@
-/*eslint-disable*/
 import React, { useEffect, useContext, useState } from 'react';
 import NewsCardList from '../components/NewsCardList/NewsCardList.jsx';
 import CurrentUserContext from '../contexts/CurrentUserContext';
@@ -30,9 +29,7 @@ export default function SavedArticles({ savedCards, onCardRemoveClick }) {
     } else if (length === 2) {
       setKeywordText(`${keywords[0]}, ${keywords[1]}`);
     } else if (length >= 3) {
-      setKeywordText(
-        `${keywords[0]}, ${keywords[1]}, and ${keywords.length - 2} others`
-      );
+      setKeywordText(`${keywords[0]}, ${keywords[1]}, and ${keywords.length - 2} others`);
     }
   }, [keywords]);
   return (

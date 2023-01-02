@@ -52,7 +52,7 @@ export default function App() {
       return;
     }
 
-    console.log(message); // todo: custom error message
+    console.log(message); //  todo: custom error message
   };
   React.useEffect(() => {
     const { shouldOpenSignInPopup } = location.state || false;

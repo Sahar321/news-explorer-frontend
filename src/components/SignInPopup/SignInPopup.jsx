@@ -12,8 +12,8 @@ export default function SignInPopup({
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [isValidEmail, setIsValidEmail] = useState(true);
-  const [isValidPassword, setIsValidPassword] = useState(true);
+  const [isValidEmail, setIsValidEmail] = useState(false);
+  const [isValidPassword, setIsValidPassword] = useState(false);
   const [isValidForm, setIsValidForm] = useState(false);
 
   useEffect(() => {

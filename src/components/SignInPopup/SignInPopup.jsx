@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
+import useFormAndValidation from '../../utils/hooks/useFormAndValidation';
+
 import PopupWithForm from '../PopupWithForm/PopupWithForm.jsx';
 
 export default function SignInPopup({
@@ -9,29 +11,10 @@ export default function SignInPopup({
   onSignUpPopupClick,
   onError,
 }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const {
+    values, errors, handleChange, isValid,
+  } = useFormAndValidation();
 
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  const [isValidPassword, setIsValidPassword] = useState(false);
-  const [isValidForm, setIsValidForm] = useState(false);
-
-  useEffect(() => {
-    if (isValidEmail && isValidPassword) {
-      setIsValidForm(true);
-    } else {
-      setIsValidForm(false);
-    }
-  }, [isValidEmail, isValidPassword]);
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    setIsValidEmail(e.target.validity.valid);
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setIsValidPassword(e.target.validity.valid);
-  };
   const children2 = (
     <span className="popup__text">
       {'or '}
@@ -42,8 +25,8 @@ export default function SignInPopup({
   );
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (!isValidForm) return;
-    onSubmit({ email, password });
+    if (!isValid) return;
+    onSubmit(values);
   };
 
   return (
@@ -53,7 +36,7 @@ export default function SignInPopup({
       onClose={onClose}
       isOpen={isOpen}
       submitTitle="Sign in"
-      isValid={isValidForm}
+      isValid={isValid}
       onSubmit={handleSubmit}
       bottomChildren={children2}
       onError={onError}
@@ -67,15 +50,13 @@ export default function SignInPopup({
         className="popup__input"
         name="email"
         placeholder="Enter email"
-        value={email}
-        onChange={handleEmailChange}
+        value={values.email}
+        onChange={handleChange}
         required
       />
-      <span
-        className={`popup__input-error popup__input-error_valid_${isValidEmail}`}
-      >
-        Invalid email address
-      </span>
+      {errors.email && (
+        <span className="popup__input-error">{errors.email}</span>
+      )}
       <label htmlFor="popup-signin-password" className="popup__field-label">
         Password
       </label>
@@ -85,15 +66,13 @@ export default function SignInPopup({
         className="popup__input"
         name="password"
         placeholder="Enter password"
-        value={password}
-        onChange={handlePasswordChange}
+        value={values.password}
+        onChange={handleChange}
         required
       />
-      <span
-        className={`popup__input-error popup__input-error_valid_${isValidPassword}`}
-      >
-        Invalid password address
-      </span>
+      {errors.password && (
+        <span className="popup__input-error">{errors.password}</span>
+      )}
     </PopupWithForm>
   );
 }

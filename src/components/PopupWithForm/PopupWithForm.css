@@ -10,7 +10,6 @@
 @import url(../../blocks/popup/__input/popup__input.css);
 
 @import url(../../blocks/popup/__input-error/popup__input-error.css);
-@import url(../../blocks/popup/__input-error/_valid/popup__input-error_valid_false.css);
 
 @import url(../../blocks/popup/__link/popup__link.css);
 @import url(../../blocks/popup/__text/popup__text.css);

@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
+/*eslint-disable*/
+import React from 'react';
 import { Link } from 'react-router-dom';
+import useFormAndValidation from '../../utils/hooks/useFormAndValidation';
 import PopupWithForm from '../PopupWithForm/PopupWithForm.jsx';
 
 export default function SignUpPopup({
@@ -9,35 +11,8 @@ export default function SignUpPopup({
   onSignInPopupClick,
   onError,
 }) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
+  const { values, errors, handleChange, isValid } = useFormAndValidation();
 
-  const [isValidEmail, setIsValidEmail] = useState(false);
-  const [isValidPassword, setIsValidPassword] = useState(false);
-  const [isValidUsername, setIsValidUsername] = useState(false);
-  const [isValidForm, setIsValidForm] = useState(false);
-
-  useEffect(() => {
-    if (isValidEmail && isValidPassword && isValidUsername) {
-      setIsValidForm(true);
-    } else {
-      setIsValidForm(false);
-    }
-  }, [isValidEmail, isValidPassword, isValidUsername]);
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-    setIsValidEmail(e.target.validity.valid);
-  };
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setIsValidPassword(e.target.validity.valid);
-  };
-  const handleUsernameChange = (e) => {
-    setUsername(e.target.value);
-    setIsValidUsername(e.target.validity.valid);
-  };
   const children2 = (
     <span className="popup__text">
       {'or '}
@@ -48,13 +23,10 @@ export default function SignUpPopup({
   );
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    if (!isValidForm) return;
-
-    onSubmit({
-      email,
-      password,
-      name: username,
-    });
+    if (!isValid) return;
+    console.log('values', values);
+    console.log('errors', errors);
+    onSubmit(values);
   };
 
   return (
@@ -64,7 +36,7 @@ export default function SignUpPopup({
       submitTitle="Sign up"
       onClose={onClose}
       isOpen={isOpen}
-      isValid={isValidForm}
+      isValid={isValid}
       onSubmit={handleSubmit}
       bottomChildren={children2}
       onError={onError}
@@ -78,15 +50,13 @@ export default function SignUpPopup({
         className="popup__input"
         name="email"
         placeholder="Enter email"
-        value={email}
-        onChange={handleEmailChange}
+        value={values.email}
+        onChange={handleChange}
         required
       />
-      <span
-        className={`popup__input-error popup__input-error_valid_${isValidEmail}`}
-      >
-        Invalid email address
-      </span>
+      {errors.email && (
+        <span className="popup__input-error">{errors.email}</span>
+      )}
       <label htmlFor="popup-signup-password" className="popup__field-label">
         Password
       </label>
@@ -96,15 +66,14 @@ export default function SignUpPopup({
         className="popup__input"
         name="password"
         placeholder="Enter password"
-        value={password}
-        onChange={handlePasswordChange}
+        value={values.password}
+        onChange={handleChange}
         required
       />
-      <span
-        className={`popup__input-error popup__input-error_valid_${isValidPassword}`}
-      >
-        Invalid password address
-      </span>
+      {errors.password && (
+        <span className="popup__input-error">{errors.password}</span>
+      )}
+
       <label htmlFor="popup-signup-username" className="popup__field-label">
         Username
       </label>
@@ -112,18 +81,17 @@ export default function SignUpPopup({
         id="popup-signup-username"
         type="text"
         className="popup__input"
-        name="username"
+        name="name"
         placeholder="Enter username"
-        value={username}
-        onChange={handleUsernameChange}
+        value={values.name}
+        onChange={handleChange}
         minLength="5"
         required
       />
-      <span
-        className={`popup__input-error popup__input-error_valid_${isValidUsername}`}
-      >
-        Invalid username
-      </span>
+      {errors.username && (
+        <span className="popup__input-error">{errors.name}</span>
+      )}
     </PopupWithForm>
   );
 }
+

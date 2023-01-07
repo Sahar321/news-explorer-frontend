@@ -246,9 +246,9 @@ export default function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className="app">
         <Header
-          OnSignOutClick={handleSignOutClick}
-          OnSignInClick={handleSignInClick}
-          OnSignUpClick={handleSignUpClick}
+          onSignOutClick={handleSignOutClick}
+          onSignInClick={handleSignInClick}
+          onSignUpClick={handleSignUpClick}
           loggedIn={loggedIn}
           hideMobileMenuButton={hideMobileMenuButton}
         />

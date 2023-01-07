@@ -5,8 +5,8 @@ import './Navigation.css';
 
 export default function Navigation({
   showMobileMenu,
-  OnSignOutClick,
-  OnSignInClick,
+  onSignOutClick,
+  onSignInClick,
   isMobileType,
   onItemClick,
   loggedIn,
@@ -52,7 +52,7 @@ export default function Navigation({
             <li className="">
               <button
                 aria-label="Sign Out"
-                onClick={OnSignOutClick}
+                onClick={onSignOutClick}
                 className="button button_type_sign-out"
               >
                 {currentUser.name} <i className="icon icon_type_sign-out"></i>
@@ -62,7 +62,7 @@ export default function Navigation({
             <li>
               <button
                 aria-label="Sign In"
-                onClick={OnSignInClick}
+                onClick={onSignInClick}
                 className="button button__sign-in"
               >
                 Sign in

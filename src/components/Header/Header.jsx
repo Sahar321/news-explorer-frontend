@@ -7,8 +7,8 @@ import { MOBILE_MENU_WIDTH } from '../../constants/constants';
 import './Header.css';
 
 export default function Header({
-  OnSignInClick,
-  OnSignOutClick,
+  onSignInClick,
+  onSignOutClick,
   hideMobileMenuButton,
   loggedIn,
 }) {
@@ -39,7 +39,7 @@ export default function Header({
 
   const handleSignInClick = () => {
     setIsMobileMenuOpen(false);
-    OnSignInClick();
+    onSignInClick();
   };
 
   useEffect(() => {
@@ -80,8 +80,8 @@ export default function Header({
         onClick={handleMenuClick}
       />
       <Navigation
-        OnSignInClick={handleSignInClick}
-        OnSignOutClick={OnSignOutClick}
+        onSignInClick={handleSignInClick}
+        onSignOutClick={onSignOutClick}
         showMobileMenu={isMobileMenuOpen}
         isMobileType={isMobileType}
         itemsMobileColor={itemsMobileColor}

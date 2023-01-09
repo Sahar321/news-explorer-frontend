@@ -23,6 +23,7 @@ export default function App() {
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
   const [cards, setCards] = useState([]);
+  const [appStyles, setAppStyles] = useState('');
   const [savedCards, setSavedCards] = useState([]);
   const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
@@ -244,7 +245,7 @@ export default function App() {
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
-      <div className="app">
+      <div className={`app ${appStyles}`}>
         <Header
           onSignOutClick={handleSignOutClick}
           onSignInClick={handleSignInClick}
@@ -277,6 +278,7 @@ export default function App() {
                 <SavedArticles
                   onCardRemoveClick={handleCardRemoveClick}
                   savedCards={savedCards}
+                  setAppStyles={setAppStyles}
                 />
               }
             />

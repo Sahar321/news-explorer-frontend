@@ -3,16 +3,15 @@ import NewsCardList from '../components/NewsCardList/NewsCardList.jsx';
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import CardType from '../constants/enums/CardType';
 
-export default function SavedArticles({ savedCards, onCardRemoveClick }) {
+export default function SavedArticles({ setAppStyles, savedCards, onCardRemoveClick }) {
   const currentUser = useContext(CurrentUserContext);
   const keywords = [];
   const [keywordText, setKeywordText] = useState('');
 
   useEffect(() => {
-    const app = document.querySelector('.app');
-    app.classList.add('app_page_saved-articles');
+    setAppStyles('app_page_saved-articles');
     return () => {
-      app.classList.remove('app_page_saved-articles');
+      setAppStyles('');
     };
   }, []);
   useEffect(() => {

@@ -12,7 +12,7 @@ export default function SearchForm({ onSearchSubmit }) {
     <form onSubmit={handleSubmit} className="search-form">
       <input
         onChange={(event) => setKeyword(event.target.value)}
-        value={keyword}
+        value={keyword || ''}
         maxLength="50"
         className="input input__search"
         type="text"

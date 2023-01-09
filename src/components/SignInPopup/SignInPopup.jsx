@@ -50,7 +50,7 @@ export default function SignInPopup({
         className="popup__input"
         name="email"
         placeholder="Enter email"
-        value={values.email}
+        value={values.email || ''}
         onChange={handleChange}
         required
       />
@@ -66,7 +66,7 @@ export default function SignInPopup({
         className="popup__input"
         name="password"
         placeholder="Enter password"
-        value={values.password}
+        value={values.password || ''}
         onChange={handleChange}
         required
       />

@@ -8,6 +8,6 @@
   background-repeat: no-repeat;
   display: inline-block;
 }
-.button__bookmark:hover {
-  background-image: url(../../../images/icons/bookmark/bookmark-hover.svg);
+.button__bookmark:disabled {
+  background-image: url(../../../images/icons/bookmark/bookmark-disable.svg);
 }

@@ -1,14 +1,20 @@
 import React from 'react';
 import './NotFound.css';
 
-export default function NotFound() {
+export default function NotFound({ isVisible }) {
   return (
-    <div className='not-found'>
-      <i className='not-found__icon'></i>
-      <h3 className='not-found__title'>Nothing found</h3>
-      <span className='not-found__text'>
-        Sorry, but nothing matched<br />your search terms.
-      </span>
-    </div>
+    <>
+      {isVisible && (
+        <div className="not-found">
+          <i className="not-found__icon"></i>
+          <h3 className="not-found__title">Nothing found</h3>
+          <span className="not-found__text">
+            Sorry, but nothing matched
+            <br />
+            your search terms.
+          </span>
+        </div>
+      )}
+    </>
   );
 }

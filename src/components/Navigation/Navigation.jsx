@@ -1,15 +1,17 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import CurrentUserContext from '../../contexts/CurrentUserContext';
 import './Navigation.css';
 
 export default function Navigation({
   showMobileMenu,
-  OnSignOutClick,
-  OnSignInClick,
+  onSignOutClick,
+  onSignInClick,
   isMobileType,
   onItemClick,
   loggedIn,
 }) {
+  const currentUser = useContext(CurrentUserContext);
   const showActiveStyle = !isMobileType && 'navigation__link_isActive_true'; // don't show active style on mobile
   const showMobileMenuClass = showMobileMenu && 'navigation_mobile_show'; // show mobile menu on button click
 
@@ -34,7 +36,7 @@ export default function Navigation({
             </NavLink>
           </li>
           <li>
-            <NavLink
+          {loggedIn && currentUser && (<NavLink
               onClick={onItemClick}
               to="/SavedArticles"
               className={({ isActive }) => (isActive
@@ -43,24 +45,24 @@ export default function Navigation({
               }
             >
               Saved articles
-            </NavLink>
+            </NavLink>) }
           </li>
 
-          {loggedIn ? (
+          {loggedIn && currentUser ? (
             <li className="">
               <button
                 aria-label="Sign Out"
-                onClick={OnSignOutClick}
+                onClick={onSignOutClick}
                 className="button button_type_sign-out"
               >
-                elise <i className="icon icon_type_sign-out"></i>
+                {currentUser.name} <i className="icon icon_type_sign-out"></i>
               </button>
             </li>
           ) : (
             <li>
               <button
                 aria-label="Sign In"
-                onClick={OnSignInClick}
+                onClick={onSignInClick}
                 className="button button__sign-in"
               >
                 Sign in

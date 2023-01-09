@@ -1,4 +1,4 @@
-.main__title {
+.search-section__title {
   font-family: 'Roboto Slab', Arial, sans-serif;
   font-style: normal;
   font-weight: 400;
@@ -10,7 +10,7 @@
 }
 
 @media screen and (max-width: 769px) {
-  .main__title {
+  .search-section__title {
     max-width: 385px;
     font-size: 36px;
     line-height: 40px;
@@ -19,8 +19,8 @@
   }
 }
 @media screen and (max-width: 480px) {
-  .main__title {
-margin-left: 3px;
-max-width: 285px;
+  .search-section__title {
+    margin-left: 3px;
+    max-width: 285px;
   }
 }

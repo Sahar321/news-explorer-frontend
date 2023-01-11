@@ -1,4 +1,5 @@
-import React from 'react';
+/*eslint-disable*/
+import React, { useEffect } from 'react';
 import './NewsCard.css';
 import CardType from '../../constants/enums/CardType';
 
@@ -16,15 +17,16 @@ export default function NewsCard({
   const handleCardRemoveClick = () => {
     onCardRemoveClick(cardData);
   };
-  const {
-    keyword, title, text, date, source, link, image,
-  } = cardData;
+  const { keyword, title, text, date, source, link, image, isBookmark } =
+    cardData;
 
   const bookmarkButton = (
     <>
       <button
         aria-label="bookmark Card"
-        className={'button button__bookmark card__button'}
+        className={`button button__bookmark card__button ${
+          isBookmark && 'button__bookmark_isActive_true'
+        }`}
         disabled={!loggedIn}
         onClick={handleCardBookmarkClick}
       />

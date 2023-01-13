@@ -1,7 +1,6 @@
+/*eslint-disable*/
 import React, { useEffect, useState } from 'react';
-import {
-  Routes, Route, Link, useLocation,
-} from 'react-router-dom';
+import { Routes, Route, Link, useLocation } from 'react-router-dom';
 import ProtectedRoutes from '../../utils/ProtectedRoutes.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
 import Header from '../Header/Header.jsx';
@@ -25,6 +24,7 @@ export default function App() {
   const [cards, setCards] = useState([]);
   const [appStyles, setAppStyles] = useState('');
   const [savedCards, setSavedCards] = useState([]);
+  const [bookmarkCards, setBookmarkCards] = useState([]);
   const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
   const [cardsToShow, setCardsToShow] = useState([]);
@@ -182,15 +182,31 @@ export default function App() {
     } ${date.getDate()}, ${date.getFullYear()}`;
   };
 
-  const handleCardBookmarkClick = (e, data) => {
+  const handleSaveCard = (card) => {
     mainApi
-      .saveArticle(data)
+      .saveArticle(card)
       .then((res) => {
-        e.target.classList.add('button__bookmark_isActive_true');
+        setBookmarkCards((book) => [...book, res.link]);
         setSavedCards([...savedCards, res]);
       })
       .catch(handleMainError);
   };
+
+  const handleCardBookmarkClick = (targetCard, isBookmark) => {
+    if (!isBookmark) {
+      handleSaveCard(targetCard);
+    } else {
+      const card = savedCards.find((cardData) => cardData.link === targetCard.link);
+      handleCardRemove(card);
+    }
+  };
+  useEffect(() => {
+    let bookmark = [];
+    savedCards.forEach((card) => {
+      bookmark.push(card.link);
+    });
+    setBookmarkCards(bookmark);
+  }, [savedCards]);
 
   const handleSearchSubmit = (searchInput) => {
     setSearchPreloaderVisible(true);
@@ -232,12 +248,14 @@ export default function App() {
     showMoreCards();
   };
 
-  const handleCardRemoveClick = (card) => {
-    if (card) {
+  const handleCardRemove = ({ _id }) => {
+    if (_id) {
       mainApi
-        .deleteArticle(card._id)
+        .deleteArticle(_id)
         .then((res) => {
-          setSavedCards((state) => state.filter((currentCard) => currentCard._id !== res._id));
+          setSavedCards((state) =>
+            state.filter((currentCard) => currentCard._id !== res._id)
+          );
         })
         .catch(handleMainError);
     }
@@ -267,6 +285,7 @@ export default function App() {
                 onShowMoreClick={handleShowMoreCards}
                 isSearchPreloaderVisible={isSearchPreloaderVisible}
                 isSearchNotFoundVisible={isSearchNotFoundVisible}
+                bookmarkCards={bookmarkCards}
               />
             }
           />
@@ -276,7 +295,7 @@ export default function App() {
               path="/SavedArticles"
               element={
                 <SavedArticles
-                  onCardRemoveClick={handleCardRemoveClick}
+                  onCardRemoveClick={handleCardRemove}
                   savedCards={savedCards}
                   setAppStyles={setAppStyles}
                 />

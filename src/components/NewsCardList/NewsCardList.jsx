@@ -13,6 +13,7 @@ export default function NewsCardList({
   pageClassName,
   onCardRemoveClick,
   showKeyword,
+  bookmarkCards,
 }) {
   return (
     <section className="card-list">
@@ -26,6 +27,7 @@ export default function NewsCardList({
             onCardRemoveClick={onCardRemoveClick}
             onCardBookmarkClick={onCardBookmarkClick}
             showKeyword={showKeyword}
+            bookmarkCards={bookmarkCards}
           />
         ))}
       </div>

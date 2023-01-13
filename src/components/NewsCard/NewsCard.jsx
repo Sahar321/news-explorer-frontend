@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import './NewsCard.css';
 import CardType from '../../constants/enums/CardType';
 
@@ -10,15 +10,16 @@ export default function NewsCard({
   loggedIn,
   onCardBookmarkClick,
   onCardRemoveClick,
+  bookmarkCards,
 }) {
-  const handleCardBookmarkClick = (e) => {
-    onCardBookmarkClick(e, cardData);
+  const { keyword, title, text, date, source, link, image } = cardData;
+  const isBookmark = bookmarkCards?.includes(link) ? true : false;
+  const handleCardBookmarkClick = () => {
+    onCardBookmarkClick(cardData, isBookmark);
   };
   const handleCardRemoveClick = () => {
     onCardRemoveClick(cardData);
   };
-  const { keyword, title, text, date, source, link, image, isBookmark } =
-    cardData;
 
   const bookmarkButton = (
     <>

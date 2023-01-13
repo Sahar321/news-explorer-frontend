@@ -17,6 +17,7 @@ export default function Main({
   cards,
   isSearchPreloaderVisible,
   isSearchNotFoundVisible,
+  bookmarkCards,
 }) {
   const hasCardsToShow = cardsToShow.length > 0;
   return (
@@ -43,6 +44,7 @@ export default function Main({
             cardType={CardType.BOOKMARK}
             cardsToShow={cardsToShow}
             onShowMoreClick={onShowMoreClick}
+            bookmarkCards={bookmarkCards}
             pageClassName="card-list__cards-wrapper_page_home"
           />
         </>

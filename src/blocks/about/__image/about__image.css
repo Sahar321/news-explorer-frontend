@@ -1,6 +1,6 @@
 .about__image {
-  width: 464px;
-  height: 464px;
+  max-width: 464px;
+  max-height: 464px;
   grid-area: 1 / 2 / 3 / 3;
   margin-top: 80px;
   border-radius: 50%;

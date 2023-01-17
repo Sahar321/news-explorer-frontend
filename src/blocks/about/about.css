@@ -13,7 +13,6 @@
 }
 @media screen and (max-width: 769px) {
   .about {
-    min-height: 354px;
     grid-template-columns:
       minmax(0, 104px) minmax(180px, 232px) minmax(0px, 32px)
       minmax(240px, auto);

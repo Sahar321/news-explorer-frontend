@@ -1,7 +1,7 @@
 # technologies used
 HTML & CSS\
 Javascript (react)\
-node.js (express)\
+node.js (express)
 
 ## Available Scripts
  

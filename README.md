@@ -1,8 +1,9 @@
-# technologies used
-HTML & CSS
-Javascript (react)
-node.js (express)
- 
+# Technologies used
+HTML & CSS\
+javaScript & React\
+node.js (express)\
+mongoDB
+
 ## Available Scripts
  
 In the project directory, you can run:
@@ -21,4 +22,4 @@ Builds the app for production to the `build` folder.\
 It correctly bundles React in production mode and optimizes the build for the best performance.
 
 ### `deployed app`
-[https://samnews.students.nomoredomainssbs.ru/](Click Here) 
+[Click Here](https://samnews.students.nomoredomainssbs.ru) 

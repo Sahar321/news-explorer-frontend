@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import './App.css';
 // apis
 import mainApi from '../../utils/MainApi';
@@ -18,6 +18,7 @@ import imageNotAvailable from '../../images/Image_not_available.png';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
+import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 ///  popups components
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
@@ -203,8 +204,12 @@ export default function App() {
 
   // useEffects
   React.useEffect(() => {
-    const { shouldOpenSignInPopup } = location.state || false;
+    const { shouldOpenSignInPopup, shouldOpenSignUpPopup } =
+      location.state || false;
     if (shouldOpenSignInPopup) {
+      setSignInPopupOpen(true);
+    }
+    if (shouldOpenSignUpPopup) {
       setSignUpPopupOpen(true);
     }
     window.history.replaceState({}, document.title);
@@ -300,7 +305,19 @@ export default function App() {
               />
             }
           />
-          <Route path="*" element={<NotFound />} />
+          <Route
+            path="/signin"
+            element={
+              <Navigate to="/" state={{ shouldOpenSignInPopup: true }} />
+            }
+          />
+          <Route
+            path="/signup"
+            element={
+              <Navigate to="/" state={{ shouldOpenSignUpPopup: true }} />
+            }
+          />
+          <Route path="*" element={<PageNotFound />} />
           <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
             <Route
               path="/SavedArticles"

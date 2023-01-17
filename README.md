@@ -1,4 +1,4 @@
-# technologies used
+# Technologies used
 HTML & CSS\
 javaScript & React\
 node.js (express)\

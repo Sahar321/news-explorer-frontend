@@ -54,7 +54,7 @@ export default function PopupWithForm({
           onSubmit={onSubmit}
         >
           {children}
-          {onError?.isShown && (
+          {onError?.visible && (
             <span className="popup__server-error" id="popup-signin-email-error">
               {onError?.message}
             </span>

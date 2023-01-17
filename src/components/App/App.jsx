@@ -1,143 +1,125 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation } from 'react-router-dom';
+import './App.css';
+// apis
+import mainApi from '../../utils/MainApi';
+import newsApi from '../../utils/NewsApi';
+// contexts
+import CurrentUserContext from '../../contexts/CurrentUserContext';
+// constants
+import LoginState from '../../constants/enums/LoginState';
+import { ENGLISH_MONTHS, CARDS_PAR_PAGE } from '../../constants/constants';
+// utils
 import ProtectedRoutes from '../../utils/ProtectedRoutes.jsx';
-import SavedArticles from '../../pages/SavedArticles.jsx';
+// images
+import imageNotAvailable from '../../images/Image_not_available.png';
+// components
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
+///  popups components
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
-import mainApi from '../../utils/MainApi';
-import newsApi from '../../utils/NewsApi';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
-import LoginState from '../../constants/enums/LoginState';
-import './App.css';
-import { ENGLISH_MONTHS, CARDS_PAR_PAGE } from '../../constants/constants';
-import imageNotAvailable from '../../images/Image_not_available.png';
+///  pages
 import Main from '../Main/Main.jsx';
+import SavedArticles from '../../pages/SavedArticles.jsx';
 
 export default function App() {
+  const location = useLocation();
+  const token = localStorage.getItem('jwt');
+
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
-  const [cards, setCards] = useState([]);
   const [appStyles, setAppStyles] = useState('');
+  const [cards, setCards] = useState([]);
   const [savedCards, setSavedCards] = useState([]);
   const [bookmarkCards, setBookmarkCards] = useState([]);
-  const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
-  const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
   const [cardsToShow, setCardsToShow] = useState([]);
-  const [authErrorMessage, setAuthErrorMessage] = useState({
-    message: '',
-    isShown: false,
-  });
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
+  const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
+  const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
+  const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
+  const [authErrorMessage, setAuthErrorMessage] = useState({
+    message: '',
+    visible: false,
+  });
   const [popupWithMessage, setPopupWithMessage] = useState({
     isOpen: false,
     title: '',
   });
-  const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
-  const token = localStorage.getItem('jwt');
-  const location = useLocation();
-  const showMoreCards = () => {
-    if (cards.length > 0) {
-      const newCards = cards.splice(0, CARDS_PAR_PAGE);
-      setCardsToShow((prvCards) => [...prvCards, ...newCards]);
-    }
-  };
+  // Functions
+  /// error handling
   const handleMainError = ({ message, type }) => {
     if (type === 'auth') {
-      setAuthErrorMessage({ message, isShown: true });
+      setAuthErrorMessage({ message, visible: true });
       return;
     }
 
     console.log(message); //  todo: custom error message
   };
-  React.useEffect(() => {
-    const { shouldOpenSignInPopup } = location.state || false;
-    if (shouldOpenSignInPopup) {
-      setSignUpPopupOpen(true);
-    }
 
-    window.history.replaceState({}, document.title);
-  }, [location]);
-
-  useEffect(() => {
-    const cardsStorage = JSON.parse(localStorage.getItem('cards'));
-    if (cards && cardsStorage) {
-      setCards(cardsStorage);
+  /// cards
+  const handleShowMoreCards = () => {
+    if (cards.length > 0) {
+      const newCards = cards.splice(0, CARDS_PAR_PAGE);
+      setCardsToShow((prvCards) => [...prvCards, ...newCards]);
     }
-  }, []);
-  useEffect(() => {
-    if (loggedIn === LoginState.LOGGED_IN) {
+  };
+  const handleCardRemove = ({ _id }) => {
+    if (_id) {
       mainApi
-        .getAllArticles()
+        .deleteArticle(_id)
         .then((res) => {
-          setSavedCards(res);
+          setSavedCards((state) =>
+            state.filter((currentCard) => currentCard._id !== res._id)
+          );
         })
         .catch(handleMainError);
     }
-  }, [loggedIn]);
+  };
 
-  useEffect(() => {
-    showMoreCards();
-  }, [cards]);
+  const handleSaveCard = (card) => {
+    mainApi
+      .saveArticle(card)
+      .then((res) => {
+        setBookmarkCards((book) => [...book, res.link]);
+        setSavedCards([...savedCards, res]);
+      })
+      .catch(handleMainError);
+  };
 
-  useEffect(() => {
-    if (token) {
-      mainApi
-        .getUserInfo(token)
-        .then((res) => {
-          if (res._id) {
-            setCurrentUser(res);
-            setLoggedIn(LoginState.LOGGED_IN);
-          }
-        })
-        .catch(handleMainError);
+  const handleCardBookmarkClick = (targetCard, isBookmark) => {
+    if (!isBookmark) {
+      handleSaveCard(targetCard);
     } else {
-      setLoggedIn(LoginState.LOGGED_OUT);
+      const card = savedCards.find(
+        (cardData) => cardData.link === targetCard.link
+      );
+      handleCardRemove(card);
     }
-  }, [token]);
+  };
 
-  useEffect(() => {
-    if (loggedIn === LoginState.LOGGED_IN) {
-      mainApi
-        .getAllArticles(token)
-        .then((res) => {
-          if (res) {
-            setSavedCards(res);
-          }
-        })
-        .catch(handleMainError);
-    }
-  }, [loggedIn]);
-
-  useEffect(() => {
-    if (isSignInPopupOpen || isSignUpPopupOpen || popupWithMessage.isOpen) {
-      setHideMobileMenuButton(true);
-    }
-  }, [isSignInPopupOpen, isSignUpPopupOpen, popupWithMessage]);
-
+  /// popups
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
-    setAuthErrorMessage({ message: '', isShown: false });
+    setAuthErrorMessage({ message: '', visible: false });
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
   };
-
   const handleSignInClick = () => {
     closeAllPopups();
     setSignInPopupOpen(true);
   };
-
   const handleSignUpClick = () => {
     closeAllPopups();
     setSignUpPopupOpen(true);
   };
 
+  /// auth
   const handleSignInSubmit = (data) => {
     mainApi
       .signin(data)
@@ -165,49 +147,13 @@ export default function App() {
         handleMainError({ message, type: 'auth' });
       });
   };
-
   const handleSignOutClick = () => {
     localStorage.removeItem('jwt');
     setCurrentUser(null);
     setLoggedIn(LoginState.LOGGED_OUT);
   };
 
-  const setCardDateFormat = (dateStr) => {
-    if (!dateStr) {
-      return '';
-    }
-    const date = new Date(dateStr);
-    return `${
-      ENGLISH_MONTHS[date.getMonth()]
-    } ${date.getDate()}, ${date.getFullYear()}`;
-  };
-
-  const handleSaveCard = (card) => {
-    mainApi
-      .saveArticle(card)
-      .then((res) => {
-        setBookmarkCards((book) => [...book, res.link]);
-        setSavedCards([...savedCards, res]);
-      })
-      .catch(handleMainError);
-  };
-
-  const handleCardBookmarkClick = (targetCard, isBookmark) => {
-    if (!isBookmark) {
-      handleSaveCard(targetCard);
-    } else {
-      const card = savedCards.find((cardData) => cardData.link === targetCard.link);
-      handleCardRemove(card);
-    }
-  };
-  useEffect(() => {
-    let bookmark = [];
-    savedCards.forEach((card) => {
-      bookmark.push(card.link);
-    });
-    setBookmarkCards(bookmark);
-  }, [savedCards]);
-
+  /// search
   const handleSearchSubmit = (searchInput) => {
     setSearchPreloaderVisible(true);
     setIsSearchNotFoundVisible(false);
@@ -244,23 +190,88 @@ export default function App() {
       .catch(handleMainError);
   };
 
-  const handleShowMoreCards = () => {
-    showMoreCards();
+  const setCardDateFormat = (dateStr) => {
+    if (!dateStr) {
+      return '';
+    }
+    const date = new Date(dateStr);
+    const result = `${
+      ENGLISH_MONTHS[date.getMonth()]
+    } ${date.getDate()}, ${date.getFullYear()}`;
+    return result;
   };
 
-  const handleCardRemove = ({ _id }) => {
-    if (_id) {
+  // useEffects
+  React.useEffect(() => {
+    const { shouldOpenSignInPopup } = location.state || false;
+    if (shouldOpenSignInPopup) {
+      setSignUpPopupOpen(true);
+    }
+    window.history.replaceState({}, document.title);
+  }, [location]);
+
+  useEffect(() => {
+    const cardsStorage = JSON.parse(localStorage.getItem('cards'));
+    if (cards && cardsStorage) {
+      setCards(cardsStorage);
+    }
+  }, []);
+  useEffect(() => {
+    if (loggedIn === LoginState.LOGGED_IN) {
       mainApi
-        .deleteArticle(_id)
+        .getAllArticles()
         .then((res) => {
-          setSavedCards((state) =>
-            state.filter((currentCard) => currentCard._id !== res._id)
-          );
+          setSavedCards(res);
         })
         .catch(handleMainError);
     }
-  };
+  }, [loggedIn]);
 
+  useEffect(() => {
+    handleShowMoreCards();
+  }, [cards]);
+
+  useEffect(() => {
+    if (token) {
+      mainApi
+        .getUserInfo(token)
+        .then((res) => {
+          if (res._id) {
+            setCurrentUser(res);
+            setLoggedIn(LoginState.LOGGED_IN);
+          }
+        })
+        .catch(handleMainError);
+    } else {
+      setLoggedIn(LoginState.LOGGED_OUT);
+    }
+  }, [token]);
+
+  useEffect(() => {
+    if (loggedIn === LoginState.LOGGED_IN) {
+      mainApi
+        .getAllArticles(token)
+        .then((res) => {
+          if (res) {
+            setSavedCards(res);
+          }
+        })
+        .catch(handleMainError);
+    }
+  }, [loggedIn]);
+
+  useEffect(() => {
+    if (isSignInPopupOpen || isSignUpPopupOpen || popupWithMessage.isOpen) {
+      setHideMobileMenuButton(true);
+    }
+  }, [isSignInPopupOpen, isSignUpPopupOpen, popupWithMessage]);
+  useEffect(() => {
+    let bookmark = [];
+    savedCards.forEach((card) => {
+      bookmark.push(card.link);
+    });
+    setBookmarkCards(bookmark);
+  }, [savedCards]);
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>

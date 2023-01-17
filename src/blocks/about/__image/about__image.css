@@ -3,6 +3,7 @@
   height: 464px;
   grid-area: 1 / 2 / 3 / 3;
   margin-top: 80px;
+  border-radius: 50%;
 }
 @media screen and (max-width: 769px) {
   .about__image {

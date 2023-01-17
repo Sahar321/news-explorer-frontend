@@ -1,5 +1,5 @@
 import React from 'react';
-import authorImage from '../../images/about/author-about.png';
+import authorImage from '../../images/about/author-about.jpg';
 import './About.css';
 
 export default function About() {

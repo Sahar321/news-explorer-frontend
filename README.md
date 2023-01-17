@@ -1,7 +1,8 @@
 # technologies used
 HTML & CSS\
-Javascript (react)\
-node.js (express)
+javaScript & React\
+node.js (express)\
+mongoDB
 
 ## Available Scripts
  

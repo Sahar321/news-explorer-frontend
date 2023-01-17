@@ -93,6 +93,10 @@ export default function App() {
   };
 
   const handleCardBookmarkClick = (targetCard, isBookmark) => {
+    if (!loggedIn) {
+      setSignUpPopupOpen(true);
+      return;
+    }
     if (!isBookmark) {
       handleSaveCard(targetCard);
     } else {

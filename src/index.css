@@ -13,7 +13,8 @@
 @import url(./blocks/button/__show-more/button__show-more.css);
 
 @import url(./blocks/button/__bookmark/button__bookmark.css);
-@import url(./blocks/button/__bookmark/_isActive/button__bookmark_isActive_true.css);
+@import url(./blocks/button/__bookmark/_type/button__bookmark_type_active.css);
+@import url(./blocks/button/__bookmark/_type/button__bookmark_type_disabled.css);
 @import url(./blocks/button/__sign-in/button__sign-in.css);
 @import url(./blocks/button/_type/button_type_close.css);
 @import url(./blocks/button/_type/button_type_sign-out.css);

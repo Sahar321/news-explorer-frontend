@@ -14,6 +14,12 @@ export default function NewsCard({
 }) {
   const { keyword, title, text, date, source, link, image } = cardData;
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
+  const isBookmarkActiveClass = isBookmark
+    ? 'button__bookmark_type_active'
+    : '';
+  const isBookmarkDisabledClass = !loggedIn
+    ? 'button__bookmark_type_disabled'
+    : '';
   const handleCardBookmarkClick = () => {
     onCardBookmarkClick(cardData, isBookmark);
   };
@@ -25,10 +31,9 @@ export default function NewsCard({
     <>
       <button
         aria-label="bookmark Card"
-        className={`button button__bookmark card__button ${
-          isBookmark && 'button__bookmark_isActive_true'
+        className={`button button__bookmark card__button  ${
+          isBookmarkActiveClass + isBookmarkDisabledClass
         }`}
-        disabled={!loggedIn}
         onClick={handleCardBookmarkClick}
       />
       {!loggedIn && (

@@ -1,8 +1,8 @@
 # technologies used
-HTML & CSS
-Javascript (react)
-node.js (express)
- 
+HTML & CSS/
+Javascript (react)/
+node.js (express)/
+
 ## Available Scripts
  
 In the project directory, you can run:

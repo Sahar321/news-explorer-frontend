@@ -7,7 +7,7 @@ export default function App() {
   return (
     <footer className="footer">
       <p className="footer__copyrights">
-        © 2021 Supersite, Powered by News API
+        © 2023 Supersite, Powered by News API
       </p>
 
       <nav>
@@ -24,7 +24,7 @@ export default function App() {
           </li>
 
           <li className="footer__nav-item footer__nav-item_type_github">
-            <a href="https://github.com" target="_blank" rel="noreferrer">
+            <a href="https://github.com/Sahar321" target="_blank" rel="noreferrer">
               <img
                 src={githubIcon}
                 alt="github link"
@@ -32,7 +32,7 @@ export default function App() {
             </a>
           </li>
           <li className="footer__nav-item footer__nav-item_type_facebook">
-            <a href="https://facebook.com" target="_blank" rel="noreferrer">
+            <a href="https://www.facebook.com/saharmoshe321" target="_blank" rel="noreferrer">
               <img
                 src={facebookIcon}
                 alt="Facebook link"

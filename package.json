@@ -17,6 +17,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "deploy": "npm run build && scp -r ./build/* ./build/* saharm123456@104.196.251.183:/home/saharm123456/apps/news-explorer-frontend",
     "all": "html-validator --quiet"
   },
   "eslintConfig": {

@@ -1,5 +1,5 @@
 import React from 'react';
-import authorImage from '../../images/about/author-about.png';
+import authorImage from '../../images/about/author-about.jpg';
 import './About.css';
 
 export default function About() {
@@ -9,12 +9,27 @@ export default function About() {
       <div className="about__text-container">
         <h2 className="about__title">About the author</h2>
         <p className="about__text">
-          This block describes the project author. Here you should indicate your
-          name, what you do, and which development technologies you know.<br/><br/> You
-          can also talk about your experience with Practicum, what you learned
-          there, and how you can help potential customers.
+          Hello, my name is Sahar Moshe.<br/>An amateur programmer since the age of
+          12.
+          <br />
+          Now after bootcamp at a practicum, looking to turn the hobby into the
+          profession I&apos;ve always dreamed of.
+          <br /> <br />
+          <strong>The technologies I used for the project:</strong>
+          <br />
+          HTML & CSS
+          <br />
+          javaScript & React
+          <br />
+          node.js (express)
+          <br />
+          mongoDB
+          <br />
+          <br />
+          For more projects that i created, look on my <strong>github profile</strong> (down
+          blow)
         </p>
-        </div>
+      </div>
     </section>
   );
 }

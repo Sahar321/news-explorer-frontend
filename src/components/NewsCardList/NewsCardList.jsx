@@ -1,33 +1,42 @@
+/* eslint-disable  */
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard.jsx';
 
-export default function NewsCardList() {
-  const { pathname } = useLocation();
-  const isHomePage = pathname === '/';
-  const selectedPage = isHomePage ? 'home' : 'saved-articles';
-  const cardButtonType = isHomePage ? 'bookmark' : 'remove';
+export default function NewsCardList({
+  cardsToShow,
+  loggedIn,
+  onCardBookmarkClick,
+  onShowMoreClick,
+  cards,
+  cardType,
+  pageClassName,
+  onCardRemoveClick,
+  showKeyword,
+  bookmarkCards,
+}) {
   return (
     <section className="card-list">
-      <h2
-        className={`card-list__search-results card-list__search-results_isVisible_${isHomePage}`}
-      >
-        Search results
-      </h2>
-      <div
-        className={`card-list__cards-wrapper card-list__cards-wrapper_page_${selectedPage}`}
-      >
-        <NewsCard buttonType={cardButtonType} />
-        <NewsCard buttonType={cardButtonType} />
-        <NewsCard buttonType={cardButtonType} />
-        <NewsCard buttonType={cardButtonType} />
+      <div className={`card-list__cards-wrapper ${pageClassName}`}>
+        {cardsToShow?.map((card, index) => (
+          <NewsCard
+            key={index}
+            cardData={card}
+            cardType={cardType}
+            loggedIn={loggedIn}
+            onCardRemoveClick={onCardRemoveClick}
+            onCardBookmarkClick={onCardBookmarkClick}
+            showKeyword={showKeyword}
+            bookmarkCards={bookmarkCards}
+          />
+        ))}
       </div>
-      {isHomePage && (
+      {cards?.length > 0 && (
         <button
           aria-label="Show More"
           type="button"
           className="button button__show-more"
+          onClick={onShowMoreClick}
         >
           Show more
         </button>

@@ -1,4 +1,5 @@
 /*eslint-disable */
+import { BASE_URL } from '../constants/config.js';
 class MainApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -59,7 +60,7 @@ class MainApi {
 }
 
 const mainApi = new MainApi({
-  baseUrl: 'https://api.samnews.students.nomoredomainssbs.ru',
+  baseUrl: BASE_URL,
   headers: {
     'Content-Type': 'application/json',
     Accept: 'application/json',

@@ -188,8 +188,8 @@ export default function App() {
             image: element.urlToImage || imageNotAvailable,
           });
         });
-        //tesd
-        //sdf
+
+
         setCards(cardListData);
         localStorage.setItem('cards', JSON.stringify(cardListData));
         setSearchPreloaderVisible(false);

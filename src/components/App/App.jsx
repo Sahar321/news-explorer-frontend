@@ -26,7 +26,7 @@ import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
 ///  pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
-
+import { Alert, AlertTitle } from '@mui/material';
 export default function App() {
   const location = useLocation();
   const token = localStorage.getItem('jwt');
@@ -51,14 +51,32 @@ export default function App() {
     isOpen: false,
     title: '',
   });
+  const [disappearingMessages, setDisappearingMessages] = useState({
+    message: '',
+    visible: false,
+    severity: '',
+    title: '',
+  });
   // Functions
   /// error handling
+
   const handleMainError = ({ message, type }) => {
     if (type === 'auth') {
       setAuthErrorMessage({ message, visible: true });
       return;
     }
+    if (type === 'SERVER_NOT_AVAILABLE') {
+      setSearchPreloaderVisible(false);
+      setDisappearingMessages({
+        message:
+          'Server is not available at the moment, please try again later...',
+        visible: true,
+        severity: 'error',
+        title: 'Server Error',
+      });
 
+      return;
+    }
     console.log(message); //  todo: custom error message
   };
 
@@ -189,12 +207,11 @@ export default function App() {
           });
         });
 
-
         setCards(cardListData);
         localStorage.setItem('cards', JSON.stringify(cardListData));
         setSearchPreloaderVisible(false);
       })
-      .catch(handleMainError);
+      .catch(handleMainError({ type: 'SERVER_NOT_AVAILABLE' }));
   };
 
   const setCardDateFormat = (dateStr) => {
@@ -209,6 +226,17 @@ export default function App() {
   };
 
   // useEffects
+  useEffect(() => {
+    disappearingMessages.visible &&
+      setTimeout(() => {
+        setDisappearingMessages({
+          message: '',
+          visible: false,
+          severity: '',
+          title: '',
+        });
+      }, 5000);
+  }, [disappearingMessages]);
   React.useEffect(() => {
     const { shouldOpenSignInPopup, shouldOpenSignUpPopup } =
       location.state || false;
@@ -367,6 +395,14 @@ export default function App() {
             Sign in
           </Link>
         </PopupWithMessage>
+        <Alert
+          variant="filled"
+          severity={disappearingMessages.severity}
+          className={`alert alert_visible_${disappearingMessages.visible}`}
+        >
+          {disappearingMessages.title && <AlertTitle>Server Error</AlertTitle>}
+          {disappearingMessages.message}
+        </Alert>
       </div>
     </CurrentUserContext.Provider>
   );

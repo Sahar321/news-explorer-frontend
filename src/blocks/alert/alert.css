@@ -1,0 +1,9 @@
+.alert {
+  width: max-content;
+  max-width: 98vw;
+  position: fixed;
+  z-index: 500000;
+  bottom: 4vh;
+  opacity: 0;
+}
+

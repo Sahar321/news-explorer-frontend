@@ -188,7 +188,7 @@ export default function App() {
             image: element.urlToImage || imageNotAvailable,
           });
         });
-        //tes
+        //tesd
         setCards(cardListData);
         localStorage.setItem('cards', JSON.stringify(cardListData));
         setSearchPreloaderVisible(false);

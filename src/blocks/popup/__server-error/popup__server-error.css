@@ -1,13 +1,17 @@
 .popup__server-error {
   display: block;
   margin-top: 17px;
-
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
   text-align: center;
-
   color: #ff0000;
+}
+
+@media screen and (max-width: 480px) {
+  .popup__server-error {
+    margin-bottom: 15px;
+  }
 }

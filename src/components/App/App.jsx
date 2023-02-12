@@ -189,6 +189,7 @@ export default function App() {
           });
         });
         //tesd
+        //sdf
         setCards(cardListData);
         localStorage.setItem('cards', JSON.stringify(cardListData));
         setSearchPreloaderVisible(false);

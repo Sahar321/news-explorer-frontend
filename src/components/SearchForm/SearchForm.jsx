@@ -22,6 +22,7 @@ export default function SearchForm({ onSearchSubmit }) {
         aria-label="Search"
         className="button button__search"
         type="submit"
+        disabled={!keyword}
       >
         Search
       </button>

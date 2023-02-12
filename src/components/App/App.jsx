@@ -188,6 +188,7 @@ export default function App() {
             image: element.urlToImage || imageNotAvailable,
           });
         });
+        //tes
         setCards(cardListData);
         localStorage.setItem('cards', JSON.stringify(cardListData));
         setSearchPreloaderVisible(false);

@@ -21,6 +21,13 @@ class MainApi {
       body: JSON.stringify(data),
     });
   };
+  signinWithGoogle = (data) => {
+    return this.customFetch(`${this._baseUrl}/signin/google`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(data),
+    });
+  };
   signup = (data) => {
     return this.customFetch(`${this._baseUrl}/signup`, {
       method: 'POST',

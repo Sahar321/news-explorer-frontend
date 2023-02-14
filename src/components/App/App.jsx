@@ -54,7 +54,7 @@ export default function App() {
   const [disappearingMessages, setDisappearingMessages] = useState({
     message: '',
     visible: false,
-    severity: '',
+    severity: 'info', // default value
     title: '',
   });
   // Functions
@@ -211,7 +211,9 @@ export default function App() {
         localStorage.setItem('cards', JSON.stringify(cardListData));
         setSearchPreloaderVisible(false);
       })
-      .catch(handleMainError({ type: 'SERVER_NOT_AVAILABLE' }));
+      .catch(() => {
+        handleMainError({ type: 'SERVER_NOT_AVAILABLE' });
+      });
   };
 
   const setCardDateFormat = (dateStr) => {
@@ -299,6 +301,10 @@ export default function App() {
     }
   }, [loggedIn]);
 
+  window.handleGooogleToken = (token) => {
+    console.log('handleGooogleToken', token);
+  };
+
   useEffect(() => {
     if (isSignInPopupOpen || isSignUpPopupOpen || popupWithMessage.isOpen) {
       setHideMobileMenuButton(true);
@@ -311,6 +317,43 @@ export default function App() {
     });
     setBookmarkCards(bookmark);
   }, [savedCards]);
+  const googleSigninButton = React.createRef();
+  useEffect(() => {
+    const handleCredentialResponse = (credential) => {
+      console.log('handleCredentialResponse', credential);
+      mainApi
+        .signinWithGoogle(credential)
+        .then((res) => {
+          if (res.token) {
+            closeAllPopups();
+            localStorage.setItem('jwt', res.token);
+            setLoggedIn(LoginState.LOGGED_IN);
+          }
+        })
+        .catch(({ message }) => {
+          handleMainError({ message, type: 'auth' });
+        });
+    };
+
+    if (window.google) {
+      console.log('window.google', window.google);
+      window.google.accounts.id.initialize({
+        client_id:
+          '1026060339727-lamt04gh0s9uqpqklh2mjchcnpsu35g0.apps.googleusercontent.com',
+        callback: handleCredentialResponse,
+      });
+      google.accounts.id.renderButton(googleSigninButton.current, {
+        theme: 'outline',
+        size: 'large',
+        click_listener: onClickHandler,
+      });
+
+      function onClickHandler() {
+        console.log('Sign in with Google button clicked...');
+      }
+    }
+  }, []);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>
@@ -374,7 +417,9 @@ export default function App() {
           onSubmit={handleSignInSubmit}
           onSignUpPopupClick={handleSignUpClick}
           onError={authErrorMessage}
-        />
+        >
+          <div className="button__google-signin" ref={googleSigninButton}></div>
+        </SignInPopup>
         <SignUpPopup
           onClose={closeAllPopups}
           onSubmit={handleSignUpSubmit}

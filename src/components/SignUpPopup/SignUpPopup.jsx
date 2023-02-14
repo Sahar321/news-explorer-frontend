@@ -68,6 +68,7 @@ export default function SignUpPopup({
         placeholder="Enter password"
         value={values.password || ''}
         onChange={handleChange}
+        autoComplete="on"
         required
       />
       {errors.password && (

@@ -19,6 +19,7 @@
 @import url(./blocks/button/_type/button_type_close.css);
 @import url(./blocks/button/_type/button_type_sign-out.css);
 @import url(./blocks/button/_type/button_type_remove.css);
+@import url(./blocks/button/__google-signin/button__google-signin.css);
 
 @import url(./blocks/icon/icon.css);
 @import url(./blocks/icon/_type/icon_type_sign-out.css);
@@ -35,3 +36,10 @@
 
 @import url(./blocks/alert/alert.css);
 @import url(./blocks/alert/_visible/alert_visible_true.css);
+
+
+/* strange google bug after logging; make the screen wider  */
+#g_a11y_announcement{
+  display: none;
+}
+

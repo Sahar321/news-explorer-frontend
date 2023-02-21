@@ -64,6 +64,15 @@ class MainApi {
   getUserInfo() {
     return this.customFetch(`${this._baseUrl}/users/me`, this._headers);
   }
+
+  // cards
+  saveCardReaction = (reactionId)  =>{
+    return this.customFetch(`${this._baseUrl}/reaction`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(reactionId),
+    });
+  }
 }
 
 const mainApi = new MainApi({

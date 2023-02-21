@@ -36,6 +36,8 @@
 
 @import url(./blocks/alert/alert.css);
 @import url(./blocks/alert/_visible/alert_visible_true.css);
+@import url(./blocks/reactions/reactions.css);
+@import url(./blocks/reactions/_visible/reactions_visible_true.css);
 
 
 /* strange google bug after logging; make the screen wider  */

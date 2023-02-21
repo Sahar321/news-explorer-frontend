@@ -120,7 +120,7 @@ export default function App() {
     } else {
       const card = savedCards.find(
         (cardData) => cardData.link === targetCard.link
-      );
+      ); // getting _id MongoDB
       handleCardRemove(card);
     }
   };
@@ -204,6 +204,7 @@ export default function App() {
             source: element.source?.name,
             link: element.url,
             image: element.urlToImage || imageNotAvailable,
+            reactionId: element.reactionId
           });
         });
 
@@ -225,6 +226,18 @@ export default function App() {
       ENGLISH_MONTHS[date.getMonth()]
     } ${date.getDate()}, ${date.getFullYear()}`;
     return result;
+  };
+
+  const handleReactionSelect = (reactionData) => {
+    console.log('appReactionSelect', reactionData);
+    mainApi
+      .saveCardReaction(reactionData)
+      .then((res) => {
+        console.log('slsected', res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // useEffects
@@ -379,6 +392,7 @@ export default function App() {
                 isSearchPreloaderVisible={isSearchPreloaderVisible}
                 isSearchNotFoundVisible={isSearchNotFoundVisible}
                 bookmarkCards={bookmarkCards}
+                onReactionSelect={handleReactionSelect}
               />
             }
           />

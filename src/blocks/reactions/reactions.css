@@ -1,0 +1,23 @@
+.reactions {
+  border-radius: 30px;
+  box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
+  display: none;
+  align-items: center;
+  justify-content: space-evenly;
+  padding: 10px 0;
+  position: absolute;
+  margin-top: 217px;
+  width: 100%;
+  background-color: #ffffffd9;
+}
+
+@media screen and (max-width: 769px) {
+  .reactions {
+    margin-top: 98px;
+  }
+}
+@media screen and (max-width: 480px) {
+  .reactions {
+    margin-top: 142px;
+  }
+}

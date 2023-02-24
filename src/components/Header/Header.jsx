@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation.jsx';
 import useScreenWidth from '../../utils/hooks/useScreenWidth';
-import { MOBILE_MENU_WIDTH } from '../../constants/constants';
+import { SCREEN_WIDTHS } from '../../constants/constants';
 
 import './Header.css';
 
@@ -14,6 +14,7 @@ export default function Header({
 }) {
   const screenWidth = useScreenWidth();
   const { pathname } = useLocation();
+  const { MOBILE_MENU_WIDTH } = SCREEN_WIDTHS;
   const [selectedPage, setSelectedPage] = useState('');
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);

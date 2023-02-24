@@ -19,6 +19,7 @@ export default function Main({
   isSearchNotFoundVisible,
   bookmarkCards,
   onReactionSelect,
+  onCommentClick,
 }) {
   const hasCardsToShow = cardsToShow.length > 0;
   return (
@@ -48,6 +49,7 @@ export default function Main({
             bookmarkCards={bookmarkCards}
             pageClassName="card-list__cards-wrapper_page_home"
             onReactionSelect={onReactionSelect}
+            onCommentClick={onCommentClick}
           />
         </>
       )}

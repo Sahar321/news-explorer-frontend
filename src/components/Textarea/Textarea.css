@@ -1,0 +1,18 @@
+.comment__input {
+  width: 100%;
+  font-size: 28px;
+  height: 200px;
+  margin-bottom: 0;
+  padding-right: 80px;
+  line-height: unset;
+  color: royalblue;
+  grid-area: 1 / 1 / 2 / 3;
+  box-sizing: border-box;
+  resize: none;
+  height: auto;
+ }
+
+
+/* .comment__input:focus-within{
+  height: 350px;
+} */

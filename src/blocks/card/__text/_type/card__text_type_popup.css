@@ -1,0 +1,12 @@
+
+.card__text_type_popup{
+  margin: 0;
+  padding: 0;
+  margin: 16px 24px 0;
+  display: block;
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+  overflow: unset;
+  max-width: 93%;
+  width: 100%;
+}

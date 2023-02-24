@@ -23,6 +23,7 @@ import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
+import PopupWithCard from '../PopupWithCard/PopupWithCard.jsx';
 ///  pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
@@ -50,6 +51,10 @@ export default function App() {
   const [popupWithMessage, setPopupWithMessage] = useState({
     isOpen: false,
     title: '',
+  });
+  const [popupWithCard, setPopupWithCard] = useState({
+    isOpen: false,
+    cardData: '',
   });
   const [disappearingMessages, setDisappearingMessages] = useState({
     message: '',
@@ -129,6 +134,7 @@ export default function App() {
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
+    setPopupWithCard({ isOpen: false, cardData: '' });
     setAuthErrorMessage({ message: '', visible: false });
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
@@ -204,7 +210,7 @@ export default function App() {
             source: element.source?.name,
             link: element.url,
             image: element.urlToImage || imageNotAvailable,
-            reactionId: element.reactionId
+            reactionId: element.reactionId,
           });
         });
 
@@ -367,6 +373,10 @@ export default function App() {
     }
   }, []);
 
+  const handleCardCommentClick = (card) => {
+    setPopupWithCard({ isOpen: true, cardData: card });
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>
@@ -393,6 +403,7 @@ export default function App() {
                 isSearchNotFoundVisible={isSearchNotFoundVisible}
                 bookmarkCards={bookmarkCards}
                 onReactionSelect={handleReactionSelect}
+                onCommentClick={handleCardCommentClick}
               />
             }
           />
@@ -462,6 +473,13 @@ export default function App() {
           {disappearingMessages.title && <AlertTitle>Server Error</AlertTitle>}
           {disappearingMessages.message}
         </Alert>
+        {/*    <div className="testt"> */}
+        <PopupWithCard
+          isOpen={popupWithCard.isOpen}
+          cardData={popupWithCard.cardData}
+          onClose={closeAllPopups}
+        />
+        {/*   </div> */}
       </div>
     </CurrentUserContext.Provider>
   );

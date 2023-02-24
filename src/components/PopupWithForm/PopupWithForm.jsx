@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
 import './PopupWithForm.css';
 
 export default function PopupWithForm({
@@ -13,20 +14,7 @@ export default function PopupWithForm({
   isValid,
   onError,
 }) {
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleEscClose = (evt) => {
-      if (evt.key === 'Escape') {
-        onClose();
-      }
-    };
-    document.addEventListener('keydown', handleEscClose);
-    // eslint-disable-next-line consistent-return
-    return () => {
-      document.removeEventListener('keydown', handleEscClose);
-    };
-  }, [isOpen]);
-
+  useCloseOnEscape(isOpen, onClose);
   const handleOverlayClose = (evt) => {
     const popup = evt.target.classList;
     if (popup.contains('popup')) {

@@ -9,6 +9,7 @@
   margin-top: 217px;
   width: 100%;
   background-color: #ffffffd9;
+  backdrop-filter: blur(2px);
 }
 
 @media screen and (max-width: 769px) {

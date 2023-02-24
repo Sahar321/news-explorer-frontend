@@ -1,0 +1,5 @@
+.popup__title_type_card {
+  justify-self: center;
+  margin-top: 14px;
+  grid-area: top;
+}

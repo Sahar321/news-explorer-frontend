@@ -1,0 +1,24 @@
+.popup__container_type_card {
+  width: 91vw;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  grid-auto-columns: 1fr;
+  gap: 25px 10px;
+  padding-bottom: 50px;
+  grid-template-areas:
+      'top top'
+      'card comments';
+  max-width: 1200px;
+  align-self: baseline;
+}
+
+@media screen and (max-width: 769px) {
+  .popup__container_type_card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        'top'
+        'comments';
+        height: unset;
+  }
+}

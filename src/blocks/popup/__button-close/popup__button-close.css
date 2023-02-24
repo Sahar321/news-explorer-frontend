@@ -1,9 +1,7 @@
 .popup__button-close {
     height: 40px;
     width: 40px;
-    position: fixed;
-    top: -45px;
-    right: -46px;
+    margin-top: -45px;
     display: inline-block;
   }
 

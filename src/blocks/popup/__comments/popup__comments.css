@@ -1,0 +1,6 @@
+.popup__comments {
+  grid-area: comments;
+  place-self: self-start;
+  margin-top: -20px;
+}
+

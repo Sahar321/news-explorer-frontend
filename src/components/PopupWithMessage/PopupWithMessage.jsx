@@ -1,4 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
+
 import './PopupWithMessage.css';
 
 export default function Popup({
@@ -7,20 +9,7 @@ export default function Popup({
   title,
   children,
 }) {
-  useEffect(() => {
-    if (!isOpen) return;
-    const handleEscClose = (evt) => {
-      if (evt.key === 'Escape') {
-        onClose();
-      }
-    };
-    document.addEventListener('keydown', handleEscClose);
-    // eslint-disable-next-line consistent-return
-    return () => {
-      document.removeEventListener('keydown', handleEscClose);
-    };
-  }, [isOpen]);
-
+  useCloseOnEscape(isOpen, onClose);
   const handleOverlayClose = (evt) => {
     const popup = evt.target.classList;
     if (popup.contains('popup')) {

@@ -14,7 +14,7 @@ import icon5 from '../../images/icons/reactions/popup/icon5.png';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import ShareIcon from '@mui/icons-material/Share';
 import CommentIcon from '@mui/icons-material/Comment';
-
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 export default function NewsCard({
   cardData,
   cardType,
@@ -24,6 +24,8 @@ export default function NewsCard({
   onCardRemoveClick,
   bookmarkCards,
   onReactionSelect,
+  onCommentClick,
+  classList,
 }) {
   const REACTIONS_ICONS = {
     lol: icon1,
@@ -40,11 +42,9 @@ export default function NewsCard({
     cardData;
 
   useEffect(() => {
-    console.log('NewsCardRRreactionId', cardData);
     handleSetReaction(cardData.reactionId);
+    console.log('classList', classList);
   }, []);
-  console.log('NewsCardRRreactionId', cardData);
-
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
   const isBookmarkActiveClass = isBookmark
     ? 'button__bookmark_type_active'
@@ -94,17 +94,15 @@ export default function NewsCard({
   );
 
   const handleSetReaction = (reactionId) => {
+    if (!reactionId) return;
     const reaction = REACTIONS_ICONS[reactionId];
     const reactionImg = <img width="30px" src={reaction} />;
     setSelectedReaction(reactionImg);
   };
 
   const handleReactionsClick = (e) => {
-    console.log('clicked on ', e.target.id);
     handleSetReaction(e.target.id);
-
     handleReactions();
-
     const reactionData = {
       reactionId: e.target.id,
       articleId: cardData.link,
@@ -112,10 +110,19 @@ export default function NewsCard({
     onReactionSelect(reactionData);
   };
 
+  const handleRemoveReaction = () => {
+    setSelectedReaction(<AddReactionIcon />);
+    setIsReactionsOpen(false);
+  };
+
+  const handleOnCommentClick = () => {
+    onCommentClick(cardData);
+  };
+
   return (
-    <article className="card">
+    <article className={`card ${classList?.card}`}>
       <div className="card__image-wrapper">
-        <div className="card__controls-wrapper">
+        <div className={`card__controls-wrapper ${classList?.imageWrapper}`}>
           {cardType === CardType.REMOVE ? removeButton : bookmarkButton}
           {showKeyword && <span className="card__keyword">{keyword}</span>}
         </div>
@@ -163,16 +170,18 @@ export default function NewsCard({
         <Button>
           <ShareIcon />
         </Button>
-        <Button>
+        <Button onClick={handleOnCommentClick}>
           <CommentIcon />
         </Button>
-        <Button onClick={handleReactions}>{selectedReaction}</Button>
+        <Button onDoubleClick={handleRemoveReaction} onClick={handleReactions}>
+          {selectedReaction}
+        </Button>
       </div>
       <Divider />
       <div className="card__text-wrapper">
         <p className="card__date">{date}</p>
-        <h3 className="card__title">{title}</h3>
-        <p className="card__text">{text}</p>
+        <h3 className={`card__title ${classList?.title}`}>{title}</h3>
+        <p className={`card__text ${classList?.text}`}>{text}</p>
         <a
           className="card__source"
           target="_blank"

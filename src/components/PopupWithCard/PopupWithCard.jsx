@@ -9,7 +9,7 @@ import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
 import './PopupWithCard.css';
 import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import InputLabel from '@mui/material/InputLabel';
-export default function PopupWithCard({ onClose, isOpen }) {
+export default function PopupWithCard({ onClose, isOpen, onCommentSubmit }) {
   const screenWidth = useScreenWidth();
   useCloseOnEscape(isOpen, onClose);
   const [isWriteCommentOpen, setIsWriteCommentOpen] = useState(false);
@@ -44,7 +44,7 @@ export default function PopupWithCard({ onClose, isOpen }) {
           {renderButtonComment()}
 
           <InputLabel id="demo-simple-select-label">Sort</InputLabel>
-          <Comment isOpen={isScreenSmallerThanTablet && isWriteCommentOpen} />
+          <Comment onCommentSubmit={onCommentSubmit} isOpen={isScreenSmallerThanTablet && isWriteCommentOpen} />
           <div className="message-list">
             <ChatMessage />
             <ChatMessage />

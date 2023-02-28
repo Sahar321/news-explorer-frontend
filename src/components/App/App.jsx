@@ -200,6 +200,36 @@ export default function App() {
           setIsSearchNotFoundVisible(true);
           return;
         }
+
+        setCards(articles);
+        localStorage.setItem('cards', JSON.stringify(articles));
+        setSearchPreloaderVisible(false);
+      })
+      .catch((err) => {
+        console.log(err);
+        handleMainError({ type: 'SERVER_NOT_AVAILABLE' });
+      });
+
+
+  };
+
+  /*   const handleSearchSubmit = (searchInput) => {
+    setSearchPreloaderVisible(true);
+    setIsSearchNotFoundVisible(false);
+    setCards([]);
+    setCardsToShow([]);
+    localStorage.removeItem('cards');
+    newsApi
+      .everything(searchInput)
+      .then(({ articles, status }) => {
+        if (status !== 'ok') {
+          throw new Error('NewsApi Error');
+        }
+        if (articles.length === 0) {
+          setSearchPreloaderVisible(false);
+          setIsSearchNotFoundVisible(true);
+          return;
+        }
         const cardListData = [];
         articles.forEach((element) => {
           cardListData.push({
@@ -221,7 +251,7 @@ export default function App() {
       .catch(() => {
         handleMainError({ type: 'SERVER_NOT_AVAILABLE' });
       });
-  };
+  }; */
 
   const setCardDateFormat = (dateStr) => {
     if (!dateStr) {
@@ -283,7 +313,9 @@ export default function App() {
         .then((res) => {
           setSavedCards(res);
         })
-        .catch(handleMainError);
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [loggedIn]);
 
@@ -330,6 +362,7 @@ export default function App() {
     }
   }, [isSignInPopupOpen, isSignUpPopupOpen, popupWithMessage]);
   useEffect(() => {
+    if (!savedCards) return;
     let bookmark = [];
     savedCards.forEach((card) => {
       bookmark.push(card.link);
@@ -375,8 +408,28 @@ export default function App() {
 
   const handleCardCommentClick = (card) => {
     setPopupWithCard({ isOpen: true, cardData: card });
+    /*   mainApi
+      .getAllArticlesDate(link)
+      .then((res) => {
+        console.log('getAllArticlesDate', res);
+        // setPopupWithCard({ isOpen: true, cardData: card, comments: res });
+      })
+      .catch((err) => {
+        console.warn('getAllArticlesDate', err);
+      }); */
   };
 
+  const handleCommentSubmit = (commentData) => {
+    console.log('handleCommentSubmit', commentData);
+    mainApi
+      .saveComment(commentData)
+      .then((res) => {
+        console.log('handleCommentSubmit', res);
+      })
+      .catch((err) => {
+        console.log('handleCommentSubmit', err);
+      });
+  };
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>
@@ -478,6 +531,7 @@ export default function App() {
           isOpen={popupWithCard.isOpen}
           cardData={popupWithCard.cardData}
           onClose={closeAllPopups}
+          onCommentSubmit={handleCommentSubmit}
         />
         {/*   </div> */}
       </div>

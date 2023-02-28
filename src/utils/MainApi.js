@@ -60,17 +60,36 @@ class MainApi {
   getAllArticles = () => {
     return this.customFetch(`${this._baseUrl}/articles`, this._headers);
   };
+  getAllArticlesDate = (link) => {
+    const linkObj = { link: link };
+    return this.customFetch(`${this._baseUrl}/articles/data`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(linkObj),
+    });
+  };
 
+  TESTgetAllArticlesDate = () => {
+    return this.customFetch(`${this._baseUrl}/articles/data`, this._headers);
+  };
   getUserInfo() {
     return this.customFetch(`${this._baseUrl}/users/me`, this._headers);
   }
 
   // cards
-  saveCardReaction = (reactionId)  =>{
+  saveCardReaction = (reactionId) => {
     return this.customFetch(`${this._baseUrl}/reaction`, {
       method: 'POST',
       headers: this._headers.headers,
       body: JSON.stringify(reactionId),
+    });
+  };
+
+  saveComment = (comment) => {
+    return this.customFetch(`${this._baseUrl}/comment`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(comment),
     });
   }
 }

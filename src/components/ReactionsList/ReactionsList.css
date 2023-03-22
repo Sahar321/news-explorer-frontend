@@ -1,3 +1,18 @@
-.reactions__list{
+.reactions__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+}
 
+.reactions__button {
+  display: inline-block;
+}
+.reactions__count{
+  position: absolute;
+    right: -14px;
+    bottom: -5px;
+    background-color: #ff6347cc;
+    padding: 0 7px;
+    border-radius: 50%;
 }

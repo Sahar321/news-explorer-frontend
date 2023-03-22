@@ -87,6 +87,7 @@ export default function SignUpPopup({
         value={values.name || ''}
         onChange={handleChange}
         minLength="5"
+        maxLength="30"
         required
       />
       {errors.username && (

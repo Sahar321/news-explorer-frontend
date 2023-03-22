@@ -9,13 +9,18 @@ import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
 import './PopupWithCard.css';
 import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import InputLabel from '@mui/material/InputLabel';
-export default function PopupWithCard({ onClose, isOpen, onCommentSubmit }) {
+export default function PopupWithCard({
+  cardData,
+  onClose,
+  isOpen,
+  onCommentSubmit,
+}) {
   const screenWidth = useScreenWidth();
   useCloseOnEscape(isOpen, onClose);
   const [isWriteCommentOpen, setIsWriteCommentOpen] = useState(false);
   const { TABLET_SIZE_WIDTH } = SCREEN_WIDTHS;
   const isScreenSmallerThanTablet = screenWidth < TABLET_SIZE_WIDTH;
-
+  const { comments } = cardData;
   const renderButtonComment = () => {
     if (!isScreenSmallerThanTablet) return null;
     const handleCommentButton = () => {
@@ -24,9 +29,14 @@ export default function PopupWithCard({ onClose, isOpen, onCommentSubmit }) {
     return (
       <Button onClick={handleCommentButton} className="comment__write-button">
         <HistoryEduIcon className="comment__write-icon" />
-      {isWriteCommentOpen ? 'Close Comment' : ''}
+        {isWriteCommentOpen ? 'Close Comment' : ''}
       </Button>
     );
+  };
+  const handleOnCommentSubmit = (value) => {
+    const { link } = cardData;
+    onCommentSubmit({ link, text: value });
+    setIsWriteCommentOpen(false);
   };
 
   return (
@@ -44,19 +54,23 @@ export default function PopupWithCard({ onClose, isOpen, onCommentSubmit }) {
           {renderButtonComment()}
 
           <InputLabel id="demo-simple-select-label">Sort</InputLabel>
-          <Comment onCommentSubmit={onCommentSubmit} isOpen={isScreenSmallerThanTablet && isWriteCommentOpen} />
+          <Comment
+            onCommentSubmit={handleOnCommentSubmit}
+            isOpen={isScreenSmallerThanTablet && isWriteCommentOpen}
+          />
           <div className="message-list">
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
-            <ChatMessage />
+            {comments?.map((comment, index) => (
+              <ChatMessage
+                key={comment.id}
+                index={index + 1}
+                comment={comment}
+              />
+            ))}
           </div>
         </div>
-        {screenWidth > TABLET_SIZE_WIDTH && <Comment isOpen={true} />}
+        {screenWidth > TABLET_SIZE_WIDTH && (
+          <Comment onCommentSubmit={handleOnCommentSubmit} isOpen={true} />
+        )}
       </div>
     </div>
   );

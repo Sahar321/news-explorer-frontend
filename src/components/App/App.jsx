@@ -85,7 +85,7 @@ export default function App() {
     console.log(message); //  todo: custom error message
   };
 
-  /// cards
+  /// crds
   const handleShowMoreCards = () => {
     if (cards.length > 0) {
       const newCards = cards.splice(0, CARDS_PAR_PAGE);
@@ -178,6 +178,7 @@ export default function App() {
   };
   const handleSignOutClick = () => {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('cards');
     setCurrentUser(null);
     setLoggedIn(LoginState.LOGGED_OUT);
   };
@@ -209,8 +210,6 @@ export default function App() {
         console.log(err);
         handleMainError({ type: 'SERVER_NOT_AVAILABLE' });
       });
-
-
   };
 
   /*   const handleSearchSubmit = (searchInput) => {
@@ -264,7 +263,18 @@ export default function App() {
     return result;
   };
 
-  const handleReactionSelect = (reactionData) => {
+  const handleUpdatedCard = (updatedCard) => {
+    const newCards = cardsToShow.map((currentCard) =>
+      currentCard.link === updatedCard.link ? updatedCard : currentCard
+    );
+    setCardsToShow(newCards);
+    console.log('handleUpdatedCard', cardsToShow);
+  };
+
+  const handleReactionSelect = (reactionData, cardDat) => {
+    console.log(cardDat);
+    handleUpdatedCard(cardDat);
+
     console.log('appReactionSelect', reactionData);
     mainApi
       .saveCardReaction(reactionData)

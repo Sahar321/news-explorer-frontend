@@ -5,8 +5,6 @@ import CardType from '../../constants/enums/CardType';
 import Button from '@mui/material/Button';
 import { Divider } from '@mui/material';
 
-
-
 import ReactionsList from '../ReactionsList/ReactionsList';
 import ReactionType from '../../constants/enums/ReactionType';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
@@ -25,18 +23,24 @@ export default function NewsCard({
   onCommentClick,
   classList,
 }) {
-
   const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
   const [selectedReaction, setSelectedReaction] = React.useState(
     <AddReactionIcon />
   );
-  const { keyword, title, text, date, source, link, image, reactionId } =
+  const { keyword, title, text, date, source, link, image, reaction } =
     cardData;
+  console.log('cardData', cardData);
 
   useEffect(() => {
-    handleSetReaction(cardData.reactionId);
+    const userCardReaction = cardData.reaction.find(
+      (reaction) => reaction.isOwner === true
+    );
+
+    if (!userCardReaction) return;
+    handleSetReaction(userCardReaction.reactionId);
+
     console.log('classList', classList);
-  }, []);
+  }, [cardData]);
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
   const isBookmarkActiveClass = isBookmark
     ? 'button__bookmark_type_active'
@@ -99,7 +103,8 @@ export default function NewsCard({
       reactionId: e.target.id,
       link: cardData.link,
     };
-    onReactionSelect(reactionData);
+    onReactionSelect(reactionData, cardData);
+
   };
 
   const handleRemoveReaction = () => {
@@ -126,42 +131,42 @@ export default function NewsCard({
           id="LOL"
           onClick={handleReactionsClick}
           width="30px"
-          src={ReactionType["LOL"]}
+          src={ReactionType['LOL']}
         />
         <img
           alt="wow"
           id="WOW"
           onClick={handleReactionsClick}
           width="30px"
-          src={ReactionType["WOW"]}
+          src={ReactionType['WOW']}
         />
         <img
           alt="LIKE"
           id="LIKE"
           onClick={handleReactionsClick}
           width="30px"
-          src={ReactionType["LIKE"]}
+          src={ReactionType['LIKE']}
         />
         <img
           alt="SAD"
           id="SAD"
           onClick={handleReactionsClick}
           width="30px"
-          src={ReactionType["SAD"]}
+          src={ReactionType['SAD']}
         />
         <img
           alt="love"
           id="LOVE"
           onClick={handleReactionsClick}
           width="30px"
-          src={ReactionType["LOVE"]}
+          src={ReactionType['LOVE']}
         />
       </div>
       <div className="card__reactions-warper">
         <Button>
           <ShareIcon />
         </Button>
-        <Button  onClick={handleOnCommentClick}>
+        <Button onClick={handleOnCommentClick}>
           <CommentIcon />
         </Button>
         <Button onDoubleClick={handleRemoveReaction} onClick={handleReactions}>
@@ -170,7 +175,7 @@ export default function NewsCard({
       </div>
       <Divider />
       <div className="card__text-wrapper">
-  {/*       <ReactionsList data={cardData} /> */}
+        <ReactionsList reactions={reaction} />
         <p className="card__date">{date}</p>
         <h3 className={`card__title ${classList?.title}`}>{title}</h3>
         <p className={`card__text ${classList?.text}`}>{text}</p>

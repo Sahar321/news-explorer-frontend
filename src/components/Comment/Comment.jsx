@@ -1,20 +1,23 @@
 /*eslint-disable */
-import React from 'react';
+import React, { useEffect } from 'react';
 import Button from '@mui/material/Button';
 import SendIcon from '@mui/icons-material/Send';
 import Textarea from '../Textarea/Textarea.jsx';
 import './Comment.css';
 
-export default function Comment({ isOpen, onCommentSubmit }) {
+export default function Comment(prop) {
+  const { isOpen, onCommentSubmit } = prop;
   const [value, setValue] = React.useState('');
   const handleChange = (evt) => {
     const { value } = evt.target;
     setValue(value);
   };
 
+
+
+
   const handleOnCommentSubmit = (e) => {
     e.preventDefault();
-    console.log(value);
     onCommentSubmit(value);
   };
   return (

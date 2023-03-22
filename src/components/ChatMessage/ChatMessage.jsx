@@ -8,28 +8,36 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import userAvatar from '../../images/icons/user_avatar.svg';
 import './ChatMessage.css';
 
-export default function comment() {
+export default function ChatMessage({ comment, index }) {
+  const { text, owner, date, rating } = comment;
+  const newDate = new Date(date);
+  const formattedDate = `${newDate.getDate().toString().padStart(2, '0')}/${(
+    newDate.getMonth() + 1
+  )
+    .toString()
+    .padStart(2, '0')}/${newDate
+    .getFullYear()
+    .toString()
+    .slice(-2)} ${newDate.toLocaleTimeString('en-US', {
+    hour12: false,
+    hour: '2-digit',
+    minute: '2-digit',
+  })}`;
 
   return (
-    <div
-      className="chat-message__warper"
-    >
+    <div className="chat-message__warper">
       <div className="chat-message__author-Info">
         <img
           src={userAvatar}
           alt="avatar"
           className="chat-message__avatar"
         ></img>
-        <label className="chat-message__author">Sahar Moshe</label>
-        <label className="chat-message__date">05/10/21 10:30</label>
-        <label className="chat-message__number">#651</label>
+        <label className="chat-message__author">{owner}</label>
+        <label className="chat-message__date">{formattedDate}</label>
+        <label className="chat-message__number">{`#${index}`}</label>
       </div>
       <div className="chat-message__message-warper">
-        <p className="chat-message__text">
-          Lorem Ipsum is simply dummy text of the printing and typesetting
-          industry. Lorem Ipsum has been the standard dummy text ever since the
-          1500s, when an unknown printer took a galley of type and scramble
-        </p>
+        <p className="chat-message__text">{text}</p>
         <label className="chat-message__replayTo">respond to Sahar Moshe</label>
       </div>
       <div className="chat-message__buttons-warper">

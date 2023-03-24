@@ -22,6 +22,7 @@ export default function NewsCard({
   onReactionSelect,
   onCommentClick,
   classList,
+  onUniqueReactionsClick,
 }) {
   const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
   const [selectedReaction, setSelectedReaction] = React.useState(
@@ -40,7 +41,7 @@ export default function NewsCard({
     handleSetReaction(userCardReaction.reactionId);
 
     console.log('classList', classList);
-  }, [cardData]);
+  }, [cardData.reaction]);
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
   const isBookmarkActiveClass = isBookmark
     ? 'button__bookmark_type_active'
@@ -97,14 +98,13 @@ export default function NewsCard({
   };
 
   const handleReactionsClick = (e) => {
-    handleSetReaction(e.target.id);
+    // handleSetReaction(e.target.id);
     handleReactions();
     const reactionData = {
       reactionId: e.target.id,
       link: cardData.link,
     };
     onReactionSelect(reactionData, cardData);
-
   };
 
   const handleRemoveReaction = () => {
@@ -115,6 +115,11 @@ export default function NewsCard({
   const handleOnCommentClick = (e) => {
     onCommentClick(cardData);
   };
+
+  const handleOnUniqueReactionsClick = (e) => {
+    onUniqueReactionsClick(cardData);
+  };
+
   return (
     <article className={`card ${classList?.card}`}>
       <div className="card__image-wrapper">
@@ -175,7 +180,7 @@ export default function NewsCard({
       </div>
       <Divider />
       <div className="card__text-wrapper">
-        <ReactionsList reactions={reaction} />
+        <ReactionsList onUniqueReactionsClick={handleOnUniqueReactionsClick} reactions={reaction} />
         <p className="card__date">{date}</p>
         <h3 className={`card__title ${classList?.title}`}>{title}</h3>
         <p className={`card__text ${classList?.text}`}>{text}</p>

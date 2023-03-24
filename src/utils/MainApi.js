@@ -1,5 +1,6 @@
 /*eslint-disable */
 import { BASE_URL } from '../constants/config.js';
+import {Buffer} from 'buffer';
 class MainApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -85,13 +86,22 @@ class MainApi {
     });
   };
 
+  getAllArticleComments = (articleId) => {
+    /* Buffer.from(articleId).toString('base64'));
+   Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('utf8') */
+    const articleIdBase64 = Buffer.from(articleId).toString('base64');
+    return this.customFetch(
+      `${this._baseUrl}/articles/${articleIdBase64}/comments`,
+      this._headers
+    );
+  };
   saveComment = (comment) => {
     return this.customFetch(`${this._baseUrl}/comment`, {
       method: 'POST',
       headers: this._headers.headers,
       body: JSON.stringify(comment),
     });
-  }
+  };
 }
 
 const mainApi = new MainApi({

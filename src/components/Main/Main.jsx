@@ -20,6 +20,7 @@ export default function Main({
   bookmarkCards,
   onReactionSelect,
   onCommentClick,
+  onUniqueReactionsClick,
 }) {
   const hasCardsToShow = cardsToShow.length > 0;
   return (
@@ -50,6 +51,7 @@ export default function Main({
             pageClassName="card-list__cards-wrapper_page_home"
             onReactionSelect={onReactionSelect}
             onCommentClick={onCommentClick}
+            onUniqueReactionsClick={onUniqueReactionsClick}
           />
         </>
       )}

@@ -24,6 +24,7 @@ import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
 import PopupWithCard from '../PopupWithCard/PopupWithCard.jsx';
+import PopupWithReactionsInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 ///  pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
@@ -56,6 +57,8 @@ export default function App() {
     isOpen: false,
     cardData: '',
   });
+  const [isReactionPopupOpen, setIsReactionPopupOpen] = useState(true);
+  const [articleReactions, setArticleReactions] = useState([]);
   const [disappearingMessages, setDisappearingMessages] = useState({
     message: '',
     visible: false,
@@ -86,11 +89,19 @@ export default function App() {
   };
 
   /// crds
-  const handleShowMoreCards = () => {
-    if (cards.length > 0) {
-      const newCards = cards.splice(0, CARDS_PAR_PAGE);
-      setCardsToShow((prvCards) => [...prvCards, ...newCards]);
-    }
+
+  const [cardSliceNumber, setCardSliceNumber] = useState(0);
+  const handleLoadMoreCards = () => {
+    const { length } = cards;
+    const hasMoreCards = length > 0 && cardSliceNumber < length;
+    if (!hasMoreCards) return;
+    const newCards = cards.slice(
+      cardSliceNumber,
+      cardSliceNumber + CARDS_PAR_PAGE
+    );
+    setCardSliceNumber((prevSliceNumber) => prevSliceNumber + CARDS_PAR_PAGE);
+    setCardsToShow((prevCards) => [...prevCards, ...newCards]);
+    console.log('load more cards');
   };
   const handleCardRemove = ({ _id }) => {
     if (_id) {
@@ -212,46 +223,6 @@ export default function App() {
       });
   };
 
-  /*   const handleSearchSubmit = (searchInput) => {
-    setSearchPreloaderVisible(true);
-    setIsSearchNotFoundVisible(false);
-    setCards([]);
-    setCardsToShow([]);
-    localStorage.removeItem('cards');
-    newsApi
-      .everything(searchInput)
-      .then(({ articles, status }) => {
-        if (status !== 'ok') {
-          throw new Error('NewsApi Error');
-        }
-        if (articles.length === 0) {
-          setSearchPreloaderVisible(false);
-          setIsSearchNotFoundVisible(true);
-          return;
-        }
-        const cardListData = [];
-        articles.forEach((element) => {
-          cardListData.push({
-            keyword: searchInput,
-            title: element.title,
-            text: element.description,
-            date: setCardDateFormat(element.publishedAt),
-            source: element.source?.name,
-            link: element.url,
-            image: element.urlToImage || imageNotAvailable,
-            reactionId: element.reactionId,
-          });
-        });
-
-        setCards(cardListData);
-        localStorage.setItem('cards', JSON.stringify(cardListData));
-        setSearchPreloaderVisible(false);
-      })
-      .catch(() => {
-        handleMainError({ type: 'SERVER_NOT_AVAILABLE' });
-      });
-  }; */
-
   const setCardDateFormat = (dateStr) => {
     if (!dateStr) {
       return '';
@@ -271,15 +242,21 @@ export default function App() {
     console.log('handleUpdatedCard', cardsToShow);
   };
 
-  const handleReactionSelect = (reactionData, cardDat) => {
-    console.log(cardDat);
-    handleUpdatedCard(cardDat);
-
-    console.log('appReactionSelect', reactionData);
+  const handleReactionSelect = (reactionData, cardData) => {
     mainApi
       .saveCardReaction(reactionData)
-      .then((res) => {
-        console.log('slsected', res);
+      .then(({ reactionId, isOwner, link }) => {
+        const updatedReactions = cardData?.reaction.map((currentCard) => {
+          return currentCard.isOwner === isOwner
+            ? { reactionId, isOwner, link }
+            : currentCard;
+        });
+        if (updatedReactions.length === 0) {
+          updatedReactions.push({ reactionId, isOwner, link });
+        }
+        cardData.reaction = updatedReactions;
+
+        handleUpdatedCard(cardData);
       })
       .catch((err) => {
         console.log(err);
@@ -330,7 +307,8 @@ export default function App() {
   }, [loggedIn]);
 
   useEffect(() => {
-    handleShowMoreCards();
+    setCardSliceNumber(0);
+    handleLoadMoreCards();
   }, [cards]);
 
   useEffect(() => {
@@ -440,6 +418,31 @@ export default function App() {
         console.log('handleCommentSubmit', err);
       });
   };
+
+  const handlePopupWithReactionClose = () => {
+    setIsReactionPopupOpen(false);
+  };
+
+  /*   const [reactionPostData, setReactionData] = useState({
+    userId: '',
+    userName: '',
+    userAvatar: '',
+    userReaction: '',
+    userReactionDate: '',
+  }); */
+  const handleUniqueReactionsClick = ({ link }) => {
+    mainApi
+      .getAllArticleComments(link)
+      .then((res) => {
+        setArticleReactions(res);
+        console.log('handleUniqueReactionsClick', res);
+        setIsReactionPopupOpen(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>
@@ -461,12 +464,13 @@ export default function App() {
                 onSearchSubmit={handleSearchSubmit}
                 cardsToShow={cardsToShow}
                 cards={cards}
-                onShowMoreClick={handleShowMoreCards}
+                onShowMoreClick={handleLoadMoreCards}
                 isSearchPreloaderVisible={isSearchPreloaderVisible}
                 isSearchNotFoundVisible={isSearchNotFoundVisible}
                 bookmarkCards={bookmarkCards}
                 onReactionSelect={handleReactionSelect}
                 onCommentClick={handleCardCommentClick}
+                onUniqueReactionsClick={handleUniqueReactionsClick}
               />
             }
           />
@@ -491,6 +495,7 @@ export default function App() {
                   onCardRemoveClick={handleCardRemove}
                   savedCards={savedCards}
                   setAppStyles={setAppStyles}
+                  onUniqueReactionsClick={handleUniqueReactionsClick}
                 />
               }
             />
@@ -536,6 +541,7 @@ export default function App() {
           {disappearingMessages.title && <AlertTitle>Server Error</AlertTitle>}
           {disappearingMessages.message}
         </Alert>
+
         {/*    <div className="testt"> */}
         <PopupWithCard
           isOpen={popupWithCard.isOpen}
@@ -543,7 +549,29 @@ export default function App() {
           onClose={closeAllPopups}
           onCommentSubmit={handleCommentSubmit}
         />
-        {/*   </div> */}
+        <PopupWithReactionsInfo
+          onClose={handlePopupWithReactionClose}
+          isOpen={isReactionPopupOpen}
+        >
+          <div className="popup__container">
+            {isReactionPopupOpen &&
+              articleReactions?.map(({ name, reactionId }, index) => (
+                <div key={index} className="popup__reaction">
+                  <div className="popup__reaction-info">
+                    <img
+                      className="popup__reaction-avatar"
+                      src={'https://picsum.photos/200/300'}
+                      alt="avatar"
+                    />
+                    <div className="popup__reaction-name">{name}</div>
+                    <i
+                      className={`icon icon-reaction icon_reaction_${reactionId.toLowerCase()}`}
+                    ></i>
+                  </div>
+                </div>
+              ))}
+          </div>
+        </PopupWithReactionsInfo>
       </div>
     </CurrentUserContext.Provider>
   );

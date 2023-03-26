@@ -24,8 +24,6 @@ export default function SignUpPopup({
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!isValid) return;
-    console.log('values', values);
-    console.log('errors', errors);
     onSubmit(values);
   };
 

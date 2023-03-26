@@ -3,16 +3,30 @@
   flex-direction: row;
   justify-content: space-evenly;
   flex-wrap: nowrap;
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 5px 0;
+  background-color: #0000004a;
+  backdrop-filter: blur(2px);
+  box-shadow: inset #ffffff63 0px 0px 20px 0px;
 }
 
 .reactions__button {
   display: inline-block;
 }
-.reactions__count{
-  position: absolute;
-    right: -14px;
-    bottom: -5px;
-    background-color: #ff6347cc;
-    padding: 0 7px;
-    border-radius: 50%;
+.reactions__count {
+    background-color: #ffffff75;
+    padding: 1px 4px;
+    border-radius: 5px;
+    align-self: self-end;
+    font-size: 14px;
+    font-family: monospace;
+    box-shadow: #ffffff21 -14px -9px 18px 22px;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+    color: white;
+    left: 25px;
+    bottom: -4px;
+    position: absolute;
 }

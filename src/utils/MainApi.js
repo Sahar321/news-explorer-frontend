@@ -70,6 +70,15 @@ class MainApi {
     });
   };
 
+  getAllArticlesReaction = (articleId) => {
+
+    const articleIdBase64 = Buffer.from(articleId).toString('base64');
+    return this.customFetch(
+      `${this._baseUrl}/articles/${articleIdBase64}/reactions`,
+      this._headers
+    );
+  };
+
   TESTgetAllArticlesDate = () => {
     return this.customFetch(`${this._baseUrl}/articles/data`, this._headers);
   };

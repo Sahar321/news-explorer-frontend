@@ -6,7 +6,6 @@ import ReactionType from '../../constants/enums/ReactionType';
 import './ReactionsList.css';
 
 export default function ReactionsList({ reactions, onUniqueReactionsClick }) {
-  console.log('ReactionsList', reactions);
   // Create a map to count the number of times each reaction appears
   if (!reactions) {
     return null;

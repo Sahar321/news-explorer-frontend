@@ -30,17 +30,15 @@ export default function NewsCard({
   );
   const { keyword, title, text, date, source, link, image, reaction } =
     cardData;
-  console.log('cardData', cardData);
 
   useEffect(() => {
-    const userCardReaction = cardData.reaction.find(
+    const userCardReaction = cardData?.reaction?.find(
       (reaction) => reaction.isOwner === true
     );
 
     if (!userCardReaction) return;
     handleSetReaction(userCardReaction.reactionId);
 
-    console.log('classList', classList);
   }, [cardData.reaction]);
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
   const isBookmarkActiveClass = isBookmark
@@ -128,6 +126,12 @@ export default function NewsCard({
           {showKeyword && <span className="card__keyword">{keyword}</span>}
         </div>
         <img className="card__image" src={image} alt="card" />
+        {reaction.length > 0 && (
+          <ReactionsList
+            onUniqueReactionsClick={handleOnUniqueReactionsClick}
+            reactions={reaction}
+          />
+        )}
       </div>
       <Divider />
       <div className={`reactions reactions_visible_${isReactionsOpen}`}>
@@ -180,7 +184,6 @@ export default function NewsCard({
       </div>
       <Divider />
       <div className="card__text-wrapper">
-        <ReactionsList onUniqueReactionsClick={handleOnUniqueReactionsClick} reactions={reaction} />
         <p className="card__date">{date}</p>
         <h3 className={`card__title ${classList?.title}`}>{title}</h3>
         <p className={`card__text ${classList?.text}`}>{text}</p>

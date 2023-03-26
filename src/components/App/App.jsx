@@ -1,7 +1,14 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { Divider } from '@mui/material';
+import totalPostIcon from '../../images/icons/totalpost.png';
+import thankyouIcon from '../../images/icons/thankyouIcon.png';
+import Button from '@mui/material/Button';
+import Autocomplete from '@mui/material/Autocomplete';
+import ReactionsList from '../ReactionsList/ReactionsList';
 import './App.css';
+
 // apis
 import mainApi from '../../utils/MainApi';
 import newsApi from '../../utils/NewsApi';
@@ -29,6 +36,7 @@ import PopupWithReactionsInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
 import { Alert, AlertTitle } from '@mui/material';
+import SearchForm from '../SearchForm/SearchForm';
 export default function App() {
   const location = useLocation();
   const token = localStorage.getItem('jwt');
@@ -432,7 +440,7 @@ export default function App() {
   }); */
   const handleUniqueReactionsClick = ({ link }) => {
     mainApi
-      .getAllArticleComments(link)
+      .getAllArticlesReaction(link)
       .then((res) => {
         setArticleReactions(res);
         console.log('handleUniqueReactionsClick', res);
@@ -496,6 +504,7 @@ export default function App() {
                   savedCards={savedCards}
                   setAppStyles={setAppStyles}
                   onUniqueReactionsClick={handleUniqueReactionsClick}
+                  onReactionSelect={handleReactionSelect}
                 />
               }
             />
@@ -554,21 +563,51 @@ export default function App() {
           isOpen={isReactionPopupOpen}
         >
           <div className="popup__container">
+            <input type="text" className="popup__reactions-filter-input" />
+            <div className="popup__reactions-filter">
+              <Button className="popup__reactions-filter-button">All</Button>
+              <Button className="popup__reactions-filter-button">LOL</Button>
+              <Button className="popup__reactions-filter-button">WOW</Button>
+              <Button className="popup__reactions-filter-button">SAD</Button>
+              <Button className="popup__reactions-filter-button">SHOCK</Button>
+            </div>
+
             {isReactionPopupOpen &&
               articleReactions?.map(({ name, reactionId }, index) => (
-                <div key={index} className="popup__reaction">
-                  <div className="popup__reaction-info">
-                    <img
-                      className="popup__reaction-avatar"
-                      src={'https://picsum.photos/200/300'}
-                      alt="avatar"
-                    />
+                <>
+                  <hr />
+                  <div key={index} className="popup__reaction">
                     <div className="popup__reaction-name">{name}</div>
-                    <i
-                      className={`icon icon-reaction icon_reaction_${reactionId.toLowerCase()}`}
-                    ></i>
+                    <div className="userbox">
+                      <img
+                        className="popup__reaction-avatar"
+                        src={'https://picsum.photos/300/300'}
+                        alt="avatar"
+                      />
+
+                      <div className="popup__reaction-stats">
+                        <img
+                          src={totalPostIcon}
+                          className="popup__reaction-totalPost"
+                          alt=""
+                        />
+                        <span className="popup__reaction-count">30h+</span>
+                      </div>
+                      <div className="popup__reaction-stats na">
+                        <img
+                          src={thankyouIcon}
+                          className="popup__reaction-thankyou"
+                          alt=""
+                        />
+                        <span className="popup__reaction-count">30h+</span>
+                      </div>
+
+                      <i
+                        className={`icon icon-reaction icon-popup-reaction icon_reaction_${reactionId.toLowerCase()}`}
+                      ></i>
+                    </div>
                   </div>
-                </div>
+                </>
               ))}
           </div>
         </PopupWithReactionsInfo>

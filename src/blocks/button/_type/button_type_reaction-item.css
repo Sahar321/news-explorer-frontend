@@ -1,17 +1,17 @@
 .button_type_reaction-item{
-  background-repeat: no-repeat;
-  font-family: 'Roboto', Arial, sans-serif;
-  font-style: normal;
-  font-weight: 500;
-  font-size: 24px;
-  box-sizing: border-box;
-  display: flex;
-  gap: 5px;
-  color: #1976d2;
+    background-repeat: no-repeat;
+    font-family: 'Roboto', Arial, sans-serif;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    box-sizing: border-box;
+    display: flex;
+    gap: 1px;
+    color: #1976d2;
+    flex-direction: row-reverse;
   position: relative;
+
 }
-
-
 
 @media screen and (max-width: 769px) {
 .button_type_sign-out {

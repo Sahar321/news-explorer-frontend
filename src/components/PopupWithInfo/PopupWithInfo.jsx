@@ -1,14 +1,10 @@
+/*eslint-disable */
 import React from 'react';
 import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
 
 import './PopupWithInfo.css';
 
-export default function Popup({
-  onClose,
-  isOpen,
-  title,
-  children,
-}) {
+export default function Popup({ onClose, isOpen, title, children }) {
   useCloseOnEscape(isOpen, onClose);
   const handleOverlayClose = (evt) => {
     const popup = evt.target.classList;
@@ -29,7 +25,7 @@ export default function Popup({
           type="button"
           onClick={onClose}
         ></button>
-        <h2 className="popup__title">{title}</h2>
+        {title && <h2 className="popup__title">{title}</h2>}
 
         {children}
       </div>

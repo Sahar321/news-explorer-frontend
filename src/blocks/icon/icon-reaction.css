@@ -6,11 +6,3 @@
 }
 
 
-.icon-popup-reaction {
-  width: 70px;
-  height: 70px;
-  background-size: contain;
-  z-index: 5555;
-  grid-area: reaction;
-  transform: rotate(19deg);
-}

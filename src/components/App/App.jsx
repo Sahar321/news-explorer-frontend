@@ -1,12 +1,13 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
-import { Divider } from '@mui/material';
-import totalPostIcon from '../../images/icons/totalpost.png';
-import thankyouIcon from '../../images/icons/thankyouIcon.png';
+import { Divider, iconButtonClasses } from '@mui/material';
+
 import Button from '@mui/material/Button';
 import Autocomplete from '@mui/material/Autocomplete';
 import ReactionsList from '../ReactionsList/ReactionsList';
+import Userbox from '../Userbox/Userbox';
+import ReactionStats from '../ReactionStats/ReactionStats';
 import './App.css';
 
 // apis
@@ -37,10 +38,11 @@ import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
 import { Alert, AlertTitle } from '@mui/material';
 import SearchForm from '../SearchForm/SearchForm';
+import ChatMessage from '../ChatMessage/ChatMessage';
 export default function App() {
   const location = useLocation();
   const token = localStorage.getItem('jwt');
-
+  const [cardComments, setCardComments] = useState([]);
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
   const [appStyles, setAppStyles] = useState('');
@@ -403,16 +405,15 @@ export default function App() {
   }, []);
 
   const handleCardCommentClick = (card) => {
-    setPopupWithCard({ isOpen: true, cardData: card });
-    /*   mainApi
-      .getAllArticlesDate(link)
+    mainApi
+      .getAllArticleComments(card.link)
       .then((res) => {
-        console.log('getAllArticlesDate', res);
-        // setPopupWithCard({ isOpen: true, cardData: card, comments: res });
+        setCardComments(res);
+        setPopupWithCard({ isOpen: true, cardData: card });
       })
       .catch((err) => {
         console.warn('getAllArticlesDate', err);
-      }); */
+      });
   };
 
   const handleCommentSubmit = (commentData) => {
@@ -557,7 +558,8 @@ export default function App() {
           cardData={popupWithCard.cardData}
           onClose={closeAllPopups}
           onCommentSubmit={handleCommentSubmit}
-        />
+          comments={cardComments}
+        ></PopupWithCard>
         <PopupWithReactionsInfo
           onClose={handlePopupWithReactionClose}
           isOpen={isReactionPopupOpen}
@@ -573,40 +575,16 @@ export default function App() {
             </div>
 
             {isReactionPopupOpen &&
-              articleReactions?.map(({ name, reactionId }, index) => (
+              articleReactions?.map((data, index) => (
                 <>
                   <hr />
-                  <div key={index} className="popup__reaction">
-                    <div className="popup__reaction-name">{name}</div>
-                    <div className="userbox">
-                      <img
-                        className="popup__reaction-avatar"
-                        src={'https://picsum.photos/300/300'}
-                        alt="avatar"
-                      />
-
-                      <div className="popup__reaction-stats">
-                        <img
-                          src={totalPostIcon}
-                          className="popup__reaction-totalPost"
-                          alt=""
-                        />
-                        <span className="popup__reaction-count">30h+</span>
-                      </div>
-                      <div className="popup__reaction-stats na">
-                        <img
-                          src={thankyouIcon}
-                          className="popup__reaction-thankyou"
-                          alt=""
-                        />
-                        <span className="popup__reaction-count">30h+</span>
-                      </div>
-
-                      <i
-                        className={`icon icon-reaction icon-popup-reaction icon_reaction_${reactionId.toLowerCase()}`}
-                      ></i>
-                    </div>
-                  </div>
+                  <Userbox
+                    key={index}
+                    username={data.name}
+                    avatar={imageNotAvailable}
+                  >
+                    <ReactionStats data={data} />
+                  </Userbox>
                 </>
               ))}
           </div>

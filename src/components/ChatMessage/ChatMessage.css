@@ -117,6 +117,7 @@
   line-height: 1.5;
   margin-top: 10px;
   padding-right: 10px;
+  white-space: pre-line;
 }
 .chat-message__replayTo {
   grid-area: replayTo;
@@ -134,4 +135,83 @@
 }
 .message-list .chat-message__warper:first-child:hover {
   margin-top: 10px;
+}
+
+
+.testt {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.container {
+}
+
+@keyframes bounce {
+  0% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(400px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+.xcontainer {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  border: 1px solid black;
+}
+
+.ximage {
+  position: absolute;
+  width: 20px;
+  height: 25px;
+  animation: bounce 2s infinite;
+}
+
+
+.popup__reaction-thankyou {
+
+    width: 40px;
+    height: 40px;
+
+}
+.userbox{
+  display: grid;
+  grid-template-areas:
+      "avatar stats1 reaction"
+      "avatar stats2 reaction";
+  padding-left: 8px;
+  padding-top: 6px;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 72px 1fr 72px;
+}
+
+
+.popup__reaction-count{
+  padding-bottom: 5px;
+  align-self: self-end;
+  font-family: 'roboto slab';
+  font-size: 18px;
+}
+
+
+
+
+.na{
+  display: flex;
+  grid-area: stats2;
+}
+
+.popup__reactions-filter{
+  display: flex;
+
 }

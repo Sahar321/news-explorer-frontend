@@ -1,0 +1,43 @@
+
+
+.userbox__warper {
+  backdrop-filter: blur(38px);
+  width: 97%;
+  padding-left: 2px;
+  padding-bottom: 10px;
+  background-color: white;
+  box-sizing: border-box;
+  box-shadow: #b9b9b940 0px 0px 7px 3px;
+  border-top-right-radius: 10px;
+}
+
+.userbox__username {
+  font-size: 18px;
+  font-family: 'roboto slab';
+  letter-spacing: 0.5px;
+  padding: 5px;
+  text-align: left;
+  background-color: #d6d6d61f;
+  border-top-right-radius: 10px;
+  width: 100%;
+}
+
+.userbox__inner-box {
+  display: grid;
+  grid-template-areas:
+    'avatar stats1 reaction'
+    'avatar stats2 reaction';
+  padding-left: 8px;
+  padding-top: 6px;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 72px 1fr 72px;
+}
+.userbox__avatar{
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+  grid-area: avatar;
+  justify-self: flex-start;
+}

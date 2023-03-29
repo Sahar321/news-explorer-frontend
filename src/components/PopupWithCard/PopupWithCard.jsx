@@ -14,13 +14,14 @@ export default function PopupWithCard({
   onClose,
   isOpen,
   onCommentSubmit,
+  comments,
 }) {
   const screenWidth = useScreenWidth();
   useCloseOnEscape(isOpen, onClose);
   const [isWriteCommentOpen, setIsWriteCommentOpen] = useState(false);
   const { TABLET_SIZE_WIDTH } = SCREEN_WIDTHS;
   const isScreenSmallerThanTablet = screenWidth < TABLET_SIZE_WIDTH;
-  const { comments } = cardData;
+
   const renderButtonComment = () => {
     if (!isScreenSmallerThanTablet) return null;
     const handleCommentButton = () => {
@@ -61,7 +62,7 @@ export default function PopupWithCard({
           <div className="message-list">
             {comments?.map((comment, index) => (
               <ChatMessage
-                key={comment.id}
+                key={index}
                 index={index + 1}
                 comment={comment}
               />

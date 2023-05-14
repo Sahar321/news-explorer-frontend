@@ -8,6 +8,7 @@
   display: block;
   color: #ff0000;
   margin-bottom: 13px;
+  word-break: break-all;
   margin-top: calc((var(--popup-input-email-margin-bottom) * -1 ) + 3px);
 }
 

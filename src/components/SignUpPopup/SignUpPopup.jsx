@@ -67,6 +67,8 @@ export default function SignUpPopup({
         value={values.password || ''}
         onChange={handleChange}
         autoComplete="on"
+        minLength="6"
+        maxLength="20"
         required
       />
       {errors.password && (
@@ -88,7 +90,7 @@ export default function SignUpPopup({
         maxLength="30"
         required
       />
-      {errors.username && (
+      {errors.name && (
         <span className="popup__input-error">{errors.name}</span>
       )}
     </PopupWithForm>

@@ -65,6 +65,8 @@ export default function SignInPopup(props) {
         type="password"
         className="popup__input"
         name="password"
+        minLength="6"
+        maxLength="20"
         placeholder="Enter password"
         value={values.password || ''}
         onChange={handleChange}

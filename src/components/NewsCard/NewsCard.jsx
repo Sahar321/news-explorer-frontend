@@ -126,7 +126,7 @@ export default function NewsCard({
           {showKeyword && <span className="card__keyword">{keyword}</span>}
         </div>
         <img className="card__image" src={image} alt="card" />
-        {reaction.length > 0 && (
+        {reaction?.length > 0 && (
           <ReactionsList
             onUniqueReactionsClick={handleOnUniqueReactionsClick}
             reactions={reaction}

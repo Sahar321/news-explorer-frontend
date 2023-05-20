@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useRef } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { Divider, iconButtonClasses } from '@mui/material';
 
@@ -42,6 +42,10 @@ import { Alert, AlertTitle } from '@mui/material';
 import SearchForm from '../SearchForm/SearchForm';
 import ChatMessage from '../ChatMessage/ChatMessage';
 export default function App() {
+
+
+
+
   const location = useLocation();
   const token = localStorage.getItem('jwt');
   const [cardComments, setCardComments] = useState([]);
@@ -257,6 +261,10 @@ export default function App() {
   };
 
   const handleReactionSelect = (reactionData, cardData) => {
+    if (!loggedIn) {
+      setSignUpPopupOpen(true);
+      return;
+    }
     mainApi
       .saveCardReaction(reactionData)
       .then(({ reactionId, isOwner, link }) => {
@@ -409,6 +417,10 @@ export default function App() {
   }, []);
 
   const handleCardCommentClick = (card) => {
+    if (!loggedIn) {
+      setSignUpPopupOpen(true);
+      return;
+    }
     mainApi
       .getAllArticleComments(card.link)
       .then((res) => {
@@ -421,6 +433,10 @@ export default function App() {
   };
 
   const handleCommentSubmit = (commentData) => {
+    if (!loggedIn) {
+      setSignUpPopupOpen(true);
+      return;
+    }
     console.log('handleCommentSubmit', commentData);
     mainApi
       .saveComment(commentData)
@@ -464,7 +480,6 @@ export default function App() {
     setIsAvatarPopupOpen(true);
   };
 
-
   const handleAvatarSubmit = (avatar) => {
     setIsAvatarPopupOpen(false);
     mainApi
@@ -478,8 +493,8 @@ export default function App() {
   };
 
   useEffect(() => {
- console.log('articleReactions', articleReactions);
-  }, [articleReactions])
+    console.log('articleReactions', articleReactions);
+  }, [articleReactions]);
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -541,7 +556,15 @@ export default function App() {
             />
           </Route>
           <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
-            <Route path="/profile" element={<Profile onAvatarClick={handleAvatarClick} setAppStyles={setAppStyles}  />} />
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  onAvatarClick={handleAvatarClick}
+                  setAppStyles={setAppStyles}
+                />
+              }
+            />
           </Route>
         </Routes>
 

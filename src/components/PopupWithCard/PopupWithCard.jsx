@@ -15,6 +15,7 @@ export default function PopupWithCard({
   isOpen,
   onCommentSubmit,
   comments,
+  onThankYou,
 }) {
   const screenWidth = useScreenWidth();
   useCloseOnEscape(isOpen, onClose);
@@ -65,6 +66,7 @@ export default function PopupWithCard({
                 key={index}
                 index={index + 1}
                 comment={comment}
+                onThankYou={onThankYou}
               />
             ))}
           </div>

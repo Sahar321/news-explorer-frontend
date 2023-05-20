@@ -1,0 +1,16 @@
+.profile__avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+
+  background-color: #e0e0e0;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.profile__avatar:hover {
+  cursor: pointer;
+  background-size: 46px 46px;
+  background-color: #c7c7c7e8;
+  background-image: url(../images/icons/edit-icon.png);
+}

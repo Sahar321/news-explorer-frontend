@@ -9,7 +9,7 @@
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: block;
-  width: 358px;
+ width: 98%;
   margin-bottom: 30px;
 }
 .popup__input::placeholder {
@@ -20,7 +20,7 @@
 }
 @media screen and (max-width: 480px) {
   .popup__input {
-    width: 288px;
+
     margin-bottom: 31px;
   }
 }

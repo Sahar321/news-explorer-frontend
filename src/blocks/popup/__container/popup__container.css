@@ -11,12 +11,21 @@
   border-radius: 16px;
   justify-self: center;
   align-self: baseline;
+  position: sticky;
+  top: 8vh;
 }
 @media screen and (max-width: 480px) {
   .popup__container {
-    height: 100%;
-    margin-top: 56px;
     width: 100%;
+    max-width: 310px;
   }
 
+}
+
+
+@media (min-height: calc(100vh + 1px)) {
+  /* Styles to apply if element height is bigger than the screen height */
+  .popup__container {
+    background-color: red; /* Example style change for the container */
+  }
 }

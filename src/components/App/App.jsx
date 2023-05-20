@@ -30,12 +30,14 @@ import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 ///  popups components
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
+import PopupWithAvatar from '../AvatarPopup/AvatarPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
 import PopupWithCard from '../PopupWithCard/PopupWithCard.jsx';
 import PopupWithReactionsInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 ///  pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
+import Profile from '../../pages/Profile.jsx';
 import { Alert, AlertTitle } from '@mui/material';
 import SearchForm from '../SearchForm/SearchForm';
 import ChatMessage from '../ChatMessage/ChatMessage';
@@ -52,6 +54,7 @@ export default function App() {
   const [cardsToShow, setCardsToShow] = useState([]);
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
+  const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
   const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
   const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
@@ -67,7 +70,7 @@ export default function App() {
     isOpen: false,
     cardData: '',
   });
-  const [isReactionPopupOpen, setIsReactionPopupOpen] = useState(true);
+  const [isReactionPopupOpen, setIsReactionPopupOpen] = useState(false);
   const [articleReactions, setArticleReactions] = useState([]);
   const [disappearingMessages, setDisappearingMessages] = useState({
     message: '',
@@ -159,6 +162,7 @@ export default function App() {
     setAuthErrorMessage({ message: '', visible: false });
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
+    setIsAvatarPopupOpen(false);
   };
   const handleSignInClick = () => {
     closeAllPopups();
@@ -432,13 +436,6 @@ export default function App() {
     setIsReactionPopupOpen(false);
   };
 
-  /*   const [reactionPostData, setReactionData] = useState({
-    userId: '',
-    userName: '',
-    userAvatar: '',
-    userReaction: '',
-    userReactionDate: '',
-  }); */
   const handleUniqueReactionsClick = ({ link }) => {
     mainApi
       .getAllArticlesReaction(link)
@@ -451,6 +448,38 @@ export default function App() {
         console.log(err);
       });
   };
+
+  const handleThankYou = (comment) => {
+    mainApi
+      .sendThankYouToCommentOwner(comment)
+      .then((res) => {
+        console.log('handleThankYou', res);
+      })
+      .catch((err) => {
+        console.log('handleThankYou', err);
+      });
+  };
+
+  const handleAvatarClick = () => {
+    setIsAvatarPopupOpen(true);
+  };
+
+
+  const handleAvatarSubmit = (avatar) => {
+    setIsAvatarPopupOpen(false);
+    mainApi
+      .updateAvatar(avatar)
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+ console.log('articleReactions', articleReactions);
+  }, [articleReactions])
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -496,6 +525,7 @@ export default function App() {
             }
           />
           <Route path="*" element={<PageNotFound />} />
+
           <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
             <Route
               path="/SavedArticles"
@@ -509,6 +539,9 @@ export default function App() {
                 />
               }
             />
+          </Route>
+          <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
+            <Route path="/profile" element={<Profile onAvatarClick={handleAvatarClick} setAppStyles={setAppStyles}  />} />
           </Route>
         </Routes>
 
@@ -552,13 +585,19 @@ export default function App() {
           {disappearingMessages.message}
         </Alert>
 
-        {/*    <div className="testt"> */}
+        <PopupWithAvatar
+          onClose={closeAllPopups}
+          isOpen={isAvatarPopupOpen}
+          onSubmit={handleAvatarSubmit}
+        />
+
         <PopupWithCard
           isOpen={popupWithCard.isOpen}
           cardData={popupWithCard.cardData}
           onClose={closeAllPopups}
           onCommentSubmit={handleCommentSubmit}
           comments={cardComments}
+          onThankYou={handleThankYou}
         ></PopupWithCard>
         <PopupWithReactionsInfo
           onClose={handlePopupWithReactionClose}
@@ -575,15 +614,15 @@ export default function App() {
             </div>
 
             {isReactionPopupOpen &&
-              articleReactions?.map((data, index) => (
+              articleReactions?.map((stats, index) => (
                 <>
                   <hr />
                   <Userbox
                     key={index}
-                    username={data.name}
-                    avatar={imageNotAvailable}
+                    username={stats.name}
+                    avatar={stats.avatar || imageNotAvailable}
                   >
-                    <ReactionStats data={data} />
+                    <ReactionStats stats={stats} />
                   </Userbox>
                 </>
               ))}

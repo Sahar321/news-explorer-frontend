@@ -1,3 +1,4 @@
+/*  */
 .chat-message__warper {
   display: grid;
   grid-template-columns: 80px 1fr;
@@ -45,9 +46,9 @@
   gap: 0px 0px;
   grid-auto-flow: row;
   grid-template-areas:
-      'messageNumber messageNumber '
-      'userAvatar userName'
-      'userAvatar messageDate';
+    'messageNumber messageNumber '
+    'userAvatar userName'
+    'userAvatar messageDate';
   grid-area: authorInfo;
 }
 .chat-message__avatar {
@@ -68,8 +69,8 @@
   margin-top: 10px;
   line-height: 27px;
   font-family: 'roboto slab', Arial, sans-serif;
-    font-weight: 700;
-    line-height: 27px;
+  font-weight: 700;
+  line-height: 27px;
 }
 .chat-message__date {
   grid-area: messageDate;
@@ -124,6 +125,11 @@
 }
 .chat-message__buttons-warper {
   grid-area: messageButtons;
+  display: flex;
+}
+
+.chat-meassge-main{
+margin-top: 10px;
 }
 
 .message-list {
@@ -136,7 +142,6 @@
 .message-list .chat-message__warper:first-child:hover {
   margin-top: 10px;
 }
-
 
 .testt {
   position: fixed;
@@ -176,18 +181,15 @@
   animation: bounce 2s infinite;
 }
 
-
 .popup__reaction-thankyou {
-
-    width: 40px;
-    height: 40px;
-
+  width: 40px;
+  height: 40px;
 }
-.userbox{
+.userbox {
   display: grid;
   grid-template-areas:
-      "avatar stats1 reaction"
-      "avatar stats2 reaction";
+    'avatar stats1 reaction'
+    'avatar stats2 reaction';
   padding-left: 8px;
   padding-top: 6px;
   justify-items: center;
@@ -195,23 +197,23 @@
   grid-template-columns: 72px 1fr 72px;
 }
 
-
-.popup__reaction-count{
+.popup__reaction-count {
   padding-bottom: 5px;
   align-self: self-end;
   font-family: 'roboto slab';
   font-size: 18px;
 }
 
-
-
-
-.na{
+.na {
   display: flex;
   grid-area: stats2;
 }
 
-.popup__reactions-filter{
+.popup__reactions-filter {
   display: flex;
+}
 
+.iconthankYou {
+  width: 40px;
+  height: 40px;
 }

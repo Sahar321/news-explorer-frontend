@@ -9,11 +9,20 @@ import userAvatar from '../../images/icons/user_avatar.svg';
 import { DateTime } from 'luxon';
 import './ChatMessage.css';
 import Userbox from '../Userbox/Userbox';
-
-export default function ChatMessage({ comment, index }) {
+import thankyouIcon from '../../images/icons/thankyouIcon.png';
+export default function ChatMessage({ comment, index, onThankYou }) {
   const [commentData, setCommentData] = useState(formatComment(comment));
 
-  function formatComment({ text, username, rating, date, avatar }) {
+  const handleOnThankYou = () => {
+    const thankYouData = {
+      id: commentData.id,
+      toOwner: commentData.owner,
+    };
+
+    onThankYou(thankYouData);
+  };
+
+  function formatComment({ text, username, rating, date, avatar, id, owner }) {
     const formattedDate = DateTime.fromISO(date, { zone: 'utc' }).toFormat(
       'dd/MM/yyyy HH:mm'
     );
@@ -24,6 +33,8 @@ export default function ChatMessage({ comment, index }) {
       rating,
       date: formattedDate,
       avatar,
+      id,
+      owner,
     };
   }
 
@@ -32,24 +43,35 @@ export default function ChatMessage({ comment, index }) {
   }, [comment]);
 
   return (
-    <div key={commentData.index} className="">
+    <div key={commentData.index} className="chat-meassge-main">
       <Userbox username={commentData.username} avatar={commentData.avatar}>
         <p>{commentData.text}</p>
+        <div className="chat-message__buttons-warper">
+          <IconButton aria-label="Reply" title="Reply">
+            <ReplyIcon />
+          </IconButton>
+          <IconButton aria-label="Report" title="Report">
+            <ReportIcon />
+          </IconButton>
+          <IconButton aria-label="Edit" title="Edit">
+            <EditIcon />
+          </IconButton>
+          <IconButton aria-label="Delete" title="Delete">
+            <DeleteIcon />
+          </IconButton>
+          <IconButton
+            onClick={handleOnThankYou}
+            aria-label="send thank You"
+            title="send thank You"
+          >
+            <img
+              className="iconthankYou"
+              src={thankyouIcon}
+              alt="thankyouIcon"
+            />
+          </IconButton>
+        </div>
       </Userbox>
-      <div className="chat-message__buttons-warper">
-        <IconButton aria-label="Reply" title="Reply">
-          <ReplyIcon />
-        </IconButton>
-        <IconButton aria-label="Report" title="Report">
-          <ReportIcon />
-        </IconButton>
-        <IconButton aria-label="Edit" title="Edit">
-          <EditIcon />
-        </IconButton>
-        <IconButton aria-label="Delete" title="Delete">
-          <DeleteIcon />
-        </IconButton>
-      </div>
     </div>
   );
 }

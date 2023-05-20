@@ -1,6 +1,6 @@
 /*eslint-disable */
 import { BASE_URL } from '../constants/config.js';
-import {Buffer} from 'buffer';
+import { Buffer } from 'buffer';
 class MainApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -71,7 +71,6 @@ class MainApi {
   };
 
   getAllArticlesReaction = (articleId) => {
-
     const articleIdBase64 = Buffer.from(articleId).toString('base64');
     return this.customFetch(
       `${this._baseUrl}/articles/${articleIdBase64}/reactions`,
@@ -95,6 +94,14 @@ class MainApi {
     });
   };
 
+  updateAvatar = (link) => {
+    return this.customFetch(`${this._baseUrl}/profile/avatar`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(link),
+    });
+  };
+
   getAllArticleComments = (articleId) => {
     /* Buffer.from(articleId).toString('base64'));
    Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('utf8') */
@@ -109,6 +116,13 @@ class MainApi {
       method: 'POST',
       headers: this._headers.headers,
       body: JSON.stringify(comment),
+    });
+  };
+  sendThankYouToCommentOwner = (thankYou) => {
+    return this.customFetch(`${this._baseUrl}/comment/thank-you`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(thankYou),
     });
   };
 }

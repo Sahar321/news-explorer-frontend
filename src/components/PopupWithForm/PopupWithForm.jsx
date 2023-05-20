@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
 import './PopupWithForm.css';
 
@@ -14,6 +14,7 @@ export default function PopupWithForm({
   isValid,
   onError,
 }) {
+  const [isScrenHeightBigger, setIsScrenHeightBigger] = useState(false);
   useCloseOnEscape(isOpen, onClose);
   const handleOverlayClose = (evt) => {
     const popup = evt.target.classList;
@@ -21,13 +22,42 @@ export default function PopupWithForm({
       onClose();
     }
   };
+  const elementRef = useRef(null);
 
+  useEffect(() => {
+    const element = elementRef.current;
+    const handleResize = () => {
+      const elm = element.children[0];
+      if (!elm.classList.contains('popup__container')) {
+        return;
+      }
+
+      const elementHeight = elm.clientHeight;
+      const screenHeight = window.innerHeight;
+
+      setIsScrenHeightBigger(elementHeight > screenHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    // Initial check on component mount
+    handleResize();
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
   return (
     <div
+      ref={elementRef}
       className={`popup popup_isVisible_${isOpen}`}
       onClick={handleOverlayClose}
     >
-      <div className="popup__container">
+      <div
+        className={`popup__container ${
+          isScrenHeightBigger && 'popup__form_fix_hight'
+        }`}
+      >
         <button
           aria-label="Close Popup"
           className="button button_type_close popup__button-close"

@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useEffect, useState,useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { Divider, iconButtonClasses } from '@mui/material';
 
@@ -42,10 +42,6 @@ import { Alert, AlertTitle } from '@mui/material';
 import SearchForm from '../SearchForm/SearchForm';
 import ChatMessage from '../ChatMessage/ChatMessage';
 export default function App() {
-
-
-
-
   const location = useLocation();
   const token = localStorage.getItem('jwt');
   const [cardComments, setCardComments] = useState([]);
@@ -252,12 +248,21 @@ export default function App() {
     return result;
   };
 
-  const handleUpdatedCard = (updatedCard) => {
-    const newCards = cardsToShow.map((currentCard) =>
-      currentCard.link === updatedCard.link ? updatedCard : currentCard
+  const handleUpdatedCard = (newCard) => {
+    // update localStorage
+    const localCards = JSON.parse(localStorage.getItem('cards'));
+    const updatedLocalCards = localCards.map((currentCard) =>
+      currentCard.link === newCard.link ? newCard : currentCard
     );
-    setCardsToShow(newCards);
-    console.log('handleUpdatedCard', cardsToShow);
+    localStorage.setItem('cards', JSON.stringify(updatedLocalCards));
+
+    // update cardsToShow
+    setCardsToShow((prevCards) =>
+      prevCards.map((currentCard) =>
+        currentCard.link === newCard.link ? newCard : currentCard
+      )
+    );
+
   };
 
   const handleReactionSelect = (reactionData, cardData) => {

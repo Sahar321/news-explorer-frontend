@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef,createRef  } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { Divider, iconButtonClasses } from '@mui/material';
 
@@ -237,17 +237,6 @@ export default function App() {
       });
   };
 
-  const setCardDateFormat = (dateStr) => {
-    if (!dateStr) {
-      return '';
-    }
-    const date = new Date(dateStr);
-    const result = `${
-      ENGLISH_MONTHS[date.getMonth()]
-    } ${date.getDate()}, ${date.getFullYear()}`;
-    return result;
-  };
-
   const handleUpdatedCard = (newCard) => {
     // update localStorage
     const localCards = JSON.parse(localStorage.getItem('cards'));
@@ -255,14 +244,12 @@ export default function App() {
       currentCard.link === newCard.link ? newCard : currentCard
     );
     localStorage.setItem('cards', JSON.stringify(updatedLocalCards));
-
     // update cardsToShow
     setCardsToShow((prevCards) =>
       prevCards.map((currentCard) =>
         currentCard.link === newCard.link ? newCard : currentCard
       )
     );
-
   };
 
   const handleReactionSelect = (reactionData, cardData) => {
@@ -302,7 +289,7 @@ export default function App() {
         });
       }, 5000);
   }, [disappearingMessages]);
-  React.useEffect(() => {
+  useEffect(() => {
     const { shouldOpenSignInPopup, shouldOpenSignUpPopup } =
       location.state || false;
     if (shouldOpenSignInPopup) {
@@ -384,7 +371,7 @@ export default function App() {
     });
     setBookmarkCards(bookmark);
   }, [savedCards]);
-  const googleSigninButton = React.createRef();
+  const googleSigninButton = createRef();
   useEffect(() => {
     const handleCredentialResponse = (credential) => {
       console.log('handleCredentialResponse', credential);

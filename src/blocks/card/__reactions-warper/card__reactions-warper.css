@@ -5,4 +5,5 @@
   align-content: center;
   flex-wrap: wrap;
   box-shadow: rgb(0 0 0 / 10%) 0px 0px 5px;
+  min-height: 42px;
 }

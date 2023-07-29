@@ -15,7 +15,7 @@ export default function Popup({ onClose, isOpen, title, children, containerType 
 
   return (
     <div
-      className={`popup popup_isVisible_${isOpen}`}
+      className={`popup popup__TopPr popup_isVisible_${isOpen}`}
       onClick={handleOverlayClose}
     >
       <div

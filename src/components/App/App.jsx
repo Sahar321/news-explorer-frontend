@@ -1,13 +1,10 @@
 /*eslint-disable*/
-import React, { useEffect, useState, useRef,createRef  } from 'react';
+import React, { useEffect, useState, useRef, createRef } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import { Divider, iconButtonClasses } from '@mui/material';
-
-import Button from '@mui/material/Button';
 import Autocomplete from '@mui/material/Autocomplete';
 import ReactionsList from '../ReactionsList/ReactionsList';
 import Userbox from '../Userbox/Userbox';
-import ReactionStats from '../ReactionStats/ReactionStats';
 import './App.css';
 
 // apis
@@ -27,7 +24,9 @@ import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
+import UserReactionList from '../UserReactionList/UserReactionList';
 ///  popups components
+import PopupWithInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
 import PopupWithAvatar from '../AvatarPopup/AvatarPopup.jsx';
@@ -41,9 +40,12 @@ import Profile from '../../pages/Profile.jsx';
 import { Alert, AlertTitle } from '@mui/material';
 import SearchForm from '../SearchForm/SearchForm';
 import ChatMessage from '../ChatMessage/ChatMessage';
+import SocialShareButton from '../SocialShareButton/SocialShareButton';
+import useMobileDetect from '../../utils/hooks/useMobileDetect';
 export default function App() {
   const location = useLocation();
   const token = localStorage.getItem('jwt');
+  const isMobile = useMobileDetect();
   const [cardComments, setCardComments] = useState([]);
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
@@ -57,6 +59,7 @@ export default function App() {
   const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
   const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
+  const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
   const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
   const [authErrorMessage, setAuthErrorMessage] = useState({
     message: '',
@@ -163,6 +166,7 @@ export default function App() {
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
     setIsAvatarPopupOpen(false);
+    setIsSharePopupOpen(false);
   };
   const handleSignInClick = () => {
     closeAllPopups();
@@ -203,7 +207,7 @@ export default function App() {
   };
   const handleSignOutClick = () => {
     localStorage.removeItem('jwt');
-    localStorage.removeItem('cards');
+    // localStorage.removeItem('cards');
     setCurrentUser(null);
     setLoggedIn(LoginState.LOGGED_OUT);
   };
@@ -246,10 +250,26 @@ export default function App() {
     localStorage.setItem('cards', JSON.stringify(updatedLocalCards));
     // update cardsToShow
     setCardsToShow((prevCards) =>
-      prevCards.map((currentCard) =>
-        currentCard.link === newCard.link ? newCard : currentCard
-      )
+      prevCards.map((currentCard) => {
+        return currentCard.link === newCard.link ? newCard : currentCard;
+      })
     );
+  };
+
+  const handleRemoveReaction = (cardData) => {
+    if (!loggedIn) {
+      setSignUpPopupOpen(true);
+      return;
+    }
+    mainApi
+      .removeCardReaction(cardData.link)
+      .then((res) => {
+        cardData.reaction = res;
+        handleUpdatedCard(cardData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const handleReactionSelect = (reactionData, cardData) => {
@@ -259,16 +279,19 @@ export default function App() {
     }
     mainApi
       .saveCardReaction(reactionData)
-      .then(({ reactionId, isOwner, link }) => {
+      .then((prop) => {
+        /*         const { reactionId, isOwner, link } = prop;
         const updatedReactions = cardData?.reaction.map((currentCard) => {
           return currentCard.isOwner === isOwner
             ? { reactionId, isOwner, link }
             : currentCard;
         });
-        if (updatedReactions.length === 0) {
+        if (updatedReactions.length > 0) {
           updatedReactions.push({ reactionId, isOwner, link });
         }
-        cardData.reaction = updatedReactions;
+        cardData.reaction = updatedReactions; */
+
+        cardData.reaction = prop;
 
         handleUpdatedCard(cardData);
       })
@@ -488,6 +511,26 @@ export default function App() {
     console.log('articleReactions', articleReactions);
   }, [articleReactions]);
 
+  const handleCardShare = async (cardData) => {
+    console.log('handleCardShare', cardData);
+    isMobile ? handleMobileShareModel() : setIsSharePopupOpen(true);
+  };
+
+  const handleMobileShareModel = async () => {
+    const shareData = {
+      title: 'MDN',
+      text: 'Learn web development on MDN!',
+      url: 'https://developer.mozilla.org',
+    };
+    console.log('shareData', shareData);
+    try {
+      await navigator.share(shareData);
+      console.log('shareData', 'MDN shared successfully');
+    } catch (err) {
+      console.log('shareDataError', `Error: ${err}`);
+    }
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>
@@ -516,6 +559,8 @@ export default function App() {
                 onReactionSelect={handleReactionSelect}
                 onCommentClick={handleCardCommentClick}
                 onUniqueReactionsClick={handleUniqueReactionsClick}
+                onRemoveReaction={handleRemoveReaction}
+                onCardShare={handleCardShare}
               />
             }
           />
@@ -539,10 +584,13 @@ export default function App() {
               element={
                 <SavedArticles
                   onCardRemoveClick={handleCardRemove}
+                  onCardShare={handleCardShare}
+                  onCommentClick={handleCardCommentClick}
                   savedCards={savedCards}
                   setAppStyles={setAppStyles}
                   onUniqueReactionsClick={handleUniqueReactionsClick}
                   onReactionSelect={handleReactionSelect}
+                  onRemoveReaction={handleRemoveReaction}
                 />
               }
             />
@@ -600,6 +648,10 @@ export default function App() {
           {disappearingMessages.message}
         </Alert>
 
+        <PopupWithInfo onClose={closeAllPopups} isOpen={isSharePopupOpen}>
+          <SocialShareButton />
+        </PopupWithInfo>
+
         <PopupWithAvatar
           onClose={closeAllPopups}
           isOpen={isAvatarPopupOpen}
@@ -609,40 +661,27 @@ export default function App() {
         <PopupWithCard
           isOpen={popupWithCard.isOpen}
           cardData={popupWithCard.cardData}
+          loggedIn={loggedIn}
           onClose={closeAllPopups}
           onCommentSubmit={handleCommentSubmit}
           comments={cardComments}
           onThankYou={handleThankYou}
+          onUniqueReactionsClick={handleUniqueReactionsClick}
+          onReactionSelect={handleReactionSelect}
+          onRemoveReaction={handleRemoveReaction}
+          onCardBookmarkClick={handleCardBookmarkClick}
+          onCardRemoveClick={handleCardRemove}
+          bookmarkCards={bookmarkCards}
+          onCardShare={handleCardShare}
         ></PopupWithCard>
-        <PopupWithReactionsInfo
+        <PopupWithInfo
+          title={'Reactions'}
           onClose={handlePopupWithReactionClose}
           isOpen={isReactionPopupOpen}
+          containerType="popup_type_user-reactions"
         >
-          <div className="popup__container">
-            <input type="text" className="popup__reactions-filter-input" />
-            <div className="popup__reactions-filter">
-              <Button className="popup__reactions-filter-button">All</Button>
-              <Button className="popup__reactions-filter-button">LOL</Button>
-              <Button className="popup__reactions-filter-button">WOW</Button>
-              <Button className="popup__reactions-filter-button">SAD</Button>
-              <Button className="popup__reactions-filter-button">SHOCK</Button>
-            </div>
-
-            {isReactionPopupOpen &&
-              articleReactions?.map((stats, index) => (
-                <>
-                  <hr />
-                  <Userbox
-                    key={index}
-                    username={stats.name}
-                    avatar={stats.avatar || imageNotAvailable}
-                  >
-                    <ReactionStats stats={stats} />
-                  </Userbox>
-                </>
-              ))}
-          </div>
-        </PopupWithReactionsInfo>
+          <UserReactionList data={articleReactions} />
+        </PopupWithInfo>
       </div>
     </CurrentUserContext.Provider>
   );

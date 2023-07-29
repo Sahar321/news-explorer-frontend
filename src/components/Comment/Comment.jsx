@@ -28,11 +28,12 @@ export default function Comment(prop) {
       <Textarea
         name="text"
         id="text"
-        maxExpandable="8"
-        expandableBy="4"
+        maxExpandable="30"
+        expandableBy="2"
         expandable={true}
         onChange={handleChange}
         value={value}
+        placeholder="Write a comment..."
       />
       <Button
         type="submit"

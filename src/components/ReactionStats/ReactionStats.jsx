@@ -18,7 +18,6 @@ console.log(stats);
       K: 1000,
       M: 1000000,
       B: 1000000000,
-
     };
 
     for (const [key, value] of Object.entries(letterNumberShortcut)) {
@@ -41,7 +40,7 @@ console.log(stats);
       if (number >= abbreviations[i].value) {
         const scaledNumber = number / abbreviations[i].value;
         const formattedNumber = scaledNumber.toFixed(1);
-        return formattedNumber + abbreviations[i].symbol +"+";
+        return formattedNumber + abbreviations[i].symbol + '+';
       }
     }
 
@@ -57,7 +56,7 @@ console.log(stats);
   }, [stats]);
   return (
     <>
-      <div className="reaction-stats">
+      <div className="reaction-stats reaction-stats_type_comment-count">
         <img
           src={totalPostIcon}
           className="popup__reaction__count-icon"
@@ -65,7 +64,7 @@ console.log(stats);
         />
         <span className="reaction-stats__total-count">{totalComments}</span>
       </div>
-      <div className="reaction-stats na">
+      <div className="reaction-stats reaction-stats_type_thank-you">
         <img
           src={thankyouIcon}
           className="popup__reaction__count-icon"

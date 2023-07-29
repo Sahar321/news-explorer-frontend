@@ -3,15 +3,18 @@
   flex-direction: row;
   justify-content: space-evenly;
   flex-wrap: nowrap;
-  position: absolute;
+
   width: 100%;
-  bottom: 0;
+color: white;
   padding: 5px 0;
   background-color: #0000004a;
   backdrop-filter: blur(2px);
   box-shadow: inset #ffffff63 0px 0px 20px 0px;
 }
-
+.reactions__list_type_article {
+  position: absolute;
+  bottom: 0;
+}
 .reactions__button {
   display: inline-block;
 }
@@ -25,7 +28,6 @@
     box-shadow: #ffffff21 -14px -9px 18px 22px;
     -webkit-backdrop-filter: blur(30px);
     backdrop-filter: blur(30px);
-    color: white;
     left: 25px;
     bottom: -4px;
     position: absolute;

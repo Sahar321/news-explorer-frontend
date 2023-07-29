@@ -29,8 +29,6 @@ export default function PopupWithCard({
   const screenWidth = useScreenWidth();
   useCloseOnEscape(isOpen, onClose);
 
-
-
   const handleOnCommentSubmit = (value) => {
     const { link } = cardData;
     onCommentSubmit({ link, text: value });
@@ -63,7 +61,7 @@ export default function PopupWithCard({
           onClick={onClose}
         ></button>
         <h2 className="card__title popup__title_type_card">
-          {`${cardData.source} - ${cardData.date}`}
+          {`${cardData.source}`} <br /> <span style={{fontSize:"14px", marginTop:"5px"}}>{`${cardData.date}`}</span>
         </h2>
 
         <NewsCard

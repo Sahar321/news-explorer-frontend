@@ -19,10 +19,13 @@ export default function NewsCard({
   onCardBookmarkClick,
   onCardRemoveClick,
   bookmarkCards,
-  onReactionSelect,
   onCommentClick,
   classList,
+  onReactionSelect,
   onUniqueReactionsClick,
+  onRemoveReaction,
+  elementsToHide,
+  onCardShare,
 }) {
   const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
   const [selectedReaction, setSelectedReaction] = React.useState(
@@ -30,16 +33,19 @@ export default function NewsCard({
   );
   const { keyword, title, text, date, source, link, image, reaction } =
     cardData;
-
+  const handleOnCardShare = () => {
+    onCardShare(cardData);
+  };
   useEffect(() => {
     const userCardReaction = cardData?.reaction?.find(
       (reaction) => reaction.isOwner === true
     );
-
+    console.log('userCardReaction', userCardReaction);
     if (!userCardReaction) return;
     handleSetReaction(userCardReaction.reactionId);
-
   }, [cardData.reaction]);
+
+
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
   const isBookmarkActiveClass = isBookmark
     ? 'button__bookmark_type_active'
@@ -73,10 +79,6 @@ export default function NewsCard({
     setIsReactionsOpen(!isReactionsOpen);
   };
 
-  const handleShare = () => {
-    navigator.share('asd');
-  };
-
   const removeButton = (
     <>
       <button
@@ -108,28 +110,38 @@ export default function NewsCard({
   const handleRemoveReaction = () => {
     setSelectedReaction(<AddReactionIcon />);
     setIsReactionsOpen(false);
+    onRemoveReaction(cardData);
   };
 
   const handleOnCommentClick = (e) => {
     onCommentClick(cardData);
   };
 
-  const handleOnUniqueReactionsClick = (e) => {
+  const handleOnUniqueReactionsClick = () => {
     onUniqueReactionsClick(cardData);
   };
 
   return (
-    <article className={`card ${classList?.card}`}>
-      <div className="card__image-wrapper">
-        <div className={`card__controls-wrapper ${classList?.imageWrapper}`}>
+    <article className={`card ${classList?.card ? classList.card : ''}`}>
+      <div
+        className={`card__image-wrapper ${
+          classList?.imageWrapper ? classList.imageWrapper : ''
+        }`}
+      >
+        <div className={`card__controls-wrapper`}>
           {cardType === CardType.REMOVE ? removeButton : bookmarkButton}
           {showKeyword && <span className="card__keyword">{keyword}</span>}
         </div>
-        <img className="card__image" src={image} alt="card" />
+        <img
+          className={`card__image ${classList?.image ? classList.image : ''}`}
+          src={image}
+          alt="card"
+        />
         {reaction?.length > 0 && (
           <ReactionsList
             onUniqueReactionsClick={handleOnUniqueReactionsClick}
             reactions={reaction}
+            classList={'reactions__list_type_article'}
           />
         )}
       </div>
@@ -172,28 +184,44 @@ export default function NewsCard({
         />
       </div>
       <div className="card__reactions-warper">
-        <Button>
+        <Button onClick={handleOnCardShare}>
           <ShareIcon />
         </Button>
-        <Button onClick={handleOnCommentClick}>
-          <CommentIcon />
-        </Button>
+        {!elementsToHide?.comment ? (
+          <Button onClick={handleOnCommentClick}>
+            <CommentIcon />
+          </Button>
+        ) : (
+          ''
+        )}
         <Button onDoubleClick={handleRemoveReaction} onClick={handleReactions}>
           {selectedReaction}
         </Button>
       </div>
       <Divider />
-      <div className="card__text-wrapper">
-        <p className="card__date">{date}</p>
-        <h3 className={`card__title ${classList?.title}`}>{title}</h3>
-        <p className={`card__text ${classList?.text}`}>{text}</p>
+      <div
+        className={`card__text-wrapper ${
+          classList?.textWrapper ? classList.textWrapper : ''
+        }`}
+      >
+        {!elementsToHide?.date ? <p className="card__date">{date}</p> : ''}
+
+        <h3
+          className={`card__title ${classList?.title ? classList.title : ''}`}
+        >
+          {title}
+        </h3>
+
+        <p className={`card__text ${classList?.text ? classList.text : ''}`}>
+          {text}
+        </p>
         <a
           className="card__source"
           target="_blank"
           rel="noreferrer"
           href={link}
         >
-          {source}
+          {!elementsToHide?.source ? source : ''}
         </a>
       </div>
     </article>

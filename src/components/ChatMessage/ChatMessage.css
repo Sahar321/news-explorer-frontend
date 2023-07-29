@@ -225,8 +225,7 @@
   align-content: center;
   gap: 5px;
   list-style: none;
-  margin-right: calc(var(--padding-margin-fix) * -1 );
-  margin-left: calc(var(--padding-margin-fix) * -1 );
+
 }
 
 .iconthankYou {

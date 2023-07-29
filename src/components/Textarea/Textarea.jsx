@@ -8,6 +8,7 @@ export default function Textarea({
   maxExpandable = 20,
   value,
   onChange,
+  placeholder
 }) {
   const textareaClassName = `popup__input comment__input`;
 
@@ -23,6 +24,7 @@ export default function Textarea({
       rows={expandable ? getRows() : 4}
       className={textareaClassName}
       onChange={onChange}
+      placeholder={placeholder}
     />
   );
 }

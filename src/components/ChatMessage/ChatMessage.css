@@ -128,16 +128,22 @@
   display: flex;
 }
 
-.chat-meassge-main{
-margin-top: 10px;
+.chat-meassge-main {
+  margin-bottom: 15px;
+  background: white;
+  border-radius: 6px;
+  padding: 5px;
+  padding-bottom: 10px;
 }
 
 .message-list {
   display: flex;
   flex-direction: column;
   overflow-y: scroll;
-  height: 800px;
-  padding-top: 17px;
+
+  max-height: 500px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+  rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
 }
 .message-list .chat-message__warper:first-child:hover {
   margin-top: 10px;
@@ -210,10 +216,87 @@ margin-top: 10px;
 }
 
 .popup__reactions-filter {
+
   display: flex;
+  flex-wrap: wrap;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  gap: 5px;
+  list-style: none;
+  margin-right: calc(var(--padding-margin-fix) * -1 );
+  margin-left: calc(var(--padding-margin-fix) * -1 );
 }
 
 .iconthankYou {
   width: 40px;
   height: 40px;
+}
+
+.comment-box {
+  padding-left: 20px;
+  display: grid;
+  grid-template-columns: auto 1fr 1fr;
+  grid-template-rows: auto 1fr auto;
+  grid-auto-columns: 1fr;
+  gap: 10px;
+  max-width: 98%;
+  grid-auto-flow: row;
+  grid-template-areas:
+    'header header header'
+    'avatar text text'
+    'buttons buttons buttons';
+}
+
+.comment-box__username {
+  margin: 0;
+  grid-area: header;
+  justify-self: left;
+  height: fit-content;
+  font-family: 'Roboto Slab', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+}
+.comment-box__date {
+  align-self: center;
+  padding-right: 10px;
+  justify-self: end;
+  grid-area: header;
+  height: fit-content;
+  padding: 0;
+  text-decoration: none;
+  color: #b6bcbf;
+  font-family: 'Roboto Slab', Arial, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 12px;
+  padding-right: 10px;
+}
+.comment-box__avatar {
+  grid-area: avatar;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+}
+.comment-box__text {
+  grid-area: text;
+}
+.comment-box__buttons {
+  grid-area: buttons;
+  height: 30px;
+  display: flex;
+
+  align-content: center;
+  justify-content: space-between;
+  width: 90%;
+  box-sizing: border-box;
+  justify-self: center;
+}
+
+@media screen and (max-width: 768px) {
+  .comment-box {
+    padding-left: 2px;
+  }
 }

@@ -9,7 +9,9 @@
   align-self: self-start;
   margin-left: 14px;
   margin-bottom: 20px;
-  max-width: 95%;
+  max-width: 93%;
+  grid-area: comment;
+  margin-top: 20px;
 }
 .comment__warper_visible_true {
   display: grid;
@@ -23,7 +25,8 @@ display: none;
 .comment__button {
   height: 40px;
   grid-area: 1 / 2 / 2 / 3;
-  align-self: flex-end;
-  margin-right: 10px !important;
-  margin-bottom: 10px !important; /* bad practice, but used to override default class */
+  /* bad practice, but used to override default class */
+  margin: 0 !important;
+  align-self: center;
+  margin-right: 21px !important;
 }

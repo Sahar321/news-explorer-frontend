@@ -4,7 +4,7 @@ import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
 
 import './PopupWithInfo.css';
 
-export default function Popup({ onClose, isOpen, title, children }) {
+export default function Popup({ onClose, isOpen, title, children, containerType }) {
   useCloseOnEscape(isOpen, onClose);
   const handleOverlayClose = (evt) => {
     const popup = evt.target.classList;
@@ -18,7 +18,9 @@ export default function Popup({ onClose, isOpen, title, children }) {
       className={`popup popup_isVisible_${isOpen}`}
       onClick={handleOverlayClose}
     >
-      <div className="popup__container popup__container_type_message">
+      <div
+        className={`popup__container popup__container_type_message   ${containerType}`}
+      >
         <button
           aria-label="Close Message Popup"
           className="button button_type_close popup__button-close"

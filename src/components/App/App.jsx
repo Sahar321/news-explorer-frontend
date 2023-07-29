@@ -648,7 +648,12 @@ export default function App() {
           {disappearingMessages.message}
         </Alert>
 
-        <PopupWithInfo onClose={closeAllPopups} isOpen={isSharePopupOpen}>
+        <PopupWithInfo
+          onClose={() => {
+            setIsSharePopupOpen(false);
+          }}
+          isOpen={isSharePopupOpen}
+        >
           <SocialShareButton />
         </PopupWithInfo>
 
@@ -675,7 +680,7 @@ export default function App() {
           onCardShare={handleCardShare}
         ></PopupWithCard>
         <PopupWithInfo
-          title={'Reactions'}
+          title="Reactions"
           onClose={handlePopupWithReactionClose}
           isOpen={isReactionPopupOpen}
           containerType="popup_type_user-reactions"

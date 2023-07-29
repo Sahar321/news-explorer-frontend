@@ -44,7 +44,7 @@ export default function ChatMessage({ comment, index, onThankYou }) {
 
   return (
     <div key={commentData.index} className="chat-meassge-main">
-      <Userbox username={commentData.username} avatar={commentData.avatar}>
+      {/*       <Userbox username={commentData.username} avatar={commentData.avatar}>
         <p>{commentData.text}</p>
         <div className="chat-message__buttons-warper">
           <IconButton aria-label="Reply" title="Reply">
@@ -71,7 +71,40 @@ export default function ChatMessage({ comment, index, onThankYou }) {
             />
           </IconButton>
         </div>
-      </Userbox>
+      </Userbox> */}
+
+
+      <div className="comment-box">
+        <h3 className="comment-box__username">{commentData.username}</h3>
+        <span className="comment-box__date">{commentData.date}</span>
+        <img src={commentData.avatar} className="comment-box__avatar"></img>
+        <p className="comment-box__text">{commentData.text}</p>
+        <div className="comment-box__buttons">
+          <IconButton aria-label="Reply" title="Reply">
+            <ReplyIcon />
+          </IconButton>
+          <IconButton aria-label="Report" title="Report">
+            <ReportIcon />
+          </IconButton>
+          <IconButton aria-label="Edit" title="Edit">
+            <EditIcon />
+          </IconButton>
+          <IconButton aria-label="Delete" title="Delete">
+            <DeleteIcon />
+          </IconButton>
+          <IconButton
+            onClick={handleOnThankYou}
+            aria-label="send thank You"
+            title="send thank You"
+          >
+            <img
+              className="iconthankYou"
+              src={thankyouIcon}
+              alt="thankyouIcon"
+            />
+          </IconButton>
+        </div>
+      </div>
     </div>
   );
 }

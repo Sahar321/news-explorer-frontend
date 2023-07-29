@@ -1,16 +1,13 @@
 .popup__container_type_card {
   width: 91vw;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: auto auto;
-  grid-auto-columns: 1fr;
-  gap: 25px 10px;
-  padding-bottom: 50px;
-  grid-template-areas:
-      'top top'
-      'card comments';
-  max-width: 1200px;
+  padding-bottom: 16px;
+  max-width: 750px;
+  display: flex;
+  gap: 0px 0px;
   align-self: baseline;
+  position: relative;
+  background-color: #EFF2F5;
+
 }
 
 @media screen and (max-width: 769px) {

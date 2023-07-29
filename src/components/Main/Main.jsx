@@ -1,4 +1,4 @@
-import React  from 'react';
+import React from 'react';
 import SearchForm from '../SearchForm/SearchForm.jsx';
 import SearchPreloader from '../SearchPreloader/SearchPreloader.jsx';
 import About from '../About/About.jsx';

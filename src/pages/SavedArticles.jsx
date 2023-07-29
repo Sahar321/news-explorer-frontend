@@ -10,6 +10,9 @@ export default function SavedArticles({
   onCardRemoveClick,
   onUniqueReactionsClick,
   onReactionSelect,
+  onCardShare,
+  onCommentClick,
+  onRemoveReaction,
 }) {
   const currentUser = useContext(CurrentUserContext);
   const keywords = [];
@@ -61,6 +64,9 @@ export default function SavedArticles({
         onCardRemoveClick={onCardRemoveClick}
         onUniqueReactionsClick={onUniqueReactionsClick}
         onReactionSelect={onReactionSelect}
+        onCardShare={onCardShare}
+        onCommentClick={onCommentClick}
+        onRemoveReaction = {onRemoveReaction}
       />
     </>
   );

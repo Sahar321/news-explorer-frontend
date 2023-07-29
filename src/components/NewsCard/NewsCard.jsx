@@ -31,7 +31,7 @@ export default function NewsCard({
   const [selectedReaction, setSelectedReaction] = React.useState(
     <AddReactionIcon />
   );
-  const { keyword, title, text, date, source, link, image, reaction } =
+  const { keyword, title,  description, date, source, link, image, reaction } =
     cardData;
   const handleOnCardShare = () => {
     onCardShare(cardData);
@@ -207,13 +207,14 @@ export default function NewsCard({
         {!elementsToHide?.date ? <p className="card__date">{date}</p> : ''}
 
         <h3
+        dir='auto'
           className={`card__title ${classList?.title ? classList.title : ''}`}
         >
           {title}
         </h3>
 
-        <p className={`card__text ${classList?.text ? classList.text : ''}`}>
-          {text}
+        <p    dir='auto' className={`card__text ${classList?.text ? classList.text : ''}`}>
+        {description}
         </p>
         <a
           className="card__source"

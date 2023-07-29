@@ -1,7 +1,6 @@
 @import url(../../blocks/app/app.css);
 @import url(../../blocks/app/_page/app_page_saved-articles.css);
 
-
 .testt {
   position: fixed;
   width: 100%;
@@ -40,4 +39,31 @@
   animation: bounce 2s infinite;
 }
 
+.card-info {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  max-width: 94%;
+  justify-items: start;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-style: normal;
+  grid-template-areas: "image info";
 
+}
+
+.card-info__image {
+  width: 95%;
+  margin-top: 10px;
+  grid-area: image;
+}
+.card-info__text{
+  grid-area: info;
+
+}
+.reactions__list_type_popup-card{
+  grid-area: image;
+  height: fit-content;
+  align-self: end;
+  background: transparent;
+  color: red;
+
+}

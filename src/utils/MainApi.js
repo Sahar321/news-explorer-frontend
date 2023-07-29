@@ -93,7 +93,14 @@ class MainApi {
       body: JSON.stringify(reactionId),
     });
   };
+  removeCardReaction = (reactionId) => {
 
+    return this.customFetch(`${this._baseUrl}/reaction`, {
+      method: 'delete',
+      headers: this._headers.headers,
+      body: JSON.stringify({link: reactionId}),
+    });
+  };
   updateAvatar = (link) => {
     return this.customFetch(`${this._baseUrl}/profile/avatar`, {
       method: 'POST',

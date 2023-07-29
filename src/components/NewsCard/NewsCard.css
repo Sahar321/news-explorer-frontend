@@ -11,3 +11,61 @@
 @import url(../../blocks/card/__button/card__button.css);
 @import url(../../blocks/card/__keyword/card__keyword.css);
 @import url(../../blocks/card/__reactions-warper/card__reactions-warper.css);
+
+.card__image_type_popup {
+  border-radius: 0;
+  max-height: unset;
+  border-top-right-radius: 15px;
+  border-top-left-radius: 15px;
+}
+.card_type_popup {
+  height: unset;
+  width: 100%;
+  max-height: unset;
+  max-width: 700px;
+  padding: 16px 13px;
+  box-sizing: border-box;
+}
+.card_type_popup:hover {
+  box-shadow: unset;
+}
+
+.card__image-wrapper_type_popup {
+  max-width: unset;
+  height: unset;
+  max-height: unset;
+}
+
+.card__text-wrapper_type_popup {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.card__text_type_popup {
+  max-width: 500px;
+  width: 100%;
+}
+
+.popup__title_type_card {
+  min-height: unset;
+  height: unset;
+  -webkit-line-clamp: unset;
+}
+.card__title_type_popup {
+  max-width: 500px;
+}
+.card__text_type_popup {
+  -webkit-line-clamp: unset;
+  -webkit-box-orient: unset;
+  max-height: unset;
+}
+
+@media screen and (max-width: 480px) {
+  .card__title {
+    -webkit-line-clamp: unset;
+    -webkit-box-orient: unset;
+    height: unset;
+  }
+}

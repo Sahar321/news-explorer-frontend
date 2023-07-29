@@ -1,5 +1,5 @@
 .comment__warper {
-  box-shadow: rgb(0 0 0 / 45%) 0px 3px 8px;
+  box-shadow:  rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
   display: none;
   grid-template-columns: 10fr 1fr;
   grid-template-rows: 1fr;

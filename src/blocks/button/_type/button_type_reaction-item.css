@@ -7,7 +7,7 @@
     box-sizing: border-box;
     display: flex;
     gap: 1px;
-    color: #1976d2;
+
     flex-direction: row-reverse;
   position: relative;
 

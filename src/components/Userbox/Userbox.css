@@ -1,14 +1,12 @@
 
 
 .userbox__warper {
-  backdrop-filter: blur(38px);
+
   width: 97%;
   padding-left: 2px;
   padding-bottom: 10px;
   background-color: white;
   box-sizing: border-box;
-  box-shadow: #b9b9b940 0px 0px 7px 3px;
-  border-top-right-radius: 10px;
 }
 
 .userbox__username {
@@ -17,9 +15,8 @@
   letter-spacing: 0.5px;
   padding: 5px;
   text-align: left;
-  background-color: #d6d6d61f;
-  border-top-right-radius: 10px;
-  width: 100%;
+  width: 99%;
+
 }
 
 .userbox__inner-box {

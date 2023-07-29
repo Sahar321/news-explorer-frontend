@@ -1,6 +1,9 @@
 @import url(../../blocks/popup/__link/_type/popup__link_type_message.css);
 @import url(../../blocks/popup/__title/_type/popup__title_type_message.css);
 
+.popup__TopPr{
+  z-index: 999999999 !important;
+}
 .popup_type_user-reactions{
 
   padding-bottom: 20px;

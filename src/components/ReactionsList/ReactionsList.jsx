@@ -5,7 +5,11 @@ import Button from '@mui/material/Button';
 import ReactionType from '../../constants/enums/ReactionType';
 import './ReactionsList.css';
 
-export default function ReactionsList({ reactions, onUniqueReactionsClick }) {
+export default function ReactionsList({
+  reactions,
+  onUniqueReactionsClick,
+  classList,
+}) {
   // Create a map to count the number of times each reaction appears
   if (!reactions) {
     return null;
@@ -17,13 +21,8 @@ export default function ReactionsList({ reactions, onUniqueReactionsClick }) {
 
   // Create an array of unique reaction IDs
   const uniqueReactions = Object.keys(reactionCounts);
-
-
-
-
-
   return (
-    <div className="reactions__list">
+    <div className={`reactions__list ${classList}`}>
       {uniqueReactions?.map((reactionId) => (
         <button
           key={reactionId}
@@ -31,7 +30,10 @@ export default function ReactionsList({ reactions, onUniqueReactionsClick }) {
           className="button button_type_reaction-item"
           onClick={onUniqueReactionsClick}
         >
-          <span className='reactions__count'> {reactionCounts[reactionId]}</span>
+          <span className="reactions__count">
+            {' '}
+            {reactionCounts[reactionId]}
+          </span>
 
           <i
             className={`icon icon-reaction icon_reaction_${reactionId.toLowerCase()}`}

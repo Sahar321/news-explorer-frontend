@@ -5,15 +5,13 @@
 }
 
 
-.na {
-  display: flex;
+
+.reaction-stats_type_comment-count {
+  grid-area: stats1;
+}
+.reaction-stats_type_thank-you {
   grid-area: stats2;
 }
-
-.popup__reactions-filter {
-  display: flex;
-}
-
 
 
 .reaction-stats__reaction {
@@ -32,6 +30,6 @@
 }
 .reaction-stats{
   display: flex;
-  grid-area: stats1;
+
   gap: 6px;
 }

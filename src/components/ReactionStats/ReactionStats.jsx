@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import totalPostIcon from '../../images/icons/totalpost.png';
 import thankyouIcon from '../../images/icons/thankyouIcon.png';
-import {formatNumberWithLetterShortcut} from '../../utils/helpers';
+import {formatNumberWithLetter} from '../../utils/helpers';
 import './ReactionStats.css';
 
 export default function ReactionStats({ stats }) {
@@ -13,8 +13,8 @@ export default function ReactionStats({ stats }) {
 
 
   useEffect(() => {
-    const comments = formatNumberWithLetterShortcut(stats.totalComments);
-    const thankYou = formatNumberWithLetterShortcut(stats.totalThankYou);
+    const comments = formatNumberWithLetter(stats.totalComments);
+    const thankYou = formatNumberWithLetter(stats.totalThankYou);
     setTotalComments(comments);
     setTotalThankYou(thankYou);
   }, [stats]);

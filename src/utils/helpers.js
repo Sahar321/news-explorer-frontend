@@ -1,4 +1,4 @@
-const formatNumberWithLetterShortcut = (inputNumber) => {
+const formatNumberWithLetter = (inputNumber) => {
   if (!inputNumber) return '';
 
   const abbreviations = [
@@ -22,4 +22,4 @@ const formatNumberWithLetterShortcut = (inputNumber) => {
   return inputNumber.toString();
 };
 /* eslint-disable import/prefer-default-export */
-export { formatNumberWithLetterShortcut };
+export { formatNumberWithLetter };

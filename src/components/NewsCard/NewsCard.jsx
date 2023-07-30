@@ -11,7 +11,7 @@ import AddReactionIcon from '@mui/icons-material/AddReaction';
 import ShareIcon from '@mui/icons-material/Share';
 import CommentIcon from '@mui/icons-material/Comment';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
-import { formatNumberWithLetterShortcut } from '../../utils/helpers';
+import { formatNumberWithLetter } from '../../utils/helpers';
 import anime from 'animejs/lib/anime.es.js';
 import 'animate.css';
 export default function NewsCard({
@@ -233,7 +233,7 @@ export default function NewsCard({
           <Button onClick={handleOnCommentClick}>
             <CommentIcon />{' '}
             <span className="reaction__text-button">
-              {formatNumberWithLetterShortcut(cardData?.comments?.length)}
+              {formatNumberWithLetter(cardData?.comments?.length)}
             </span>
           </Button>
         ) : (
@@ -242,7 +242,7 @@ export default function NewsCard({
         <Button onClick={handleReactions}>
           {selectedReaction}
           <span className="reaction__text-button">
-            {formatNumberWithLetterShortcut(cardData?.reaction?.length)}
+            {formatNumberWithLetter(cardData?.reaction?.length)}
           </span>
         </Button>
       </div>

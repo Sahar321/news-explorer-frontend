@@ -12,6 +12,10 @@
 @import url(../../blocks/card/__keyword/card__keyword.css);
 @import url(../../blocks/card/__reactions-warper/card__reactions-warper.css);
 
+
+#closeRections{
+color: rgb(246, 82, 53);
+}
 .card__image_type_popup {
   border-radius: 0;
   max-height: unset;
@@ -48,6 +52,10 @@
   width: 100%;
 }
 
+.reaction__text-button {
+  font-size: 16px;
+  margin-left: 4px;
+}
 .popup__title_type_card {
   min-height: unset;
   height: unset;

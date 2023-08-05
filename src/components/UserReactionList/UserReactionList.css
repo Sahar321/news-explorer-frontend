@@ -28,7 +28,6 @@
   padding: 0 !important;
   margin: 0 !important;
 }
-
 .popup_reactions-list__not-found{
   font-family: 'Roboto', Arial, sans-serif;
     font-style: normal;
@@ -42,5 +41,8 @@
     padding: 9px 10px;
     color: #202124;
     align-self: center;
+
+}
+.popup__reactions-filters-header{
 
 }

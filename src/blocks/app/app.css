@@ -1,7 +1,6 @@
 .app {
   padding: 0;
   margin: 0 auto;
-  background-color: #000000;
   background-image: url(../../images/backgrounds/background-top-main.png);
   background-repeat: no-repeat;
   background-size: auto auto;
@@ -20,9 +19,9 @@
   .app {
     background-size: auto 536px;
   }
-@media screen and (max-width: 320px) {
-  .app {
-    background-image: url(../../images/backgrounds/background-top-main-320-536.png);
+  @media screen and (max-width: 320px) {
+    .app {
+      background-image: url(../../images/backgrounds/background-top-main-320-536.png);
+    }
   }
-}
 }

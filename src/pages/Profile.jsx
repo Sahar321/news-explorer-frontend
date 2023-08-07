@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import SideMenu from '../components/SideMenu/SideMenu.jsx';
 import InfoTable from '../components/InfoTable/InfoTable';
 import './Profile.css';
+import ErrorBoundary from '../ErrorBoundary.jsx';
 
 export default function Profile({ setAppStyles, onAvatarClick }) {
   const currentUser = useContext(CurrentUserContext);
@@ -63,9 +64,10 @@ export default function Profile({ setAppStyles, onAvatarClick }) {
             Edit
           </Button>
         </div>
-        <InfoTable header={'Personal Information'} />
 
-{/*         <section className="personal-info">
+          <InfoTable header={'Personal Information'} />
+
+        {/*         <section className="personal-info">
           <h3 className="personal-info__header">Personal Information</h3>
           {personalInfoData.map((info) => (
             <label key={info.label} className={`personal-info__label`}>

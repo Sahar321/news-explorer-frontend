@@ -1,6 +1,5 @@
 /*eslint-disable */
-import React, { useEffect, useContext, useState } from 'react';
-import CurrentUserContext from '../../contexts/CurrentUserContext';
+import React, { useEffect, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import SaveIcon from '@mui/icons-material/Save';
 import ClearIcon from '@mui/icons-material/Clear';
@@ -10,81 +9,67 @@ import useFormAndValidation from '../../utils/hooks/useFormAndValidation';
 import './InfoTable.css';
 
 const InfoTable = ({ header }) => {
-  const currentUser = useContext(CurrentUserContext);
-  const [isEditMode, setIsEditMode] = useState(true);
-  const [leftData, setLeftData] = useState([]);
-  const [rightData, setRightData] = useState([]);
-  const { values, errors, handleChange, isValid } = useFormAndValidation();
+  const [isEditModeActive, setIsEditModeActive] = useState(false);
   const data = [
-    { label: 'First name', value: 'Sam', name: 'first-name' },
-    { label: 'Last name', value: 'Smith', name: 'last-name' },
-    { label: 'Email', value: 'ssad3ds@gmail.com', name: 'email' },
-    { label: 'Phone', value: '0523554984', name: 'phone' },
+    { label: 'First name', type: 'text', value: 'Sam', name: 'first-name' },
+    { label: 'Last name', type: 'text', value: 'Smith', name: 'last-name' },
+    {
+      label: 'Email',
+      type: 'email',
+      value: 'ssad3ds@gmail.com',
+      name: 'email',
+    },
+    { label: 'Phone', type: 'tel', value: '0523554984', name: 'phone' },
   ];
 
-  useEffect(() => {
-    const leftColumn = [];
-    const rightColumn = [];
-    data.forEach((item, index) => {
-      if (index % 2 === 0) {
-        leftColumn.push(item);
-      } else {
-        rightColumn.push(item);
-      }
-    });
+  const dataValidation = data.reduce((acc, item) => {
+    acc[item.name] = item.value;
+    return acc;
+  }, {});
 
-    setLeftData(leftColumn);
-    setRightData(rightColumn);
-  }, []);
-
-  const handleEditButtonClick = () => {
-    setIsEditMode(!isEditMode);
-  };
-  const handleCancelButtonClick = () => {
-    setIsEditMode(!isEditMode);
-  };
-  const handleSubmitClick = () => {
-    console.log('handleSubmitClick', isValid);
-  };
+  const { values, errors, handleChange, isValid } =
+    useFormAndValidation(dataValidation);
 
   useEffect(() => {
-    console.log('isEditMode', isEditMode);
-  }, [isEditMode]);
+    console.log('errors', errors);
+    console.log('isValid', isValid);
+  }, [errors]);
+  const toggleEditMode = () => {
+    setIsEditModeActive(!isEditModeActive);
+  };
 
-  const renderEditButtonsMode = () => {
-    return (
-      <>
-        {isEditMode && (
+  const renderActionButtons = () => {
+    if (isEditModeActive) {
+      return (
+        <>
           <Button
             className="info-table__edit-button"
             variant="outlined"
-            endIcon={<EditIcon />}
-            onClick={handleEditButtonClick}
+            endIcon={<ClearIcon />}
+            onClick={toggleEditMode}
           >
-            Edit
+            Cancel
           </Button>
-        )}
-        {!isEditMode && (
-          <>
-            <Button
-              className="info-table__edit-button"
-              variant="outlined"
-              endIcon={<ClearIcon />}
-              onClick={handleCancelButtonClick}
-            >
-              Cancel
-            </Button>
-            <Button
-              className="info-table__edit-button"
-              variant="outlined"
-              endIcon={<SaveIcon />}
-              onClick={handleSubmitClick}
-            >
-              Save
-            </Button>
-          </>
-        )}
-      </>
+          <Button
+            className="info-table__edit-button"
+            variant="outlined"
+            endIcon={<SaveIcon />}
+            onClick={onSubmit}
+          >
+            Save
+          </Button>
+        </>
+      );
+    }
+    return (
+      <Button
+        className="info-table__edit-button"
+        variant="outlined"
+        endIcon={<EditIcon />}
+        onClick={toggleEditMode}
+      >
+        Edit
+      </Button>
     );
   };
   const onSubmit = (evt) => {
@@ -95,47 +80,37 @@ const InfoTable = ({ header }) => {
 
   return (
     <form noValidate onSubmit={onSubmit} id="presonelSD" className="info-table">
-      <h3 className="info-table__header">{header}</h3>
+      <h2 className="info-table__header">{header}</h2>
       <div className="info-table__edit-buttons-wrapper">
-        {renderEditButtonsMode()}
+        {renderActionButtons()}
       </div>
-      <dl className="info-table__dl">
-        {leftData.map(({ label, value, name }) => (
-          <React.Fragment key={name}>
-            <dt className="info-table__label">{label}</dt>
-            {isEditMode ? (
-              <dd className="info-table__value">{value}</dd>
+      <ul className="info-table__items">
+        {data.map(({ label, value, name, type }, index) => (
+          <li className="info-table__item" key={index}>
+            <label for={name} className="info-table__label">
+              {label}
+            </label>
+            {isEditModeActive ? (
+              <>
+                <input
+                  id={name}
+                  name={name}
+                  type={type}
+                  value={values[name] || ''}
+                  onChange={handleChange}
+                  className="info-table__input"
+                  required
+                />
+                <span dir="rtl" className="info-table__error">
+                  {errors[name]}
+                </span>
+              </>
             ) : (
-              <input
-                name={name}
-                value={values[name] || ''}
-                onChange={handleChange}
-
-                className="info-table__input"
-                required
-              />
+              <span className="info-table__value">{value}</span>
             )}
-          </React.Fragment>
+          </li>
         ))}
-      </dl>
-      <dl className="info-table__dl">
-        {rightData.map(({ label, value, name }) => (
-          <React.Fragment key={name}>
-            <dt className="info-table__label">{label}</dt>
-            {isEditMode ? (
-              <dd className="info-table__value">{value}</dd>
-            ) : (
-              <input
-                name={name}
-                onChange={handleChange}
-                value={values[name] || ''}
-                className="info-table__input"
-                required
-              />
-            )}
-          </React.Fragment>
-        ))}
-      </dl>
+      </ul>
     </form>
   );
 };

@@ -31,8 +31,7 @@ export default function PopupWithCard({
 
   const handleOnCommentSubmit = (value) => {
     const { link } = cardData;
-    onCommentSubmit({ link, text: value });
-    setIsWriteCommentOpen(false);
+    onCommentSubmit(cardData, { link, text: value });
   };
 
   const cardClasses = {
@@ -61,7 +60,10 @@ export default function PopupWithCard({
           onClick={onClose}
         ></button>
         <h2 className="card__title popup__title_type_card">
-          {`${cardData.source}`} <br /> <span style={{fontSize:"14px", marginTop:"5px"}}>{`${cardData.date}`}</span>
+          {`${cardData.source}`} <br />{' '}
+          <span
+            style={{ fontSize: '14px', marginTop: '5px' }}
+          >{`${cardData.date}`}</span>
         </h2>
 
         <NewsCard

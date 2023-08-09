@@ -1,22 +1,18 @@
+/*eslint-disable*/
 import { useEffect } from 'react';
 
-const useClickOutside = (ref, onClickOutside) => {
-  if (!ref || !ref.current) {
-    throw new Error('Invalid argument passed to useClickOutside hook');
-  }
-
-  const handleClickOutside = (event) => {
-    if (!ref.current.contains(event.target)) {
-      onClickOutside();
+const useClickOutside = (ref, onClickOutSide) => {
+  const handleClick = (e) => {
+    if (ref.current && !ref.current.contains(e.target)) {
+      onClickOutSide();
     }
   };
-
   useEffect(() => {
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClick);
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('click', handleClick);
     };
-  }, [handleClickOutside]);
+  }, []);
 };
 
 export default useClickOutside;

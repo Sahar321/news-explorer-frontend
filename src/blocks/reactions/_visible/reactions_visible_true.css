@@ -1,4 +1,4 @@
-.reactions_visible_true{
+.reactions_visible_true {
   display: flex;
   flex-direction: row-reverse;
   justify-content: space-around;

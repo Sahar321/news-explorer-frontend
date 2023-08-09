@@ -12,10 +12,6 @@ export default function Comment(prop) {
     const { value } = evt.target;
     setValue(value);
   };
-
-
-
-
   const handleOnCommentSubmit = (e) => {
     e.preventDefault();
     onCommentSubmit(value);

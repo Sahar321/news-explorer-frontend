@@ -1,10 +1,10 @@
 /*eslint-disable*/
-import React, { useDebugValue, useEffect } from 'react';
+import React, { useDebugValue, useEffect, forwardRef, useRef } from 'react';
 import './NewsCard.css';
 import CardType from '../../constants/enums/CardType';
 import Button from '@mui/material/Button';
 import { Divider } from '@mui/material';
-
+import useClickOutside from '../../utils/hooks/useClickOutside';
 import ReactionsList from '../ReactionsList/ReactionsList';
 import ReactionType from '../../constants/enums/ReactionType';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
@@ -35,11 +35,18 @@ export default function NewsCard({
     <AddReactionIcon />
   );
 
+  const reactionsRef = useRef(null);
+
+  useClickOutside(reactionsRef, () => {setIsReactionsOpen(false)} );
+
+
   const { keyword, title, description, date, source, link, image, reaction } =
     cardData;
   const handleOnCardShare = () => {
     onCardShare(cardData);
   };
+
+
   useEffect(() => {
     const userCardReaction = cardData?.reaction?.find(
       (reaction) => reaction.isOwner === true
@@ -125,20 +132,11 @@ export default function NewsCard({
   };
 
   const handleOnUniqueReactionsClick = () => {
+    console.log('handleOnUniqueReactionsClick');
     onUniqueReactionsClick(cardData);
   };
 
-  useEffect(() => {
-    if (!isReactionsOpen) return;
-/*     anime({
-      targets: "#WOW,#LOL,#LIKE,#SAD,#LOVE",
-      scale: [
-        {value: .1, easing: 'easeInElastic', duration: 0},
-        {value: 1, easing: 'easeInElastic', duration: 400}
-      ],
-      delay: anime.stagger(200, {grid: [5, 1], from: 'center'})
-    }); */
-  }, [isReactionsOpen]);
+
 
   return (
     <article className={`card ${classList?.card ? classList.card : ''}`}>
@@ -166,8 +164,8 @@ export default function NewsCard({
       </div>
       <Divider />
 
-      <div className="card__reactions-warper">
-        <div  className={`reactions  reactions_visible_${isReactionsOpen}`}>
+      <div  ref={reactionsRef} className="card__reactions-warper">
+        <div className={`reactions  reactions_visible_${isReactionsOpen}`}>
           <svg
             id="closeRections"
             xmlns="http://www.w3.org/2000/svg"
@@ -190,7 +188,7 @@ export default function NewsCard({
             id="LOL"
             onClick={handleReactionsClick}
             width="30px"
-            className='animate__animated animate__bounceIn'
+            className="animate__animated animate__bounceIn"
             src={ReactionType['LOL']}
           />
           <img
@@ -198,7 +196,7 @@ export default function NewsCard({
             id="WOW"
             onClick={handleReactionsClick}
             width="30px"
-            className='animate__animated animate__bounceIn'
+            className="animate__animated animate__bounceIn"
             src={ReactionType['WOW']}
           />
           <img
@@ -206,7 +204,7 @@ export default function NewsCard({
             id="LIKE"
             onClick={handleReactionsClick}
             width="30px"
-            className='animate__animated animate__bounceIn'
+            className="animate__animated animate__bounceIn"
             src={ReactionType['LIKE']}
           />
           <img
@@ -214,7 +212,7 @@ export default function NewsCard({
             id="SAD"
             onClick={handleReactionsClick}
             width="30px"
-            className='animate__animated animate__bounceIn'
+            className="animate__animated animate__bounceIn"
             src={ReactionType['SAD']}
           />
           <img
@@ -222,7 +220,7 @@ export default function NewsCard({
             id="LOVE"
             onClick={handleReactionsClick}
             width="30px"
-            className='animate__animated animate__bounceIn'
+            className="animate__animated animate__bounceIn"
             src={ReactionType['LOVE']}
           />
         </div>

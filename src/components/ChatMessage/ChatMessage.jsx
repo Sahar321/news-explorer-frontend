@@ -10,8 +10,12 @@ import { DateTime } from 'luxon';
 import './ChatMessage.css';
 import Userbox from '../Userbox/Userbox';
 import thankyouIcon from '../../images/icons/thankyouIcon.png';
-export default function ChatMessage({ comment, index, onThankYou }) {
-  const [commentData, setCommentData] = useState(formatComment(comment));
+export default function ChatMessage({ cardData, comment, index, onThankYou, key}) {
+  const [commentData, setCommentData] = useState({});
+
+  useEffect(() => {
+    setCommentData(formatComment(comment));
+  }, [comment]);
 
   const handleOnThankYou = () => {
     const thankYouData = {
@@ -22,19 +26,18 @@ export default function ChatMessage({ comment, index, onThankYou }) {
     onThankYou(thankYouData);
   };
 
-  function formatComment({ text, username, rating, date, avatar, id, owner }) {
+  function formatComment({ text, rating, date, owner, avatar, username }) {
     const formattedDate = DateTime.fromISO(date, { zone: 'utc' }).toFormat(
-      'dd/MM/yyyy HH:mm'
+      'd/M/yy HH:mm'
     );
     return {
       index,
       text,
-      username,
       rating,
       date: formattedDate,
-      avatar,
-      id,
       owner,
+      avatar,
+      username,
     };
   }
 
@@ -72,7 +75,6 @@ export default function ChatMessage({ comment, index, onThankYou }) {
           </IconButton>
         </div>
       </Userbox> */}
-
 
       <div className="comment-box">
         <h3 className="comment-box__username">{commentData.username}</h3>

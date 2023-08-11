@@ -46,7 +46,7 @@ export default function App() {
   const location = useLocation();
   const token = localStorage.getItem('jwt');
   const isMobile = useMobileDetect();
-  const [cardComments, setCardComments] = useState([]);
+  /*   const [cardComments, setCardComments] = useState([]); */
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
   const [appStyles, setAppStyles] = useState('');
@@ -69,10 +69,8 @@ export default function App() {
     isOpen: false,
     title: '',
   });
-  const [popupWithCard, setPopupWithCard] = useState({
-    isOpen: false,
-    cardData: '',
-  });
+  const [selectedCard, setSelectedCard] = useState({});
+  const [isPopupWithCardOpen, setIsPopupWithCardOpen] = useState(false);
   const [isReactionPopupOpen, setIsReactionPopupOpen] = useState(false);
   const [articleReactions, setArticleReactions] = useState([]);
   const [disappearingMessages, setDisappearingMessages] = useState({
@@ -141,12 +139,16 @@ export default function App() {
       })
       .catch(handleMainError);
   };
-
-  const handleCardBookmarkClick = (targetCard, isBookmark) => {
+  const showSignUpIfNotLoggedIn = () => {
     if (!loggedIn) {
       setSignUpPopupOpen(true);
       return;
     }
+  };
+
+  const handleCardBookmarkClick = (targetCard, isBookmark) => {
+    showSignUpIfNotLoggedIn();
+
     if (!isBookmark) {
       handleSaveCard(targetCard);
     } else {
@@ -161,7 +163,7 @@ export default function App() {
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
-    setPopupWithCard({ isOpen: false, cardData: '' });
+    setIsPopupWithCardOpen({ isOpen: false, cardData: '' });
     setAuthErrorMessage({ message: '', visible: false });
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
@@ -257,10 +259,7 @@ export default function App() {
   };
 
   const handleRemoveReaction = (cardData) => {
-    if (!loggedIn) {
-      setSignUpPopupOpen(true);
-      return;
-    }
+    showSignUpIfNotLoggedIn();
     mainApi
       .removeCardReaction(cardData.link)
       .then((res) => {
@@ -273,10 +272,7 @@ export default function App() {
   };
 
   const handleReactionSelect = (reactionData, cardData) => {
-    if (!loggedIn) {
-      setSignUpPopupOpen(true);
-      return;
-    }
+    showSignUpIfNotLoggedIn();
     mainApi
       .saveCardReaction(reactionData)
       .then((prop) => {
@@ -432,31 +428,32 @@ export default function App() {
   }, []);
 
   const handleCardCommentClick = (card) => {
-    if (!loggedIn) {
-      setSignUpPopupOpen(true);
-      return;
-    }
-    mainApi
+    showSignUpIfNotLoggedIn();
+
+    setSelectedCard(card);
+    setIsPopupWithCardOpen(true);
+    /*    mainApi
       .getAllArticleComments(card.link)
       .then((res) => {
-        setCardComments(res);
+        console.log('getAllArticleComments', card);
+         setCardComments(res);
         setPopupWithCard({ isOpen: true, cardData: card });
       })
       .catch((err) => {
         console.warn('getAllArticlesDate', err);
-      });
+      });   */
   };
 
-  const handleCommentSubmit = (commentData) => {
-    if (!loggedIn) {
-      setSignUpPopupOpen(true);
-      return;
-    }
+  const handleCommentSubmit = (card, commentData) => {
+   /*  showSignUpIfNotLoggedIn(); */
     console.log('handleCommentSubmit', commentData);
     mainApi
       .saveComment(commentData)
       .then((res) => {
-        console.log('handleCommentSubmit', res);
+        console.log('handleCommentSubmit', card, res);
+        card.comments = res;
+
+        handleUpdatedCard(card);
       })
       .catch((err) => {
         console.log('handleCommentSubmit', err);
@@ -664,12 +661,12 @@ export default function App() {
         />
 
         <PopupWithCard
-          isOpen={popupWithCard.isOpen}
-          cardData={popupWithCard.cardData}
+          isOpen={isPopupWithCardOpen}
+          cardData={selectedCard}
           loggedIn={loggedIn}
           onClose={closeAllPopups}
           onCommentSubmit={handleCommentSubmit}
-          comments={cardComments}
+          /*       comments={cardComments} */
           onThankYou={handleThankYou}
           onUniqueReactionsClick={handleUniqueReactionsClick}
           onReactionSelect={handleReactionSelect}

@@ -1,8 +1,8 @@
 /*eslint-disable*/
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Comment from '../Comment/Comment.jsx';
 import ChatMessage from '../ChatMessage/ChatMessage.jsx';
-
+import CommentsList from '../CommentsList.jsx';
 import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
 import './PopupWithCard.css';
 import useScreenWidth from '../../utils/hooks/useScreenWidth';
@@ -15,7 +15,6 @@ export default function PopupWithCard({
   onClose,
   isOpen,
   onCommentSubmit,
-  comments,
   onThankYou,
   onReactionSelect,
   onUniqueReactionsClick,
@@ -26,13 +25,21 @@ export default function PopupWithCard({
   loggedIn,
   onCardShare,
 }) {
-  const screenWidth = useScreenWidth();
   useCloseOnEscape(isOpen, onClose);
-
+  const messageListRef = useRef(null);
   const handleOnCommentSubmit = (value) => {
     const { link } = cardData;
     onCommentSubmit(cardData, { link, text: value });
   };
+
+  useEffect(() => {
+    const elm = messageListRef.current;
+    console.log(elm.scrollHeight);
+    elm.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, [cardData.comments]);
 
   const cardClasses = {
     card: 'card_type_popup',
@@ -82,24 +89,31 @@ export default function PopupWithCard({
         <Divider />
         <Divider />
         <div className="popup__comments">
-          <div className="message-list">
-            {!comments.length > 0 && (
-              <h3 className="message-list__empty-title">No comments yet...</h3>
+          <Comment onCommentSubmit={handleOnCommentSubmit} isOpen={true} />
+          <div ref={messageListRef} className="message-list">
+            {!cardData.comments?.length > 0 && (
+              <h3 className="message-list__empty-title">
+                Be the first to comment...
+              </h3>
             )}
 
-            {comments?.map((comment, index) => (
-              <>
+            <CommentsList
+              comments={cardData.comments}
+              onThankYou={onThankYou}
+            />
+
+            {/*             {cardData.comments
+              ?.slice()
+              .reverse()
+              .map((comment, index, array) => (
                 <ChatMessage
-                  key={index}
-                  index={index + 1}
+                  key={array.length - index - 1}
+                  index={array.length - index}
                   comment={comment}
                   onThankYou={onThankYou}
                 />
-              </>
-            ))}
+              ))} */}
           </div>
-
-          <Comment onCommentSubmit={handleOnCommentSubmit} isOpen={true} />
         </div>
       </div>
     </div>

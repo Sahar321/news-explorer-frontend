@@ -142,7 +142,8 @@
   overflow-y: scroll;
 
   max-height: 500px;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+    rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
 }
 .message-list .chat-message__warper:first-child:hover {
   margin-top: 10px;
@@ -215,7 +216,6 @@
 }
 
 .popup__reactions-filter {
-
   display: flex;
   flex-wrap: wrap;
   padding: 0;
@@ -224,7 +224,6 @@
   align-content: center;
   gap: 5px;
   list-style: none;
-
 }
 
 .iconthankYou {

@@ -10,7 +10,6 @@
 }@media screen and (max-width: 769px) {
   .about__text-container {
     margin-top: 42px;
-    max-height: 354px;
     gap: 16px;
   }
 }

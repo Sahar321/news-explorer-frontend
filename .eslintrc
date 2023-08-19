@@ -1,5 +1,6 @@
 {
   "parser": "@babel/eslint-parser",
+
   "settings": {
     "react": {
       "version": "detect"
@@ -9,16 +10,17 @@
     "browser": true,
     "es2021": true
   },
-  "extends": [
-    "plugin:react/recommended",
-    "airbnb-base"
-  ],
+  "extends": ["plugin:react/recommended", "airbnb-base"],
   "parserOptions": {
-    "sourceType": "module"
+    "parser": "@babel/eslint-parser",
+    "babelOptions": {
+      "presets": ["@babel/preset-react"]
+    },
+    "requireConfigFile": false, // <== ADD THIS
+    "ecmaVersion": 2023, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module" // Allows for the use of imports
   },
-  "plugins": [
-    "react"
- ],
+  "plugins": ["react"],
   "rules": {
     "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],

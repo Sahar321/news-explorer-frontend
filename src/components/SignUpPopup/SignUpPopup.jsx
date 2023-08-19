@@ -24,8 +24,6 @@ export default function SignUpPopup({
   const handleSubmit = (evt) => {
     evt.preventDefault();
     if (!isValid) return;
-    console.log('values', values);
-    console.log('errors', errors);
     onSubmit(values);
   };
 
@@ -68,6 +66,9 @@ export default function SignUpPopup({
         placeholder="Enter password"
         value={values.password || ''}
         onChange={handleChange}
+        autoComplete="on"
+        minLength="6"
+        maxLength="20"
         required
       />
       {errors.password && (
@@ -86,9 +87,10 @@ export default function SignUpPopup({
         value={values.name || ''}
         onChange={handleChange}
         minLength="5"
+        maxLength="30"
         required
       />
-      {errors.username && (
+      {errors.name && (
         <span className="popup__input-error">{errors.name}</span>
       )}
     </PopupWithForm>

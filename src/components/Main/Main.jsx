@@ -18,6 +18,11 @@ export default function Main({
   isSearchPreloaderVisible,
   isSearchNotFoundVisible,
   bookmarkCards,
+  onReactionSelect,
+  onCommentClick,
+  onUniqueReactionsClick,
+  onRemoveReaction,
+  onCardShare,
 }) {
   const hasCardsToShow = cardsToShow.length > 0;
   return (
@@ -36,7 +41,6 @@ export default function Main({
         <>
           <h2 className={'card-list__search-results'}>Search results</h2>
           <NewsCardList
-            onCardBookmarkClick={onCardBookmarkClick}
             loggedIn={loggedIn}
             showTitle={true}
             cards={cards}
@@ -44,8 +48,14 @@ export default function Main({
             cardType={CardType.BOOKMARK}
             cardsToShow={cardsToShow}
             onShowMoreClick={onShowMoreClick}
-            bookmarkCards={bookmarkCards}
             pageClassName="card-list__cards-wrapper_page_home"
+            onCardBookmarkClick={onCardBookmarkClick}
+            onRemoveReaction={onRemoveReaction}
+            bookmarkCards={bookmarkCards}
+            onReactionSelect={onReactionSelect}
+            onCommentClick={onCommentClick}
+            onUniqueReactionsClick={onUniqueReactionsClick}
+            onCardShare={onCardShare}
           />
         </>
       )}

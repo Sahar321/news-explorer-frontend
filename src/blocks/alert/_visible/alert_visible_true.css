@@ -1,0 +1,14 @@
+.alert_visible_true {
+  animation: visibleAlert 1s;
+  opacity: 1;
+}
+
+@keyframes visibleAlert {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+

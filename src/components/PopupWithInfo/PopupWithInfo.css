@@ -1,0 +1,50 @@
+@import url(../../blocks/popup/__link/_type/popup__link_type_message.css);
+@import url(../../blocks/popup/__title/_type/popup__title_type_message.css);
+
+.popup__TopPr{
+  z-index: 999999999 !important;
+}
+.popup_type_user-reactions{
+
+  padding-bottom: 20px;
+  padding-left: 13px;
+  padding-right: 13px;
+}
+.popup__reaction{
+  backdrop-filter: blur(38px);
+  width: 97%;
+  padding-left: 2px;
+  padding-bottom: 10px;
+  background-color: white;
+  box-sizing: border-box;
+  box-shadow: #b9b9b940 0px 0px 7px 3px;
+  border-top-right-radius: 10px;
+
+}
+
+.popup__reaction-info{
+
+}
+.popup__reaction-avatar{
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+  grid-area: avatar;
+  justify-self: flex-start;
+
+}
+.popup__reaction-name{
+  font-size: 18px;
+  font-family: 'roboto slab';
+  letter-spacing: .5px;
+  padding: 5px;
+  text-align: left;
+  background-color: #d6d6d61f;
+  border-top-right-radius: 10px;
+  width: 100%;
+}
+
+.popup__reaction-reaction{
+
+}

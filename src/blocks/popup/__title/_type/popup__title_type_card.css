@@ -1,0 +1,26 @@
+.popup__title_type_card {
+
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0 !important;
+  margin: 18px 0 0 24px !important;
+  letter-spacing: 0.4px !important;
+  text-transform: uppercase !important;
+  text-decoration: none !important;
+  color: #b6bcbf !important;
+  margin-top: 14px !important;
+  width: calc(100% - 100px);
+  max-width: 600px !important;
+  align-self: center;
+  font-family: 'Roboto Slab', Arial, sans-serif !important;
+  font-style: normal !important;
+  font-weight: 700 !important;
+  font-size: 20px !important;
+  line-height: 20px !important;
+  margin-bottom: 4px !important;
+  margin-left: 0 !important;
+  text-align: center;
+  width: auto;
+
+}

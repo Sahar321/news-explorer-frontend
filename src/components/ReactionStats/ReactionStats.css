@@ -1,0 +1,35 @@
+
+.popup__reaction__count-icon {
+  width: 40px;
+  height: 40px;
+}
+
+
+
+.reaction-stats_type_comment-count {
+  grid-area: stats1;
+}
+.reaction-stats_type_thank-you {
+  grid-area: stats2;
+}
+
+
+.reaction-stats__reaction {
+  width: 70px;
+  height: 70px;
+  background-size: contain;
+  z-index: 5555;
+  grid-area: reaction;
+  transform: rotate(19deg);
+}
+.reaction-stats__total-count{
+  padding-bottom: 5px;
+  align-self: self-end;
+  font-family: 'roboto slab';
+  font-size: 18px;
+}
+.reaction-stats{
+  display: flex;
+
+  gap: 6px;
+}

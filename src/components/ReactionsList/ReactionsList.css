@@ -1,0 +1,34 @@
+.reactions__list {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  flex-wrap: nowrap;
+
+  width: 100%;
+color: white;
+  padding: 5px 0;
+  background-color: #0000004a;
+  backdrop-filter: blur(2px);
+  box-shadow: inset #ffffff63 0px 0px 20px 0px;
+}
+.reactions__list_type_article {
+  position: absolute;
+  bottom: 0;
+}
+.reactions__button {
+  display: inline-block;
+}
+.reactions__count {
+    background-color: #ffffff75;
+    padding: 1px 4px;
+    border-radius: 5px;
+    align-self: self-end;
+    font-size: 14px;
+    font-family: monospace;
+    box-shadow: #ffffff21 -14px -9px 18px 22px;
+    -webkit-backdrop-filter: blur(30px);
+    backdrop-filter: blur(30px);
+    left: 25px;
+    bottom: -4px;
+    position: absolute;
+}

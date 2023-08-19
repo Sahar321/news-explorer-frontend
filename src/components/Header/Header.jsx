@@ -1,8 +1,9 @@
+/*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation.jsx';
 import useScreenWidth from '../../utils/hooks/useScreenWidth';
-import { MOBILE_MENU_WIDTH } from '../../constants/constants';
+import { SCREEN_WIDTHS } from '../../constants/constants';
 
 import './Header.css';
 
@@ -14,13 +15,15 @@ export default function Header({
 }) {
   const screenWidth = useScreenWidth();
   const { pathname } = useLocation();
+  const { MOBILE_MENU_WIDTH } = SCREEN_WIDTHS;
   const [selectedPage, setSelectedPage] = useState('');
 
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileType, setIsMobileType] = useState(false);
   const [itemsMobileColor, setItemsMobileColor] = useState('');
   const [mobileMenuButtonColor, setMobileMenuButtonColor] = useState('');
-  const [isMobileMenuButtonVisible, setIsMobileMenuButtonVisible] = useState(false);
+  const [isMobileMenuButtonVisible, setIsMobileMenuButtonVisible] =
+    useState(false);
   useEffect(() => {
     switch (pathname) {
       case '/':
@@ -28,6 +31,11 @@ export default function Header({
         setMobileMenuButtonColor('header_mobile_white');
         break;
       case '/SavedArticles':
+        setMobileMenuButtonColor('header_mobile_black');
+        setSelectedPage('header_page_saved-articles');
+        setItemsMobileColor('navigation__items_color_white');
+        break;
+      case '/profile':
         setMobileMenuButtonColor('header_mobile_black');
         setSelectedPage('header_page_saved-articles');
         setItemsMobileColor('navigation__items_color_white');
@@ -59,7 +67,10 @@ export default function Header({
     setIsMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const isMobileMenuButtonClass = isMobileMenuButtonVisible && !hideMobileMenuButton && 'header_mobile_visible';
+  const isMobileMenuButtonClass =
+    isMobileMenuButtonVisible &&
+    !hideMobileMenuButton &&
+    'header_mobile_visible';
   const headerMobileMenuClass = isMobileMenuOpen && 'header__title_menu_white';
 
   const handleItemClick = () => {

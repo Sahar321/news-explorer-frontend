@@ -9,18 +9,18 @@
   border: 0;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
   display: block;
-  width: 358px;
+ width: 98%;
   margin-bottom: 30px;
 }
 .popup__input::placeholder {
   color: rgba(0, 0, 0, 0.2);
 }
 .popup__input:focus {
-  box-shadow: 0px 2px 2px 0px rgba(0, 169, 241, 0.344);
+  box-shadow: 0px 2px 2px 0px rgb(0 169 241)
 }
 @media screen and (max-width: 480px) {
   .popup__input {
-    width: 288px;
+
     margin-bottom: 31px;
   }
 }

@@ -6,8 +6,10 @@ class NewsApi {
     this._headers = { headers: headers };
   }
   customFetch = (url, options) => {
-    /*    const token = localStorage.getItem('jwt');
-    options.headers.authorization = `Bearer ${token}`; */
+    const token = localStorage.getItem('jwt');
+    if (token) {
+      options.headers.authorization = `Bearer ${token}`;
+    }
 
     return fetch(url, options).then(async (res) =>
       res.ok ? res.json() : Promise.reject(await res.json())

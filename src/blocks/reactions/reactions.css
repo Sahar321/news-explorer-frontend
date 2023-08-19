@@ -1,0 +1,18 @@
+.reactions {
+  border-radius: 7px;
+  box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
+  display: none;
+  align-items: center;
+  padding: 14px 0;
+  position: absolute;
+  background-color: #ffffffd9;
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(8px);
+  z-index: 1;
+  box-sizing: border-box;
+  width: 100%;
+  bottom: -4px;
+  cursor: pointer;
+}
+
+

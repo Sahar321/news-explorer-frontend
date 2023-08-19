@@ -1,0 +1,21 @@
+.popup__container_type_card {
+  width: 91vw;
+  padding-bottom: 16px;
+  max-width: 750px;
+  display: flex;
+  gap: 0px 0px;
+  align-self: baseline;
+  position: relative;
+  background-color: #EFF2F5;
+
+}
+
+@media screen and (max-width: 769px) {
+  .popup__container_type_card {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        'top'
+        'comments';
+        height: unset;
+  }
+}

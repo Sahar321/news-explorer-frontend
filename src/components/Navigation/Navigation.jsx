@@ -1,6 +1,9 @@
+/*eslint-disable*/
 import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+
+import SettingsIcon from '@mui/icons-material/Settings';
 import './Navigation.css';
 
 export default function Navigation({
@@ -27,25 +30,30 @@ export default function Navigation({
             <NavLink
               onClick={onItemClick}
               to="/"
-              className={({ isActive }) => (isActive
-                ? `navigation__link navigation__link_type_home ${showActiveStyle}`
-                : 'navigation__link navigation__link_type_home')
+              className={({ isActive }) =>
+                isActive
+                  ? `navigation__link navigation__link_type_home ${showActiveStyle}`
+                  : 'navigation__link navigation__link_type_home'
               }
             >
               Home
             </NavLink>
           </li>
+
           <li>
-          {loggedIn && currentUser && (<NavLink
-              onClick={onItemClick}
-              to="/SavedArticles"
-              className={({ isActive }) => (isActive
-                ? `navigation__link navigation__link_type_saved-articles ${showActiveStyle}`
-                : 'navigation__link navigation__link_type_saved-articles')
-              }
-            >
-              Saved articles
-            </NavLink>) }
+            {loggedIn && currentUser && (
+              <NavLink
+                onClick={onItemClick}
+                to="/SavedArticles"
+                className={({ isActive }) =>
+                  isActive
+                    ? `navigation__link navigation__link_type_saved-articles ${showActiveStyle}`
+                    : 'navigation__link navigation__link_type_saved-articles'
+                }
+              >
+                Saved articles
+              </NavLink>
+            )}
           </li>
 
           {loggedIn && currentUser ? (
@@ -67,6 +75,17 @@ export default function Navigation({
               >
                 Sign in
               </button>
+            </li>
+          )}
+
+          {loggedIn && currentUser && (
+            <li>
+              <NavLink
+                to="/profile"
+                className="navigation__link navigation__link_type_profile"
+              >
+                <SettingsIcon />
+              </NavLink>
             </li>
           )}
         </ul>

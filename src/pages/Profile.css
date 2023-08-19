@@ -1,0 +1,236 @@
+.personal-info {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: auto 1fr 1fr auto;
+  gap: 0px 0px;
+  grid-template-areas:
+    'header edit-button'
+    'first-name last-name'
+    'email phone';
+  margin-bottom: var(--section-bottom-margin);
+}
+
+.menu__warper {
+  list-style-type: none;
+  display: flex;
+  text-decoration: none;
+  justify-content: center;
+}
+
+.menu__button {
+  text-decoration: none;
+}
+
+.avatar {
+  grid-area: avatar;
+}
+
+.full-name {
+  grid-area: full-name;
+}
+
+.title {
+  grid-area: title;
+}
+
+img.profile__avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  background-color: #e0e0e0;
+  background-position: center;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  grid-area: avatar;
+  margin-left: 14px;
+}
+
+section.profile {
+  width: 100%;
+}
+
+main {
+  width: 97.9%;
+  --section-bottom-margin: 29px;
+}
+
+p.profile__name {
+  grid-area: full-name;
+  margin: 0 0 0 10px;
+  padding: 0;
+  align-self: center;
+}
+
+p.profile__title {
+  grid-area: title;
+  margin: 0 0 0 10px;
+  padding: 0;
+  align-self: center;
+}
+
+
+.personal-info__label {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  height: 60px;
+  justify-content: space-between;
+}
+
+h3.personal-info__header {
+  margin: 0;
+  padding: 0;
+  grid-area: header;
+}
+
+.personal-info__first-name {
+  grid-area: first-name;
+}
+
+.personal-info__last-name {
+}
+
+.personal-info__last-name {
+  grid-area: last-name;
+}
+
+.personal-info__email {
+  grid-area: email;
+}
+
+.personal-info__phone {
+  grid-area: phone;
+}
+
+
+
+.personal-info__edit-button {
+  grid-area: edit-button;
+  width: 64%;
+  height: 27px;
+  justify-self: center;
+  justify-self: end;
+}
+
+
+.address__label {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  height: 60px;
+  justify-content: space-between;
+}
+
+.address__label {
+  display: flex;
+  flex-direction: column;
+  margin-left: 20px;
+  margin-bottom: 20px;
+  height: 60px;
+  justify-content: space-between;
+}
+
+.address__city {
+  grid-area: city;
+}
+
+.address__postal-code {
+  grid-area: postal-code;
+}
+
+.address__edit-button {
+  grid-area: edit-button;
+  width: 64%;
+  height: 27px;
+
+  justify-self: end;
+}
+.profile__header{
+  grid-area: header;
+  margin: 0;
+  height: 0;
+}
+@media screen and (min-width: 500px) {
+  .pageS {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-areas: 'nav page';
+  }
+  .menu {
+    grid-area: nav;
+  }
+  .profile {
+    width: 100%;
+    grid-area: page;
+    max-width: 800px;
+    justify-self: center;
+  }
+  .menu__warper {
+    list-style-type: none;
+    display: flex;
+    text-decoration: none;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+
+
+
+.profile__header {
+  grid-area: header;
+  margin: 0;
+  height: 0;
+}
+
+.profile__edit-button {
+  grid-area: edit-button;
+  width: 64%;
+  height: 27px;
+  justify-self: center;
+max-width: 100px;
+justify-self: end;
+}
+
+.address-info {
+  display: grid;
+  grid-auto-columns: 1fr;
+  grid-auto-rows: 1fr;
+  grid-template-columns: 1.5fr 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 0px 0px;
+  grid-template-areas:
+      'header edit-button'
+      'country city'
+      'postal-code unused';
+  margin-bottom: var(--section-bottom-margin);
+  font-style: normal;
+}
+
+.address__header {
+  margin: 0;
+  height: 0;
+}
+
+.profile__info-wrapper {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto 1fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+      'header edit-button'
+      'avatar full-name'
+      'avatar title';
+
+  margin-bottom: var(--section-bottom-margin);
+}
+
+
+
+
+

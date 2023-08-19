@@ -14,6 +14,11 @@ export default function NewsCardList({
   onCardRemoveClick,
   showKeyword,
   bookmarkCards,
+  onReactionSelect,
+  onCommentClick,
+  onUniqueReactionsClick,
+  onRemoveReaction,
+  onCardShare,
 }) {
   return (
     <section className="card-list">
@@ -27,7 +32,12 @@ export default function NewsCardList({
             onCardRemoveClick={onCardRemoveClick}
             onCardBookmarkClick={onCardBookmarkClick}
             showKeyword={showKeyword}
+            onRemoveReaction={onRemoveReaction}
             bookmarkCards={bookmarkCards}
+            onReactionSelect={onReactionSelect}
+            onCommentClick={onCommentClick}
+            onUniqueReactionsClick={onUniqueReactionsClick}
+            onCardShare={onCardShare}
           />
         ))}
       </div>

@@ -1,0 +1,26 @@
+.popup__button-close_type_card {
+  height: 40px;
+  width: 40px;
+  background-color: rgba(255, 0, 0, 0.494);
+  display: inline-block;
+  border-top-right-radius: 16px;
+  border-bottom-left-radius: 5px;
+  position: absolute;
+  top: 0;
+  right: 0;
+z-index: 1;
+  }
+
+ /*  @media screen and (max-width: 590px) {
+    .popup__button-close  {
+      right: calc(50% - 20px);
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .popup__button-close  {
+      right: 0px;
+    }
+  }
+ */
+

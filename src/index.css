@@ -18,10 +18,18 @@
 @import url(./blocks/button/__sign-in/button__sign-in.css);
 @import url(./blocks/button/_type/button_type_close.css);
 @import url(./blocks/button/_type/button_type_sign-out.css);
+@import url(./blocks/button/_type/button_type_reaction-item.css);
 @import url(./blocks/button/_type/button_type_remove.css);
+@import url(./blocks/button/__google-signin/button__google-signin.css);
 
 @import url(./blocks/icon/icon.css);
 @import url(./blocks/icon/_type/icon_type_sign-out.css);
+@import url(./blocks/icon/icon-reaction.css);
+@import url(./blocks/icon/_reaction/icon_reaction_wow.css);
+@import url(./blocks/icon/_reaction/icon_reaction_sad.css);
+@import url(./blocks/icon/_reaction/icon_reaction_love.css);
+@import url(./blocks/icon/_reaction/icon_reaction_lol.css);
+@import url(./blocks/icon/_reaction/icon_reaction_like.css);
 
 
 
@@ -32,3 +40,15 @@
 @import url(./blocks/saved-articles/__keywords/saved-articles__keywords.css);
 @import url(./blocks/saved-articles/__text/saved-articles__text.css);
 @import url(./blocks/saved-articles/__title/saved-articles__title.css);
+
+@import url(./blocks/alert/alert.css);
+@import url(./blocks/alert/_visible/alert_visible_true.css);
+@import url(./blocks/reactions/reactions.css);
+@import url(./blocks/reactions/_visible/reactions_visible_true.css);
+
+
+/* strange google bug after logging; make the screen wider  */
+#g_a11y_announcement{
+  display: none;
+}
+

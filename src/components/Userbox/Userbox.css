@@ -1,0 +1,40 @@
+
+
+.userbox__warper {
+
+  width: 97%;
+  padding-left: 2px;
+  padding-bottom: 10px;
+  background-color: white;
+  box-sizing: border-box;
+}
+
+.userbox__username {
+  font-size: 18px;
+  font-family: 'roboto slab';
+  letter-spacing: 0.5px;
+  padding: 5px;
+  text-align: left;
+  width: 99%;
+
+}
+
+.userbox__inner-box {
+  display: grid;
+  grid-template-areas:
+    'avatar stats1 reaction'
+    'avatar stats2 reaction';
+  padding-left: 8px;
+  padding-top: 6px;
+  justify-items: center;
+  align-items: center;
+  grid-template-columns: 72px 1fr 72px;
+}
+.userbox__avatar{
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+  margin-right: 10px;
+  grid-area: avatar;
+  justify-self: flex-start;
+}

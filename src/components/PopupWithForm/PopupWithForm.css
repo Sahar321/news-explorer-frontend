@@ -6,6 +6,7 @@
 @import url(../../blocks/popup/__field-label/popup__field-label.css);
 
 @import url(../../blocks/popup/__form/popup__form.css);
+@import url(../../blocks/popup/__form/_fix_height/popup__form_fix_hight.css);
 
 @import url(../../blocks/popup/__input/popup__input.css);
 
@@ -18,6 +19,7 @@
 @import url(../../blocks/button/_type/button_type_submit.css);
 
 @import url(../../blocks/popup/__container/_type/popup__container_type_message.css);
-@import url(../../blocks/popup/__button-close/__button-close.css);
+@import url(../../blocks/popup/__button-close/popup__button-close.css);
 @import url(../../blocks/popup/__server-error/popup__server-error.css);
+@import url(../../blocks/popup/__line/popup__line.css);
 

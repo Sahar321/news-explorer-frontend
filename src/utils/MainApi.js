@@ -1,5 +1,6 @@
 /*eslint-disable */
 import { BASE_URL } from '../constants/config.js';
+import { Buffer } from 'buffer';
 class MainApi {
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
@@ -16,6 +17,13 @@ class MainApi {
 
   signin = (data) => {
     return this.customFetch(`${this._baseUrl}/signin`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(data),
+    });
+  };
+  signinWithGoogle = (data) => {
+    return this.customFetch(`${this._baseUrl}/signin/google`, {
       method: 'POST',
       headers: this._headers.headers,
       body: JSON.stringify(data),
@@ -53,10 +61,77 @@ class MainApi {
   getAllArticles = () => {
     return this.customFetch(`${this._baseUrl}/articles`, this._headers);
   };
+  getAllArticlesDate = (link) => {
+    const linkObj = { link: link };
+    return this.customFetch(`${this._baseUrl}/articles/data`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(linkObj),
+    });
+  };
 
+  getAllArticlesReaction = (articleId) => {
+    const articleIdBase64 = Buffer.from(articleId).toString('base64');
+    return this.customFetch(
+      `${this._baseUrl}/articles/${articleIdBase64}/reactions`,
+      this._headers
+    );
+  };
+
+  TESTgetAllArticlesDate = () => {
+    return this.customFetch(`${this._baseUrl}/articles/data`, this._headers);
+  };
   getUserInfo() {
     return this.customFetch(`${this._baseUrl}/users/me`, this._headers);
   }
+
+  // cards
+  saveCardReaction = (type) => {
+    return this.customFetch(`${this._baseUrl}/reaction`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(type),
+    });
+  };
+  removeCardReaction = (type) => {
+
+    return this.customFetch(`${this._baseUrl}/reaction`, {
+      method: 'delete',
+      headers: this._headers.headers,
+      body: JSON.stringify({link: type}),
+    });
+  };
+  updateAvatar = (link) => {
+    return this.customFetch(`${this._baseUrl}/profile/avatar`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(link),
+    });
+  };
+
+  getAllArticleComments = (articleId) => {
+    /* Buffer.from(articleId).toString('base64'));
+   Buffer.from("SGVsbG8gV29ybGQ=", 'base64').toString('utf8') */
+    const articleIdBase64 = Buffer.from(articleId).toString('base64');
+    return this.customFetch(
+      `${this._baseUrl}/articles/${articleIdBase64}/comments`,
+      this._headers
+    );
+  };
+  saveComment = (comment) => {
+    return this.customFetch(`${this._baseUrl}/comment`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(comment),
+    });
+  };
+  sendThankYouToCommentOwner = (thankYou) => {
+    return this.customFetch(`${this._baseUrl}/comment/thank-you`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(thankYou),
+    });
+  };
 }
 
 const mainApi = new MainApi({

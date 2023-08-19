@@ -30,7 +30,11 @@
 .button__search:hover {
   background: #347eff;
 }
-.button__search:active {
+.button__search:disabled {
+  background: #c1c3c4;
+  color: #e0e4e6;
+}
+.button__search:active:enabled {
   background-color: #2a65cc;
 }
 

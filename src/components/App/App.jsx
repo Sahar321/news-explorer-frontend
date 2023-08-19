@@ -1,7 +1,12 @@
 /*eslint-disable*/
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef, createRef } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
+import { Divider, iconButtonClasses } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import ReactionsList from '../ReactionsList/ReactionsList';
+import Userbox from '../Userbox/Userbox';
 import './App.css';
+
 // apis
 import mainApi from '../../utils/MainApi';
 import newsApi from '../../utils/NewsApi';
@@ -19,18 +24,29 @@ import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
+import UserReactionList from '../UserReactionList/UserReactionList';
 ///  popups components
+import PopupWithInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
+import PopupWithAvatar from '../AvatarPopup/AvatarPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
+import PopupWithCard from '../PopupWithCard/PopupWithCard.jsx';
+import PopupWithReactionsInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 ///  pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
-
+import Profile from '../../pages/Profile.jsx';
+import { Alert, AlertTitle } from '@mui/material';
+import SearchForm from '../SearchForm/SearchForm';
+import ChatMessage from '../ChatMessage/ChatMessage';
+import SocialShareButton from '../SocialShareButton/SocialShareButton';
+import useMobileDetect from '../../utils/hooks/useMobileDetect';
 export default function App() {
   const location = useLocation();
   const token = localStorage.getItem('jwt');
-
+  const isMobile = useMobileDetect();
+  /*   const [cardComments, setCardComments] = useState([]); */
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
   const [appStyles, setAppStyles] = useState('');
@@ -40,8 +56,10 @@ export default function App() {
   const [cardsToShow, setCardsToShow] = useState([]);
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
+  const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
   const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
+  const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
   const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
   const [authErrorMessage, setAuthErrorMessage] = useState({
     message: '',
@@ -51,23 +69,53 @@ export default function App() {
     isOpen: false,
     title: '',
   });
+  const [selectedCard, setSelectedCard] = useState({});
+  const [isPopupWithCardOpen, setIsPopupWithCardOpen] = useState(false);
+  const [isReactionPopupOpen, setIsReactionPopupOpen] = useState(false);
+  const [articleReactions, setArticleReactions] = useState([]);
+  const [disappearingMessages, setDisappearingMessages] = useState({
+    message: '',
+    visible: false,
+    severity: 'info', // default value
+    title: '',
+  });
   // Functions
   /// error handling
+
   const handleMainError = ({ message, type }) => {
     if (type === 'auth') {
       setAuthErrorMessage({ message, visible: true });
       return;
     }
+    if (type === 'SERVER_NOT_AVAILABLE') {
+      setSearchPreloaderVisible(false);
+      setDisappearingMessages({
+        message:
+          'Server is not available at the moment, please try again later...',
+        visible: true,
+        severity: 'error',
+        title: 'Server Error',
+      });
 
+      return;
+    }
     console.log(message); //  todo: custom error message
   };
 
-  /// cards
-  const handleShowMoreCards = () => {
-    if (cards.length > 0) {
-      const newCards = cards.splice(0, CARDS_PAR_PAGE);
-      setCardsToShow((prvCards) => [...prvCards, ...newCards]);
-    }
+  /// crds
+
+  const [cardSliceNumber, setCardSliceNumber] = useState(0);
+  const handleLoadMoreCards = () => {
+    const { length } = cards;
+    const hasMoreCards = length > 0 && cardSliceNumber < length;
+    if (!hasMoreCards) return;
+    const newCards = cards.slice(
+      cardSliceNumber,
+      cardSliceNumber + CARDS_PAR_PAGE
+    );
+    setCardSliceNumber((prevSliceNumber) => prevSliceNumber + CARDS_PAR_PAGE);
+    setCardsToShow((prevCards) => [...prevCards, ...newCards]);
+    console.log('load more cards');
   };
   const handleCardRemove = ({ _id }) => {
     if (_id) {
@@ -91,18 +139,22 @@ export default function App() {
       })
       .catch(handleMainError);
   };
-
-  const handleCardBookmarkClick = (targetCard, isBookmark) => {
+  const showSignUpIfNotLoggedIn = () => {
     if (!loggedIn) {
       setSignUpPopupOpen(true);
       return;
     }
+  };
+
+  const handleCardBookmarkClick = (targetCard, isBookmark) => {
+    showSignUpIfNotLoggedIn();
+
     if (!isBookmark) {
       handleSaveCard(targetCard);
     } else {
       const card = savedCards.find(
         (cardData) => cardData.link === targetCard.link
-      );
+      ); // getting _id MongoDB
       handleCardRemove(card);
     }
   };
@@ -111,9 +163,12 @@ export default function App() {
   const closeAllPopups = () => {
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
+    setIsPopupWithCardOpen({ isOpen: false, cardData: '' });
     setAuthErrorMessage({ message: '', visible: false });
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
+    setIsAvatarPopupOpen(false);
+    setIsSharePopupOpen(false);
   };
   const handleSignInClick = () => {
     closeAllPopups();
@@ -154,6 +209,7 @@ export default function App() {
   };
   const handleSignOutClick = () => {
     localStorage.removeItem('jwt');
+    // localStorage.removeItem('cards');
     setCurrentUser(null);
     setLoggedIn(LoginState.LOGGED_OUT);
   };
@@ -176,39 +232,83 @@ export default function App() {
           setIsSearchNotFoundVisible(true);
           return;
         }
-        const cardListData = [];
-        articles.forEach((element) => {
-          cardListData.push({
-            keyword: searchInput,
-            title: element.title,
-            text: element.description,
-            date: setCardDateFormat(element.publishedAt),
-            source: element.source?.name,
-            link: element.url,
-            image: element.urlToImage || imageNotAvailable,
-          });
-        });
-        //tes
-        setCards(cardListData);
-        localStorage.setItem('cards', JSON.stringify(cardListData));
+
+        setCards(articles);
+        localStorage.setItem('cards', JSON.stringify(articles));
         setSearchPreloaderVisible(false);
       })
-      .catch(handleMainError);
+      .catch((err) => {
+        console.log(err);
+        handleMainError({ type: 'SERVER_NOT_AVAILABLE' });
+      });
   };
 
-  const setCardDateFormat = (dateStr) => {
-    if (!dateStr) {
-      return '';
-    }
-    const date = new Date(dateStr);
-    const result = `${
-      ENGLISH_MONTHS[date.getMonth()]
-    } ${date.getDate()}, ${date.getFullYear()}`;
-    return result;
+  const handleUpdatedCard = (newCard) => {
+    // update localStorage
+    const localCards = JSON.parse(localStorage.getItem('cards'));
+    const updatedLocalCards = localCards.map((currentCard) =>
+      currentCard.link === newCard.link ? newCard : currentCard
+    );
+    localStorage.setItem('cards', JSON.stringify(updatedLocalCards));
+    // update cardsToShow
+    setCardsToShow((prevCards) =>
+      prevCards.map((currentCard) => {
+        return currentCard.link === newCard.link ? newCard : currentCard;
+      })
+    );
+  };
+
+  const handleRemoveReaction = (cardData) => {
+    showSignUpIfNotLoggedIn();
+    mainApi
+      .removeCardReaction(cardData.link)
+      .then((res) => {
+        cardData.reactions = res;
+        handleUpdatedCard(cardData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleReactionSelect = (reactionData, cardData) => {
+    showSignUpIfNotLoggedIn();
+    mainApi
+      .saveCardReaction(reactionData)
+      .then((prop) => {
+        /*         const { reactionId, isOwner, link } = prop;
+        const updatedReactions = cardData?.reaction.map((currentCard) => {
+          return currentCard.isOwner === isOwner
+            ? { reactionId, isOwner, link }
+            : currentCard;
+        });
+        if (updatedReactions.length > 0) {
+          updatedReactions.push({ reactionId, isOwner, link });
+        }
+        cardData.reaction = updatedReactions; */
+
+        cardData.reactions = prop;
+
+        handleUpdatedCard(cardData);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   // useEffects
-  React.useEffect(() => {
+  useEffect(() => {
+    disappearingMessages.visible &&
+      setTimeout(() => {
+        setDisappearingMessages({
+          message: '',
+          visible: false,
+          severity: '',
+          title: '',
+        });
+      }, 5000);
+  }, [disappearingMessages]);
+  useEffect(() => {
     const { shouldOpenSignInPopup, shouldOpenSignUpPopup } =
       location.state || false;
     if (shouldOpenSignInPopup) {
@@ -233,12 +333,15 @@ export default function App() {
         .then((res) => {
           setSavedCards(res);
         })
-        .catch(handleMainError);
+        .catch((err) => {
+          console.log(err);
+        });
     }
   }, [loggedIn]);
 
   useEffect(() => {
-    handleShowMoreCards();
+    setCardSliceNumber(0);
+    handleLoadMoreCards();
   }, [cards]);
 
   useEffect(() => {
@@ -270,18 +373,161 @@ export default function App() {
     }
   }, [loggedIn]);
 
+  window.handleGooogleToken = (token) => {
+    console.log('handleGooogleToken', token);
+  };
+
   useEffect(() => {
     if (isSignInPopupOpen || isSignUpPopupOpen || popupWithMessage.isOpen) {
       setHideMobileMenuButton(true);
     }
   }, [isSignInPopupOpen, isSignUpPopupOpen, popupWithMessage]);
   useEffect(() => {
+    if (!savedCards) return;
     let bookmark = [];
     savedCards.forEach((card) => {
       bookmark.push(card.link);
     });
     setBookmarkCards(bookmark);
   }, [savedCards]);
+  const googleSigninButton = createRef();
+  useEffect(() => {
+    const handleCredentialResponse = (credential) => {
+      console.log('handleCredentialResponse', credential);
+      mainApi
+        .signinWithGoogle(credential)
+        .then((res) => {
+          if (res.token) {
+            closeAllPopups();
+            localStorage.setItem('jwt', res.token);
+            setLoggedIn(LoginState.LOGGED_IN);
+          }
+        })
+        .catch(({ message }) => {
+          handleMainError({ message, type: 'auth' });
+        });
+    };
+
+    if (window.google) {
+      console.log('window.google', window.google);
+      window.google.accounts.id.initialize({
+        client_id:
+          '1026060339727-lamt04gh0s9uqpqklh2mjchcnpsu35g0.apps.googleusercontent.com',
+        callback: handleCredentialResponse,
+      });
+      google.accounts.id.renderButton(googleSigninButton.current, {
+        theme: 'outline',
+        size: 'large',
+        click_listener: onClickHandler,
+      });
+
+      function onClickHandler() {
+        console.log('Sign in with Google button clicked...');
+      }
+    }
+  }, []);
+
+  const handleCardCommentClick = (card) => {
+    showSignUpIfNotLoggedIn();
+
+    setSelectedCard(card);
+    setIsPopupWithCardOpen(true);
+    /*    mainApi
+      .getAllArticleComments(card.link)
+      .then((res) => {
+        console.log('getAllArticleComments', card);
+         setCardComments(res);
+        setPopupWithCard({ isOpen: true, cardData: card });
+      })
+      .catch((err) => {
+        console.warn('getAllArticlesDate', err);
+      });   */
+  };
+
+  const handleCommentSubmit = (card, commentData) => {
+   /*  showSignUpIfNotLoggedIn(); */
+    console.log('handleCommentSubmit', commentData);
+    mainApi
+      .saveComment(commentData)
+      .then((res) => {
+        console.log('handleCommentSubmit', card, res);
+        card.comments = res;
+
+        handleUpdatedCard(card);
+      })
+      .catch((err) => {
+        console.log('handleCommentSubmit', err);
+      });
+  };
+
+  const handlePopupWithReactionClose = () => {
+    setIsReactionPopupOpen(false);
+  };
+
+  const handleUniqueReactionsClick = ({ link }) => {
+    mainApi
+      .getAllArticlesReaction(link)
+      .then((res) => {
+        setArticleReactions(res);
+        console.log('handleUniqueReactionsClick', res);
+        setIsReactionPopupOpen(true);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleThankYou = (comment) => {
+    mainApi
+      .sendThankYouToCommentOwner(comment)
+      .then((res) => {
+        console.log('handleThankYou', res);
+      })
+      .catch((err) => {
+        console.log('handleThankYou', err);
+      });
+  };
+
+  const handleAvatarClick = () => {
+    setIsAvatarPopupOpen(true);
+  };
+
+  const handleAvatarSubmit = (avatar) => {
+    setIsAvatarPopupOpen(false);
+    mainApi
+      .updateAvatar(avatar)
+      .then((res) => {
+        setCurrentUser(res);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  useEffect(() => {
+    console.log('articleReactions', articleReactions);
+  }, [articleReactions]);
+
+  const handleCardShare = async (cardData) => {
+    console.log('handleCardShare', cardData);
+    isMobile ? handleMobileShareModel() : setIsSharePopupOpen(true);
+  };
+
+  const handleMobileShareModel = async () => {
+    const shareData = {
+      title: 'MDN',
+      text: 'Learn web development on MDN!',
+      url: 'https://developer.mozilla.org',
+    };
+    console.log('shareData', shareData);
+    try {
+      await navigator.share(shareData);
+      console.log('shareData', 'MDN shared successfully');
+    } catch (err) {
+      console.log('shareDataError', `Error: ${err}`);
+    }
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>
@@ -303,10 +549,15 @@ export default function App() {
                 onSearchSubmit={handleSearchSubmit}
                 cardsToShow={cardsToShow}
                 cards={cards}
-                onShowMoreClick={handleShowMoreCards}
+                onShowMoreClick={handleLoadMoreCards}
                 isSearchPreloaderVisible={isSearchPreloaderVisible}
                 isSearchNotFoundVisible={isSearchNotFoundVisible}
                 bookmarkCards={bookmarkCards}
+                onReactionSelect={handleReactionSelect}
+                onCommentClick={handleCardCommentClick}
+                onUniqueReactionsClick={handleUniqueReactionsClick}
+                onRemoveReaction={handleRemoveReaction}
+                onCardShare={handleCardShare}
               />
             }
           />
@@ -323,13 +574,30 @@ export default function App() {
             }
           />
           <Route path="*" element={<PageNotFound />} />
+
           <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
             <Route
               path="/SavedArticles"
               element={
                 <SavedArticles
                   onCardRemoveClick={handleCardRemove}
+                  onCardShare={handleCardShare}
+                  onCommentClick={handleCardCommentClick}
                   savedCards={savedCards}
+                  setAppStyles={setAppStyles}
+                  onUniqueReactionsClick={handleUniqueReactionsClick}
+                  onReactionSelect={handleReactionSelect}
+                  onRemoveReaction={handleRemoveReaction}
+                />
+              }
+            />
+          </Route>
+          <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
+            <Route
+              path="/profile"
+              element={
+                <Profile
+                  onAvatarClick={handleAvatarClick}
                   setAppStyles={setAppStyles}
                 />
               }
@@ -345,7 +613,9 @@ export default function App() {
           onSubmit={handleSignInSubmit}
           onSignUpPopupClick={handleSignUpClick}
           onError={authErrorMessage}
-        />
+        >
+          <div className="button__google-signin" ref={googleSigninButton}></div>
+        </SignInPopup>
         <SignUpPopup
           onClose={closeAllPopups}
           onSubmit={handleSignUpSubmit}
@@ -366,6 +636,54 @@ export default function App() {
             Sign in
           </Link>
         </PopupWithMessage>
+        <Alert
+          variant="filled"
+          severity={disappearingMessages.severity}
+          className={`alert alert_visible_${disappearingMessages.visible}`}
+        >
+          {disappearingMessages.title && <AlertTitle>Server Error</AlertTitle>}
+          {disappearingMessages.message}
+        </Alert>
+
+        <PopupWithInfo
+          onClose={() => {
+            setIsSharePopupOpen(false);
+          }}
+          isOpen={isSharePopupOpen}
+        >
+          <SocialShareButton />
+        </PopupWithInfo>
+
+        <PopupWithAvatar
+          onClose={closeAllPopups}
+          isOpen={isAvatarPopupOpen}
+          onSubmit={handleAvatarSubmit}
+        />
+
+        <PopupWithCard
+          isOpen={isPopupWithCardOpen}
+          cardData={selectedCard}
+          loggedIn={loggedIn}
+          onClose={closeAllPopups}
+          onCommentSubmit={handleCommentSubmit}
+          /*       comments={cardComments} */
+          onThankYou={handleThankYou}
+          onUniqueReactionsClick={handleUniqueReactionsClick}
+          onReactionSelect={handleReactionSelect}
+          onRemoveReaction={handleRemoveReaction}
+          onCardBookmarkClick={handleCardBookmarkClick}
+          onCardRemoveClick={handleCardRemove}
+          bookmarkCards={bookmarkCards}
+          onCardShare={handleCardShare}
+        ></PopupWithCard>
+        <PopupWithInfo
+          title="Reactions"
+          onClose={handlePopupWithReactionClose}
+          isOpen={isReactionPopupOpen}
+          containerType="popup_type_user-reactions"
+        >
+          <UserReactionList data={articleReactions} />
+        </PopupWithInfo>
       </div>
     </CurrentUserContext.Provider>
   );

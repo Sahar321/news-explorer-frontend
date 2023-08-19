@@ -86,19 +86,19 @@ class MainApi {
   }
 
   // cards
-  saveCardReaction = (reactionId) => {
+  saveCardReaction = (type) => {
     return this.customFetch(`${this._baseUrl}/reaction`, {
       method: 'POST',
       headers: this._headers.headers,
-      body: JSON.stringify(reactionId),
+      body: JSON.stringify(type),
     });
   };
-  removeCardReaction = (reactionId) => {
+  removeCardReaction = (type) => {
 
     return this.customFetch(`${this._baseUrl}/reaction`, {
       method: 'delete',
       headers: this._headers.headers,
-      body: JSON.stringify({link: reactionId}),
+      body: JSON.stringify({link: type}),
     });
   };
   updateAvatar = (link) => {

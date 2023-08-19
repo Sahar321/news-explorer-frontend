@@ -23,7 +23,7 @@ export default function UserReactionList({ data }) {
     if (!filter) return;
     const filteredReactions = data.filter((reaction) => {
       if (filter === 'all') return true;
-      return reaction.reactionId.toLowerCase() === filter;
+      return reaction.type.toLowerCase() === filter;
     });
 
     if (filteredReactions.length === 0) {

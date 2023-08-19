@@ -6,7 +6,7 @@ import {formatNumberWithLetter} from '../../utils/helpers';
 import './ReactionStats.css';
 
 export default function ReactionStats({ stats }) {
-  const { reactionId } = stats;
+  const { type } = stats;
   const [totalComments, setTotalComments] = useState(0);
   const [totalThankYou, setTotalThankYou] = useState(0);
 
@@ -37,7 +37,7 @@ export default function ReactionStats({ stats }) {
         <span className="reaction-stats__total-count">{totalThankYou}</span>
       </div>
       <i
-        className={`icon reaction-stats__reaction icon_reaction_${reactionId?.toLowerCase()}`}
+        className={`icon reaction-stats__reaction icon_reaction_${type?.toLowerCase()}`}
       ></i>
     </>
   );

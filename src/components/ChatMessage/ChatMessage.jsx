@@ -13,6 +13,7 @@ import thankyouIcon from '../../images/icons/thankyouIcon.png';
 export default function ChatMessage({ cardData, comment, index, onThankYou, key}) {
   const [commentData, setCommentData] = useState({});
 
+/*  */
   useEffect(() => {
     setCommentData(formatComment(comment));
   }, [comment]);
@@ -26,7 +27,7 @@ export default function ChatMessage({ cardData, comment, index, onThankYou, key}
     onThankYou(thankYouData);
   };
 
-  function formatComment({ text, rating, date, owner, avatar, username }) {
+  function formatComment({ text, rating, date, owner, user }) {
     const formattedDate = DateTime.fromISO(date, { zone: 'utc' }).toFormat(
       'd/M/yy HH:mm'
     );
@@ -36,8 +37,7 @@ export default function ChatMessage({ cardData, comment, index, onThankYou, key}
       rating,
       date: formattedDate,
       owner,
-      avatar,
-      username,
+      user,
     };
   }
 
@@ -47,39 +47,12 @@ export default function ChatMessage({ cardData, comment, index, onThankYou, key}
 
   return (
     <div key={commentData.index} className="chat-meassge-main">
-      {/*       <Userbox username={commentData.username} avatar={commentData.avatar}>
-        <p>{commentData.text}</p>
-        <div className="chat-message__buttons-warper">
-          <IconButton aria-label="Reply" title="Reply">
-            <ReplyIcon />
-          </IconButton>
-          <IconButton aria-label="Report" title="Report">
-            <ReportIcon />
-          </IconButton>
-          <IconButton aria-label="Edit" title="Edit">
-            <EditIcon />
-          </IconButton>
-          <IconButton aria-label="Delete" title="Delete">
-            <DeleteIcon />
-          </IconButton>
-          <IconButton
-            onClick={handleOnThankYou}
-            aria-label="send thank You"
-            title="send thank You"
-          >
-            <img
-              className="iconthankYou"
-              src={thankyouIcon}
-              alt="thankyouIcon"
-            />
-          </IconButton>
-        </div>
-      </Userbox> */}
+
 
       <div className="comment-box">
-        <h3 className="comment-box__username">{commentData.username}</h3>
+        <h3 className="comment-box__username">{commentData.user?.name}</h3>
         <span className="comment-box__date">{commentData.date}</span>
-        <img src={commentData.avatar} className="comment-box__avatar"></img>
+        <img src={commentData.user?.avatar} className="comment-box__avatar"></img>
         <p className="comment-box__text">{commentData.text}</p>
         <div className="comment-box__buttons">
           <IconButton aria-label="Reply" title="Reply">

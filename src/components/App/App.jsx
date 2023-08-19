@@ -263,7 +263,7 @@ export default function App() {
     mainApi
       .removeCardReaction(cardData.link)
       .then((res) => {
-        cardData.reaction = res;
+        cardData.reactions = res;
         handleUpdatedCard(cardData);
       })
       .catch((err) => {
@@ -287,7 +287,7 @@ export default function App() {
         }
         cardData.reaction = updatedReactions; */
 
-        cardData.reaction = prop;
+        cardData.reactions = prop;
 
         handleUpdatedCard(cardData);
       })

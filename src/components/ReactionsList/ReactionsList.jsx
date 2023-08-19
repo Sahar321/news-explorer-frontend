@@ -14,8 +14,8 @@ export default function ReactionsList({
   if (!reactions) {
     return null;
   }
-  const reactionCounts = reactions.reduce((map, { reactionId }) => {
-    map[reactionId] = (map[reactionId] || 0) + 1;
+  const reactionCounts = reactions.reduce((map, { type }) => {
+    map[type] = (map[type] || 0) + 1;
     return map;
   }, {});
 
@@ -23,20 +23,20 @@ export default function ReactionsList({
   const uniqueReactions = Object.keys(reactionCounts);
   return (
     <div className={`reactions__list ${classList}`}>
-      {uniqueReactions?.map((reactionId) => (
+      {uniqueReactions?.map((type) => (
         <button
-          key={reactionId}
-          aria-label={`${reactionId} count`}
+          key={type}
+          aria-label={`${type} count`}
           className="button button_type_reaction-item"
           onClick={onUniqueReactionsClick}
         >
           <span className="reactions__count">
             {' '}
-            {reactionCounts[reactionId]}
+            {reactionCounts[type]}
           </span>
 
           <i
-            className={`icon icon-reaction icon_reaction_${reactionId.toLowerCase()}`}
+            className={`icon icon-reaction icon_reaction_${type.toLowerCase()}`}
           ></i>
         </button>
         /*  <button className='button reactions__button' key={reactionId}>

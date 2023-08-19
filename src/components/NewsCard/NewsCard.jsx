@@ -40,7 +40,7 @@ export default function NewsCard({
   useClickOutside(reactionsRef, () => {setIsReactionsOpen(false)} );
 
 
-  const { keyword, title, description, date, source, link, image, reaction } =
+  const { keyword, title, description, date, source, link, image, reactions } =
     cardData;
   const handleOnCardShare = () => {
     onCardShare(cardData);
@@ -48,13 +48,13 @@ export default function NewsCard({
 
 
   useEffect(() => {
-    const userCardReaction = cardData?.reaction?.find(
+    const userCardReaction = cardData?.reactions?.find(
       (reaction) => reaction.isOwner === true
     );
     console.log('userCardReaction', userCardReaction);
     if (!userCardReaction) return;
-    handleSetReaction(userCardReaction.reactionId);
-  }, [cardData.reaction]);
+    handleSetReaction(userCardReaction.type);
+  }, [cardData.reactions]);
 
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
   const isBookmarkActiveClass = isBookmark
@@ -104,9 +104,9 @@ export default function NewsCard({
     </>
   );
 
-  const handleSetReaction = (reactionId) => {
-    if (!reactionId) return;
-    const reaction = ReactionType[reactionId];
+  const handleSetReaction = (type) => {
+    if (!type) return;
+    const reaction = ReactionType[type];
     const reactionImg = <img width="30px" src={reaction} />;
     setSelectedReaction(reactionImg);
   };
@@ -115,7 +115,7 @@ export default function NewsCard({
     // handleSetReaction(e.target.id);
     handleReactions();
     const reactionData = {
-      reactionId: e.target.id,
+      type: e.target.id,
       link: cardData.link,
     };
     onReactionSelect(reactionData, cardData);
@@ -154,10 +154,10 @@ export default function NewsCard({
           src={image}
           alt="card"
         />
-        {reaction?.length > 0 && (
+        {reactions?.length > 0 && (
           <ReactionsList
             onUniqueReactionsClick={handleOnUniqueReactionsClick}
-            reactions={reaction}
+            reactions={reactions}
             classList={'reactions__list_type_article'}
           />
         )}

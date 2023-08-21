@@ -30,31 +30,29 @@ export default function NewsCard({
   elementsToHide,
   onCardShare,
 }) {
+  const { keyword, title, description, date, source, link, image, reactions } =
+    cardData;
   const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
-  const [selectedReaction, setSelectedReaction] = React.useState(
-    <AddReactionIcon />
-  );
+  const [selectedReaction, setSelectedReaction] = React.useState(null);
+
+  useEffect(() => {
+    if (!reactions) return;
+    setSelectedReaction(ReactionType[reactions.ownerReactionType]);
+  }, [reactions]);
 
   const reactionsRef = useRef(null);
 
-  useClickOutside(reactionsRef, () => {setIsReactionsOpen(false)} );
+  useClickOutside(reactionsRef, () => {
+    setIsReactionsOpen(false);
+  });
 
-
-  const { keyword, title, description, date, source, link, image, reactions } =
-    cardData;
   const handleOnCardShare = () => {
     onCardShare(cardData);
   };
 
-
   useEffect(() => {
-    const userCardReaction = cardData?.reactions?.find(
-      (reaction) => reaction.isOwner === true
-    );
-    console.log('userCardReaction', userCardReaction);
-    if (!userCardReaction) return;
-    handleSetReaction(userCardReaction.type);
-  }, [cardData.reactions]);
+    console.log('selectedReaction', selectedReaction);
+  }, [selectedReaction]);
 
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
   const isBookmarkActiveClass = isBookmark
@@ -89,10 +87,6 @@ export default function NewsCard({
     </>
   );
 
-  const handleReactions = () => {
-    setIsReactionsOpen(!isReactionsOpen);
-  };
-
   const removeButton = (
     <>
       <button
@@ -104,16 +98,13 @@ export default function NewsCard({
     </>
   );
 
-  const handleSetReaction = (type) => {
-    if (!type) return;
-    const reaction = ReactionType[type];
-    const reactionImg = <img width="30px" src={reaction} />;
-    setSelectedReaction(reactionImg);
-  };
-
   const handleReactionsClick = (e) => {
-    // handleSetReaction(e.target.id);
-    handleReactions();
+    if (!e.target.id) {
+      setIsReactionsOpen(!isReactionsOpen);
+      return;
+    }
+
+    setIsReactionsOpen(!isReactionsOpen);
     const reactionData = {
       type: e.target.id,
       link: cardData.link,
@@ -122,7 +113,6 @@ export default function NewsCard({
   };
 
   const handleRemoveReaction = () => {
-    setSelectedReaction(<AddReactionIcon />);
     onRemoveReaction(cardData);
     setIsReactionsOpen(false);
   };
@@ -135,8 +125,6 @@ export default function NewsCard({
     console.log('handleOnUniqueReactionsClick');
     onUniqueReactionsClick(cardData);
   };
-
-
 
   return (
     <article className={`card ${classList?.card ? classList.card : ''}`}>
@@ -154,20 +142,22 @@ export default function NewsCard({
           src={image}
           alt="card"
         />
-        {reactions?.length > 0 && (
+        {reactions && (
           <ReactionsList
             onUniqueReactionsClick={handleOnUniqueReactionsClick}
-            reactions={reactions}
+            reactionsCountByType={reactions.countByType}
             classList={'reactions__list_type_article'}
           />
         )}
       </div>
       <Divider />
 
-      <div  ref={reactionsRef} className="card__reactions-warper">
-        <div className={`reactions  reactions_visible_${isReactionsOpen}`}>
+      <div ref={reactionsRef} className="card__reactions-warper">
+        <div
+          onClick={handleReactionsClick}
+          className={`reactions  reactions_visible_${isReactionsOpen}`}
+        >
           <svg
-            id="closeRections"
             xmlns="http://www.w3.org/2000/svg"
             width="40"
             height="40"
@@ -186,7 +176,6 @@ export default function NewsCard({
           <img
             alt="lol"
             id="LOL"
-            onClick={handleReactionsClick}
             width="30px"
             className="animate__animated animate__bounceIn"
             src={ReactionType['LOL']}
@@ -194,7 +183,6 @@ export default function NewsCard({
           <img
             alt="wow"
             id="WOW"
-            onClick={handleReactionsClick}
             width="30px"
             className="animate__animated animate__bounceIn"
             src={ReactionType['WOW']}
@@ -202,7 +190,6 @@ export default function NewsCard({
           <img
             alt="LIKE"
             id="LIKE"
-            onClick={handleReactionsClick}
             width="30px"
             className="animate__animated animate__bounceIn"
             src={ReactionType['LIKE']}
@@ -210,7 +197,6 @@ export default function NewsCard({
           <img
             alt="SAD"
             id="SAD"
-            onClick={handleReactionsClick}
             width="30px"
             className="animate__animated animate__bounceIn"
             src={ReactionType['SAD']}
@@ -218,7 +204,6 @@ export default function NewsCard({
           <img
             alt="love"
             id="LOVE"
-            onClick={handleReactionsClick}
             width="30px"
             className="animate__animated animate__bounceIn"
             src={ReactionType['LOVE']}
@@ -237,8 +222,13 @@ export default function NewsCard({
         ) : (
           ''
         )}
-        <Button onClick={handleReactions}>
-          {selectedReaction}
+        <Button onClick={handleReactionsClick}>
+          {selectedReaction ? (
+            <img width="30px" src={selectedReaction} />
+          ) : (
+            <AddReactionIcon />
+          )}
+
           <span className="reaction__text-button">
             {formatNumberWithLetter(cardData?.reaction?.length)}
           </span>

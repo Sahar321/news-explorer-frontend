@@ -1,23 +1,20 @@
 /*eslint-disable */
 import React, { useEffect, useContext, useState } from 'react';
 import NewsCardList from '../components/NewsCardList/NewsCardList.jsx';
+
+
 import CurrentUserContext from '../contexts/CurrentUserContext';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import SideMenu from '../components/SideMenu/SideMenu.jsx';
 import InfoTable from '../components/InfoTable/InfoTable';
-import './Profile.css';
+  import './Profile.css';
 import ErrorBoundary from '../ErrorBoundary.jsx';
 
-export default function Profile({ setAppStyles, onAvatarClick }) {
+export default function Profile({ setAppStyles, onAvatarClick, onProfileEdit }) {
   const currentUser = useContext(CurrentUserContext);
 
-  useEffect(() => {
-    setAppStyles('app_page_saved-articles');
-    return () => {
-      setAppStyles('');
-    };
-  }, []);
+
   const personalInfoData = [
     { label: 'First name', value: 'Sam', className: 'first-name' },
     { label: 'Last name', value: 'Smith', className: 'last-name' },
@@ -30,21 +27,8 @@ export default function Profile({ setAppStyles, onAvatarClick }) {
     { label: 'City', value: 'Modiin', className: 'city' },
     { label: 'Postal Code', value: '61564', className: 'postal-code' },
   ];
+
   return (
-    <main className="pageS">
-      <nav className="menu">
-        <ul className="menu__warper">
-          <li className="menu__item">
-            <Button className="menu__button">profile</Button>
-          </li>
-          <li className="menu__item">
-            <Button className="menu__button">My Post</Button>
-          </li>
-          <li className="menu__item">
-            <Button className="menu__button">My reaction</Button>
-          </li>
-        </ul>
-      </nav>
 
       <section className="profile">
         <div className="profile__info-wrapper">
@@ -60,12 +44,13 @@ export default function Profile({ setAppStyles, onAvatarClick }) {
             className="profile__edit-button"
             variant="outlined"
             endIcon={<EditIcon />}
+            onClick={onProfileEdit}
           >
             Edit
           </Button>
         </div>
 
-          <InfoTable header={'Personal Information'} />
+        <InfoTable header={'Personal Information'} />
 
         {/*         <section className="personal-info">
           <h3 className="personal-info__header">Personal Information</h3>
@@ -106,6 +91,6 @@ export default function Profile({ setAppStyles, onAvatarClick }) {
           </Button>
         </address> */}
       </section>
-    </main>
+
   );
 }

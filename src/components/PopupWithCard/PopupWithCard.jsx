@@ -91,28 +91,18 @@ export default function PopupWithCard({
         <div className="popup__comments">
           <Comment onCommentSubmit={handleOnCommentSubmit} isOpen={true} />
           <div ref={messageListRef} className="message-list">
-            {!cardData.comments?.length > 0 && (
+            {!cardData.comments?.count > 0 && (
               <h3 className="message-list__empty-title">
                 Be the first to comment...
               </h3>
             )}
 
             <CommentsList
-              comments={cardData.comments}
+              comments={cardData.comments?.data}
               onThankYou={onThankYou}
             />
 
-            {/*             {cardData.comments
-              ?.slice()
-              .reverse()
-              .map((comment, index, array) => (
-                <ChatMessage
-                  key={array.length - index - 1}
-                  index={array.length - index}
-                  comment={comment}
-                  onThankYou={onThankYou}
-                />
-              ))} */}
+
           </div>
         </div>
       </div>

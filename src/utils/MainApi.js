@@ -101,8 +101,8 @@ class MainApi {
       body: JSON.stringify({link: type}),
     });
   };
-  updateAvatar = (link) => {
-    return this.customFetch(`${this._baseUrl}/profile/avatar`, {
+  updateProfile = (link) => {
+    return this.customFetch(`${this._baseUrl}/profile`, {
       method: 'POST',
       headers: this._headers.headers,
       body: JSON.stringify(link),

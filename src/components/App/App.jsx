@@ -5,6 +5,7 @@ import { Divider, iconButtonClasses } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import ReactionsList from '../ReactionsList/ReactionsList';
 import Userbox from '../Userbox/Userbox';
+import EditProfileInfoModal from '../EditProfileInfoModal/EditProfileInfoModal';
 import './App.css';
 
 // apis
@@ -25,7 +26,9 @@ import Footer from '../Footer/Footer.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import UserReactionList from '../UserReactionList/UserReactionList';
+import CommentsList from '../CommentsList.jsx';
 ///  popups components
+import ProfileLayout from '../ProfileLayout';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
@@ -36,7 +39,7 @@ import PopupWithReactionsInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 ///  pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
-import Profile from '../../pages/Profile.jsx';
+
 import { Alert, AlertTitle } from '@mui/material';
 import SearchForm from '../SearchForm/SearchForm';
 import ChatMessage from '../ChatMessage/ChatMessage';
@@ -61,6 +64,7 @@ export default function App() {
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
   const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
   const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
+
   const [authErrorMessage, setAuthErrorMessage] = useState({
     message: '',
     visible: false,
@@ -70,6 +74,8 @@ export default function App() {
     title: '',
   });
   const [selectedCard, setSelectedCard] = useState({});
+  const [isEditProfileInfoModalOpen, setIsEditProfileInfoModalOpen] =
+    useState(false);
   const [isPopupWithCardOpen, setIsPopupWithCardOpen] = useState(false);
   const [isReactionPopupOpen, setIsReactionPopupOpen] = useState(false);
   const [articleReactions, setArticleReactions] = useState([]);
@@ -169,6 +175,7 @@ export default function App() {
     setHideMobileMenuButton(false);
     setIsAvatarPopupOpen(false);
     setIsSharePopupOpen(false);
+    setIsEditProfileInfoModalOpen(false);
   };
   const handleSignInClick = () => {
     closeAllPopups();
@@ -430,29 +437,27 @@ export default function App() {
   const handleCardCommentClick = (card) => {
     showSignUpIfNotLoggedIn();
 
-    setSelectedCard(card);
-    setIsPopupWithCardOpen(true);
-    /*    mainApi
+    mainApi
       .getAllArticleComments(card.link)
       .then((res) => {
         console.log('getAllArticleComments', card);
-         setCardComments(res);
-        setPopupWithCard({ isOpen: true, cardData: card });
+        card.comments.data = res;
+        setSelectedCard(card);
+        setIsPopupWithCardOpen(true);
       })
       .catch((err) => {
         console.warn('getAllArticlesDate', err);
-      });   */
+      });
   };
 
   const handleCommentSubmit = (card, commentData) => {
-   /*  showSignUpIfNotLoggedIn(); */
+    /*  showSignUpIfNotLoggedIn(); */
     console.log('handleCommentSubmit', commentData);
     mainApi
       .saveComment(commentData)
       .then((res) => {
-        console.log('handleCommentSubmit', card, res);
-        card.comments = res;
-
+        card.comments.data = res;
+        card.comments.count = res.length;
         handleUpdatedCard(card);
       })
       .catch((err) => {
@@ -495,7 +500,7 @@ export default function App() {
   const handleAvatarSubmit = (avatar) => {
     setIsAvatarPopupOpen(false);
     mainApi
-      .updateAvatar(avatar)
+      .updateProfileInfo(avatar)
       .then((res) => {
         setCurrentUser(res);
       })
@@ -503,6 +508,12 @@ export default function App() {
         console.log(err);
       });
   };
+
+
+  const handleProfileEditClick = (data) => {
+    setIsEditProfileInfoModalOpen(true);
+
+  }
 
   useEffect(() => {
     console.log('articleReactions', articleReactions);
@@ -527,6 +538,11 @@ export default function App() {
       console.log('shareDataError', `Error: ${err}`);
     }
   };
+
+const handleProfileEditSubmit = (data) => {
+  mainApi.updateProfileInfo
+}
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -594,9 +610,10 @@ export default function App() {
           </Route>
           <Route element={<ProtectedRoutes loggedIn={loggedIn} />}>
             <Route
-              path="/profile"
+              path="/profile/*"
               element={
-                <Profile
+                <ProfileLayout
+                onProfileEdit={handleProfileEditClick}
                   onAvatarClick={handleAvatarClick}
                   setAppStyles={setAppStyles}
                 />
@@ -676,6 +693,13 @@ export default function App() {
           bookmarkCards={bookmarkCards}
           onCardShare={handleCardShare}
         ></PopupWithCard>
+        <EditProfileInfoModal
+          isOpen={isEditProfileInfoModalOpen}
+          onClose={closeAllPopups}
+          currentUser={currentUser}
+          onSubmit={handleProfileEditClick}
+
+        ></EditProfileInfoModal>
         <PopupWithInfo
           title="Reactions"
           onClose={handlePopupWithReactionClose}

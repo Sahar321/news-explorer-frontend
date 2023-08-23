@@ -81,6 +81,7 @@ export default function Navigation({
           {loggedIn && currentUser && (
             <li>
               <NavLink
+                onClick={onItemClick}
                 to="/profile"
                 className="navigation__link navigation__link_type_profile"
               >

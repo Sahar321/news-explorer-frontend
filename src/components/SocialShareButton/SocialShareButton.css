@@ -39,6 +39,7 @@
   color: #404040;
   margin: 0;
   transition: 0.5s;
+  cursor: pointer;
 }
 .social-button__span {
   position: absolute;

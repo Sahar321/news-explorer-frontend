@@ -19,10 +19,13 @@
 }
 
 .info-table__header {
-  grid-area: header;
   margin: 0;
-  height: fit-content;
-  display: block;
+  height: 0;
+  margin-left: 8px;
+  margin-bottom: 10px;
+  display: inline-block;
+  height: auto;
+  width: fit-content;
 }
 
 .info-table__label {

@@ -98,15 +98,15 @@ export default function NewsCard({
     </>
   );
 
-  const handleReactionsClick = (e) => {
-    if (!e.target.id) {
+  const handleReactionsClick = (evt) => {
+    if (!evt.target.id) {
       setIsReactionsOpen(!isReactionsOpen);
       return;
     }
 
     setIsReactionsOpen(!isReactionsOpen);
     const reactionData = {
-      type: e.target.id,
+      type: evt.target.id,
       link: cardData.link,
     };
     onReactionSelect(reactionData, cardData);
@@ -216,7 +216,7 @@ export default function NewsCard({
           <Button onClick={handleOnCommentClick}>
             <CommentIcon />{' '}
             <span className="reaction__text-button">
-              {formatNumberWithLetter(cardData?.comments?.length)}
+              {formatNumberWithLetter(cardData?.comments?.count)}
             </span>
           </Button>
         ) : (

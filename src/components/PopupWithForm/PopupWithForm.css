@@ -23,3 +23,10 @@
 @import url(../../blocks/popup/__server-error/popup__server-error.css);
 @import url(../../blocks/popup/__line/popup__line.css);
 
+
+
+.search-loading__icon_type_button {
+
+  height: 40px !important;
+  width: 40px !important;
+}

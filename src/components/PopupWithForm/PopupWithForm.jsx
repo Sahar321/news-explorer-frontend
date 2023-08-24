@@ -1,5 +1,7 @@
+/*eslint-disable*/
 import React, { useRef, useEffect, useState } from 'react';
 import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
+import Preloader from '../Preloader/Preloader';
 import './PopupWithForm.css';
 
 export default function PopupWithForm({
@@ -15,7 +17,26 @@ export default function PopupWithForm({
   onError,
 }) {
   const [isScrenHeightBigger, setIsScrenHeightBigger] = useState(false);
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSubmitButtonDisabled, setIsSubmitButtonDisabled] = useState(true);
+  const formRef = useRef(null);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    setIsLoading(false);
+    setIsSubmitButtonDisabled(!formRef.current.checkValidity());
+    console.log('checkValidity');
+  }, [isOpen, isValid, onError]);
+
   useCloseOnEscape(isOpen, onClose);
+
+  const onSubmitHandler = (evt) => {
+    setIsSubmitButtonDisabled(true);
+    setIsLoading(true);
+    onSubmit(evt);
+  };
+
   const handleOverlayClose = (evt) => {
     const popup = evt.target.classList;
     if (popup.contains('popup')) {
@@ -69,21 +90,26 @@ export default function PopupWithForm({
           className="popup__form"
           noValidate
           name={name}
-          onSubmit={onSubmit}
+          ref={formRef}
+          onSubmit={onSubmitHandler}
         >
           {children}
           {onError?.visible && (
             <span className="popup__server-error" id="popup-signin-email-error">
-              {onError?.message}
+              {onError?.message }
             </span>
           )}
           <button
             aria-label="submit"
             type="submit"
-            disabled={!isValid}
+            disabled={isSubmitButtonDisabled}
             className="button button_type_submit"
           >
-            {submitTitle}
+            <Preloader
+              isVisible={isLoading}
+              className="search-loading__icon search-loading__icon_type_button"
+            />
+            {!isLoading && submitTitle}
           </button>
         </form>
         {bottomChildren}

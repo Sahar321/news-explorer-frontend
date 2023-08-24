@@ -30,41 +30,41 @@ export default function EditProfileInfoModal({
       onError={onError}
     >
       <label htmlFor="popup-info-name" className="popup__field-label">
-        Full name
+        name
       </label>
       <input
         id="popup-info-name"
         type="text"
         className="popup__input"
-        name="fullName"
-        placeholder="Enter Full name"
-        value={values.fullName || ''}
+        name="name"
+        placeholder="Enter name"
+        value={values.name || ''}
         onChange={handleChange}
         minLength="6"
         maxLength="30"
         required
       />
-      {errors.fullName && (
-        <span className="popup__input-error">{errors.fullName}</span>
+      {errors.name && (
+        <span className="popup__input-error">{errors.name}</span>
       )}
-      <label htmlFor="popup-info-title" className="popup__field-label">
-        Title
+      <label htmlFor="popup-info-motto" className="popup__field-label">
+        Motto
       </label>
       <input
-        id="popup-info-title"
+        id="popup-info-motto"
         type="text"
         className="popup__input"
-        name="title"
-        placeholder="Enter Title"
-        value={values.title || ''}
+        name="motto"
+        placeholder="What is your motto?"
+        value={values.motto || ''}
         onChange={handleChange}
         autoComplete="on"
         minLength="0"
         maxLength="50"
         required
       />
-      {errors.title && (
-        <span className="popup__input-error">{errors.title}</span>
+      {errors.motto && (
+        <span className="popup__input-error">{errors.motto}</span>
       )}
 
       <label htmlFor="popup-info-avatar" className="popup__field-label">

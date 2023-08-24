@@ -28,7 +28,7 @@ import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import UserReactionList from '../UserReactionList/UserReactionList';
 import CommentsList from '../CommentsList.jsx';
 ///  popups components
-import ProfileLayout from '../ProfileLayout';
+import ProfileLayout from '../ProfileLayout/ProfileLayout';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
 import SignUpPopup from '../SignUpPopup/SignUpPopup.jsx';
@@ -419,7 +419,7 @@ export default function App() {
       console.log('window.google', window.google);
       window.google.accounts.id.initialize({
         client_id:
-          '1026060339727-lamt04gh0s9uqpqklh2mjchcnpsu35g0.apps.googleusercontent.com',
+          '109257300086-qa4gpb1jcah14ug0g3pfrvllpgm4b95l.apps.googleusercontent.com',
         callback: handleCredentialResponse,
       });
       google.accounts.id.renderButton(googleSigninButton.current, {
@@ -497,23 +497,9 @@ export default function App() {
     setIsAvatarPopupOpen(true);
   };
 
-  const handleAvatarSubmit = (avatar) => {
-    setIsAvatarPopupOpen(false);
-    mainApi
-      .updateProfileInfo(avatar)
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-
   const handleProfileEditClick = (data) => {
     setIsEditProfileInfoModalOpen(true);
-
-  }
+  };
 
   useEffect(() => {
     console.log('articleReactions', articleReactions);
@@ -526,23 +512,30 @@ export default function App() {
 
   const handleMobileShareModel = async () => {
     const shareData = {
-      title: 'MDN',
-      text: 'Learn web development on MDN!',
-      url: 'https://developer.mozilla.org',
+      title: 'news-explorer',
+      text: selectedCard.title,
+      url: selectedCard.link,
     };
     console.log('shareData', shareData);
     try {
       await navigator.share(shareData);
-      console.log('shareData', 'MDN shared successfully');
     } catch (err) {
       console.log('shareDataError', `Error: ${err}`);
     }
   };
 
-const handleProfileEditSubmit = (data) => {
-  mainApi.updateProfileInfo
-}
-
+  const handleUpdateProfileSubmit = (data) => {
+    mainApi
+      .updateProfile(data)
+      .then((res) => {
+        console.log('handleUpdateProfileSubmit', res);
+        setCurrentUser(res);
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log('handleUpdateProfileSubmit', err);
+      });
+  };
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -613,7 +606,7 @@ const handleProfileEditSubmit = (data) => {
               path="/profile/*"
               element={
                 <ProfileLayout
-                onProfileEdit={handleProfileEditClick}
+                  onProfileEditClick={handleProfileEditClick}
                   onAvatarClick={handleAvatarClick}
                   setAppStyles={setAppStyles}
                 />
@@ -671,12 +664,12 @@ const handleProfileEditSubmit = (data) => {
           <SocialShareButton />
         </PopupWithInfo>
 
-        <PopupWithAvatar
+        {/*     <PopupWithAvatar
           onClose={closeAllPopups}
           isOpen={isAvatarPopupOpen}
           onSubmit={handleAvatarSubmit}
         />
-
+ */}
         <PopupWithCard
           isOpen={isPopupWithCardOpen}
           cardData={selectedCard}
@@ -697,8 +690,7 @@ const handleProfileEditSubmit = (data) => {
           isOpen={isEditProfileInfoModalOpen}
           onClose={closeAllPopups}
           currentUser={currentUser}
-          onSubmit={handleProfileEditClick}
-
+          onSubmit={handleUpdateProfileSubmit}
         ></EditProfileInfoModal>
         <PopupWithInfo
           title="Reactions"

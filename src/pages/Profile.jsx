@@ -6,11 +6,7 @@ import Button from '@mui/material/Button';
 import InfoTable from '../components/InfoTable/InfoTable';
 import './Profile.css';
 
-export default function Profile({
-  onProfileEditClick,
-  currentUser,
-}) {
-
+export default function Profile({ onProfileEditClick, currentUser, onPersonalInfoSubmit }) {
   return (
     <section className="profile">
       <div className="profile__info-wrapper">
@@ -32,7 +28,7 @@ export default function Profile({
         </Button>
       </div>
 
-      <InfoTable header={'Personal Information'} />
+      <InfoTable currentUser={currentUser} onSubmit={onPersonalInfoSubmit} header={'Personal Information'} />
 
       {/*         <section className="personal-info">
           <h3 className="personal-info__header">Personal Information</h3>

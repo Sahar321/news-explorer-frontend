@@ -12,7 +12,7 @@ const CommentsList = ({ comments, onThankYou }) => {
     return (
       <div style={style}>
         <ChatMessage
-          key={index}
+          id={index}
           index={comments?.length - index}
           comment={comment}
           onThankYou={onThankYou}
@@ -23,7 +23,7 @@ const CommentsList = ({ comments, onThankYou }) => {
 
   return (
     <List
-      height={500} // Adjust this value according to your layout
+      height={parseInt(500)} // Adjust this value according to your layout
       itemCount={comments?.length}
       itemSize={145} // Average height of a single comment. Adjust as needed.
       width="100%"

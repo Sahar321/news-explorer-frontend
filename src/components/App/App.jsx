@@ -429,6 +429,8 @@ export default function App() {
       click_listener: onClickHandler,
     });
 
+    google.accounts.id.prompt();
+
     function onClickHandler() {
       console.log('Sign in with Google button clicked...');
     }

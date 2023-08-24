@@ -101,11 +101,11 @@ class MainApi {
       body: JSON.stringify({link: type}),
     });
   };
-  updateProfile = (link) => {
+  updateProfile = (data) => {
     return this.customFetch(`${this._baseUrl}/profile`, {
       method: 'POST',
       headers: this._headers.headers,
-      body: JSON.stringify(link),
+      body: JSON.stringify(data),
     });
   };
 

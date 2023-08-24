@@ -87,7 +87,7 @@ const InfoTable = ({ header }) => {
       <ul className="info-table__items">
         {data.map(({ label, value, name, type }, index) => (
           <li className="info-table__item" key={index}>
-            <label for={name} className="info-table__label">
+            <label htmlFor={name} className="info-table__label">
               {label}
             </label>
             {isEditModeActive ? (

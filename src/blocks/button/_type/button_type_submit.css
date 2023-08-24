@@ -1,4 +1,5 @@
 .button_type_submit {
+  display: flex;
   box-sizing: border-box;
   border-radius: 100px;
   width: 358px;
@@ -11,7 +12,10 @@
   line-height: 24px;
   background: #2f80ed;
   color: #ffffff;
-  display: inline-block;
+  flex-direction: column;
+  align-content: center;
+  align-items: center;
+  justify-content: center;
 }
 
 .button_type_submit:disabled {

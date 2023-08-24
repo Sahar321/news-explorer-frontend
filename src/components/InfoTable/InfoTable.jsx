@@ -8,7 +8,7 @@ import useFormAndValidation from '../../utils/hooks/useFormAndValidation';
 
 import './InfoTable.css';
 
-const InfoTable = ({ header }) => {
+const InfoTable = ({ header, currentUser, onSubmit }) => {
   const [isEditModeActive, setIsEditModeActive] = useState(false);
   const data = [
     { label: 'First name', type: 'text', value: 'Sam', name: 'first-name' },
@@ -72,14 +72,14 @@ const InfoTable = ({ header }) => {
       </Button>
     );
   };
-  const onSubmit = (evt) => {
+  const onSubmitHandler = (evt) => {
     evt.preventDefault();
     if (!isValid) return;
     onSubmit(values);
   };
 
   return (
-    <form noValidate onSubmit={onSubmit} id="presonelSD" className="info-table">
+    <form noValidate onSubmit={onSubmitHandler} id="presonelSD" className="info-table">
       <h2 className="info-table__header">{header}</h2>
       <div className="info-table__edit-buttons-wrapper">
         {renderActionButtons()}

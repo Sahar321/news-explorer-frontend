@@ -10,7 +10,7 @@ import { DateTime } from 'luxon';
 import './ChatMessage.css';
 import Userbox from '../Userbox/Userbox';
 import thankyouIcon from '../../images/icons/thankyouIcon.png';
-export default function ChatMessage({ cardData, comment, index, onThankYou, key}) {
+export default function ChatMessage({ cardData, comment, index, onThankYou, id}) {
   const [commentData, setCommentData] = useState({});
 
 /*  */
@@ -46,7 +46,7 @@ export default function ChatMessage({ cardData, comment, index, onThankYou, key}
   }, [comment]);
 
   return (
-    <div key={commentData.index} className="chat-meassge-main">
+    <div id={commentData.index} className="chat-meassge-main">
 
 
       <div className="comment-box">

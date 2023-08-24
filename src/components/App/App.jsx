@@ -398,41 +398,42 @@ export default function App() {
     setBookmarkCards(bookmark);
   }, [savedCards]);
   const googleSigninButton = createRef();
+  const handleCredentialResponse = (credential) => {
+    console.log('handleCredentialResponse', credential);
+    mainApi
+      .signinWithGoogle(credential)
+      .then((res) => {
+        if (res.token) {
+          closeAllPopups();
+          localStorage.setItem('jwt', res.token);
+          setLoggedIn(LoginState.LOGGED_IN);
+        }
+      })
+      .catch(({ message }) => {
+        handleMainError({ message, type: 'auth' });
+      });
+  };
   useEffect(() => {
-    const handleCredentialResponse = (credential) => {
-      console.log('handleCredentialResponse', credential);
-      mainApi
-        .signinWithGoogle(credential)
-        .then((res) => {
-          if (res.token) {
-            closeAllPopups();
-            localStorage.setItem('jwt', res.token);
-            setLoggedIn(LoginState.LOGGED_IN);
-          }
-        })
-        .catch(({ message }) => {
-          handleMainError({ message, type: 'auth' });
-        });
-    };
 
-    if (window.google) {
-      console.log('window.google', window.google);
-      window.google.accounts.id.initialize({
-        client_id:
-          '109257300086-qa4gpb1jcah14ug0g3pfrvllpgm4b95l.apps.googleusercontent.com',
-        callback: handleCredentialResponse,
-      });
-      google.accounts.id.renderButton(googleSigninButton.current, {
-        theme: 'outline',
-        size: 'large',
-        click_listener: onClickHandler,
-      });
+    if (!window.google) return;
 
-      function onClickHandler() {
-        console.log('Sign in with Google button clicked...');
-      }
+
+    window?.google?.accounts?.id.initialize({
+      client_id:
+        '109257300086-qa4gpb1jcah14ug0g3pfrvllpgm4b95l.apps.googleusercontent.com',
+      callback: handleCredentialResponse,
+    });
+    google.accounts.id.renderButton(googleSigninButton.current, {
+      theme: 'outline',
+      size: 'large',
+      click_listener: onClickHandler,
+    });
+
+    function onClickHandler() {
+      console.log('Sign in with Google button clicked...');
     }
-  }, []);
+    console.log(window.google);
+  }, [window.google]);
 
   const handleCardCommentClick = (card) => {
     showSignUpIfNotLoggedIn();

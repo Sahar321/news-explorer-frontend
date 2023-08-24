@@ -414,9 +414,7 @@ export default function App() {
       });
   };
   useEffect(() => {
-
     if (!window.google) return;
-
 
     window?.google?.accounts?.id.initialize({
       client_id:
@@ -429,13 +427,14 @@ export default function App() {
       click_listener: onClickHandler,
     });
 
-    google.accounts.id.prompt();
-
+    if (loggedIn === LoginState.LOGGED_OUT) {
+      google.accounts.id.prompt();
+    }
     function onClickHandler() {
       console.log('Sign in with Google button clicked...');
     }
     console.log(window.google);
-  }, [window.google]);
+  }, [window.google, loggedIn]);
 
   const handleCardCommentClick = (card) => {
     showSignUpIfNotLoggedIn();

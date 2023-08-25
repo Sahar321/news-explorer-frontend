@@ -27,6 +27,7 @@ import NotFound from '../NotFound/NotFound.jsx';
 import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import UserReactionList from '../UserReactionList/UserReactionList';
 import CommentsList from '../CommentsList.jsx';
+import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy.jsx';
 ///  popups components
 import ProfileLayout from '../ProfileLayout/ProfileLayout';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo.jsx';
@@ -416,24 +417,19 @@ export default function App() {
   useEffect(() => {
     if (!window.google) return;
 
-    window?.google?.accounts?.id.initialize({
+    window.google.accounts.id.initialize({
       client_id:
         '109257300086-qa4gpb1jcah14ug0g3pfrvllpgm4b95l.apps.googleusercontent.com',
       callback: handleCredentialResponse,
+      scope: 'https://www.googleapis.com/auth/calendar.readonly',
     });
     google.accounts.id.renderButton(googleSigninButton.current, {
       theme: 'outline',
       size: 'large',
-      click_listener: onClickHandler,
+
     });
 
-    if (loggedIn === LoginState.LOGGED_OUT) {
-      google.accounts.id.prompt();
-    }
-    function onClickHandler() {
-      console.log('Sign in with Google button clicked...');
-    }
-    console.log(window.google);
+
   }, [window.google, loggedIn]);
 
   const handleCardCommentClick = (card) => {
@@ -551,6 +547,7 @@ export default function App() {
         />
 
         <Routes>
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route
             path="/"
             element={

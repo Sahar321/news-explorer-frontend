@@ -48,26 +48,32 @@ export default function SavedArticles({
       <section className="saved-articles">
         <span className="saved-articles__title">Saved articles</span>
         <h1 className="saved-articles__text">
-          {currentUser.name}, you have {savedCards.length} saved articles
+          {savedCards.length > 0
+            ? `${currentUser.name}, you have ${savedCards.length} saved articles`
+            : `Hey ${currentUser.name}, You haven't saved any articles yet. Give it a try!`}
         </h1>
 
-        <h2 className="saved-articles__keywords">
-          By keywords: <strong>{keywordText}</strong>
-        </h2>
+        {savedCards.length > 0 && (
+          <h2 className="saved-articles__keywords">
+            By keywords: <strong>{keywordText}</strong>
+          </h2>
+        )}
       </section>
 
-      <NewsCardList
-        pageClassName="card-list__cards-wrapper_page_saved-articles"
-        cardType={CardType.REMOVE}
-        cardsToShow={savedCards}
-        showKeyword={true}
-        onCardRemoveClick={onCardRemoveClick}
-        onUniqueReactionsClick={onUniqueReactionsClick}
-        onReactionSelect={onReactionSelect}
-        onCardShare={onCardShare}
-        onCommentClick={onCommentClick}
-        onRemoveReaction = {onRemoveReaction}
-      />
+      {savedCards.length > 0 && (
+        <NewsCardList
+          pageClassName="card-list__cards-wrapper_page_saved-articles"
+          cardType={CardType.REMOVE}
+          cardsToShow={savedCards}
+          showKeyword={true}
+          onCardRemoveClick={onCardRemoveClick}
+          onUniqueReactionsClick={onUniqueReactionsClick}
+          onReactionSelect={onReactionSelect}
+          onCardShare={onCardShare}
+          onCommentClick={onCommentClick}
+          onRemoveReaction={onRemoveReaction}
+        />
+      )}
     </>
   );
 }

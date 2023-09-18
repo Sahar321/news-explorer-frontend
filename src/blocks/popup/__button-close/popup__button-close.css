@@ -3,6 +3,9 @@
     width: 40px;
     margin-top: -45px;
     display: inline-block;
+    background-color: #0088cc;
+    border-radius: 50%;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
   }
 
   @media screen and (max-width: 590px) {

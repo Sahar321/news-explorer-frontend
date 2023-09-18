@@ -29,6 +29,13 @@ class MainApi {
       body: JSON.stringify(data),
     });
   };
+  signinWithFacebook = (data) => {
+    return this.customFetch(`${this._baseUrl}/signin/facebook`, {
+      method: 'POST',
+      headers: this._headers.headers,
+      body: JSON.stringify(data),
+    });
+  };
   signup = (data) => {
     return this.customFetch(`${this._baseUrl}/signup`, {
       method: 'POST',
@@ -118,6 +125,10 @@ class MainApi {
       this._headers
     );
   };
+  getAllUserComments = () => {
+    return this.customFetch(`${this._baseUrl}/profile/comments`, this._headers);
+  };
+
   saveComment = (comment) => {
     return this.customFetch(`${this._baseUrl}/comment`, {
       method: 'POST',

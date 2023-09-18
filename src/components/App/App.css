@@ -46,8 +46,7 @@
   justify-items: start;
   font-family: 'Roboto', Arial, sans-serif;
   font-style: normal;
-  grid-template-areas: "image info";
-
+  grid-template-areas: 'image info';
 }
 
 .card-info__image {
@@ -55,15 +54,78 @@
   margin-top: 10px;
   grid-area: image;
 }
-.card-info__text{
+.card-info__text {
   grid-area: info;
-
 }
-.reactions__list_type_popup-card{
+.reactions__list_type_popup-card {
   grid-area: image;
   height: fit-content;
   align-self: end;
   background: transparent;
   color: red;
+}
 
+.popup__loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  min-height: 200px;
+
+  max-width: 90%;
+
+  padding: 0 51px 40px;
+  margin-top: 20px;
+  line-height: 25px;
+  justify-content: space-between;
+}
+
+.popup__loader-text {
+  margin-top: 0;
+  font-size: 20px;
+  font-family: 'Roboto', Arial, sans-serif;
+  margin-bottom: 31px;
+  font-weight: 700;
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+}
+.popup__loader-text_type_error {
+  color: #d62f2f;
+}
+.popup__loader-image {
+  width: 40px;
+  height: 100%;
+  border-radius: 50%;
+  margin-left: 5px;
+}
+.popup__loader-image_type_error {
+  width: 90px;
+  height: 100%;
+ border-radius: unset;
+
+}
+.popup__loader-text_type_success {
+  font-size: 30px;
+  display: flex;
+  flex-direction: row;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0;
+}
+
+
+.button__facebook-signin{
+  padding-bottom: 20px;
+}
+.button__facebook-signin * {
+  width: 231px !important;
+}
+
+.no-scroll-y{
+  overflow-y: hidden;
 }

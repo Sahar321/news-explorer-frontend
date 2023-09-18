@@ -3,7 +3,7 @@ import React, { useDebugValue, useEffect, forwardRef, useRef } from 'react';
 import './NewsCard.css';
 import CardType from '../../constants/enums/CardType';
 import Button from '@mui/material/Button';
-import { Divider } from '@mui/material';
+import { Divider, setRef } from '@mui/material';
 import useClickOutside from '../../utils/hooks/useClickOutside';
 import ReactionsList from '../ReactionsList/ReactionsList';
 import ReactionType from '../../constants/enums/ReactionType';
@@ -12,8 +12,18 @@ import ShareIcon from '@mui/icons-material/Share';
 import CommentIcon from '@mui/icons-material/Comment';
 import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import { formatNumberWithLetter } from '../../utils/helpers';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import imageNotAvailable from '../../images/Image_not_available.png';
 import anime from 'animejs/lib/anime.es.js';
+import Preloader from '../Preloader/Preloader';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import {
+  faCircleChevronDown,
+  faCircleChevronUp,
+} from '@fortawesome/free-solid-svg-icons';
 import 'animate.css';
+import { set } from 'animejs';
 export default function NewsCard({
   cardData,
   cardType,
@@ -30,11 +40,16 @@ export default function NewsCard({
   elementsToHide,
   onCardShare,
 }) {
-  const { keyword, title, description, date, source, link, image, reactions } =
+  const titleRef = useRef(null);
+  const [isTitleOverflow, setIsTitleOverflow] = React.useState(false);
+  const [isTitleOverflowVisible, setIsTitleOverflowVisible] =
+    React.useState(false);
+  const { keyword, title, date, source, link, image, reactions, text } =
     cardData;
   const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
   const [selectedReaction, setSelectedReaction] = React.useState(null);
 
+  const [isImageLoaded, setIsImageLoaded] = React.useState(false);
   useEffect(() => {
     if (!reactions) return;
     setSelectedReaction(ReactionType[reactions.ownerReactionType]);
@@ -48,6 +63,25 @@ export default function NewsCard({
 
   const handleOnCardShare = () => {
     onCardShare(cardData);
+  };
+
+  useEffect(() => {
+    if (!titleRef.current || !title) return;
+    checkOverflow();
+    window.addEventListener('resize', checkOverflow);
+
+    return () => {
+      window.removeEventListener('resize', checkOverflow);
+    };
+  }, []);
+  const checkOverflow = () => {
+    const titleHeight = titleRef.current.offsetHeight;
+    const titleScrollHeight = titleRef.current.scrollHeight;
+    if (titleHeight + 4 < titleScrollHeight) {
+      setIsTitleOverflow(true);
+    } else {
+      setIsTitleOverflow(false);
+    }
   };
 
   useEffect(() => {
@@ -125,6 +159,9 @@ export default function NewsCard({
     console.log('handleOnUniqueReactionsClick');
     onUniqueReactionsClick(cardData);
   };
+  const toggleExpandTitle = () => {
+    setIsTitleOverflowVisible(!isTitleOverflowVisible);
+  };
 
   return (
     <article className={`card ${classList?.card ? classList.card : ''}`}>
@@ -137,11 +174,24 @@ export default function NewsCard({
           {cardType === CardType.REMOVE ? removeButton : bookmarkButton}
           {showKeyword && <span className="card__keyword">{keyword}</span>}
         </div>
-        <img
+
+        {!isImageLoaded && (
+          <img
+            className={`card__image ${
+              classList?.image ? classList.image : ''
+            } image__preloader`}
+          />
+        )}
+
+        <LazyLoadImage
           className={`card__image ${classList?.image ? classList.image : ''}`}
-          src={image}
-          alt="card"
+          src={image || imageNotAvailable}
+          effect="blur"
+          onLoad={(e) => {
+            setIsImageLoaded(true);
+          }}
         />
+
         {reactions && (
           <ReactionsList
             onUniqueReactionsClick={handleOnUniqueReactionsClick}
@@ -243,27 +293,33 @@ export default function NewsCard({
         {!elementsToHide?.date ? <p className="card__date">{date}</p> : ''}
 
         <h3
+          ref={titleRef}
           dir="auto"
-          className={`card__title ${classList?.title ? classList.title : ''}`}
+          className={`card__title ${classList?.title ? classList.title : ''} ${
+            isTitleOverflowVisible && 'card__title_overflow'
+          }`}
         >
           {title}
         </h3>
-
+        {isTitleOverflow && (
+          <FontAwesomeIcon
+            onClick={toggleExpandTitle}
+            className="chevron"
+            icon={
+              isTitleOverflowVisible ? faCircleChevronUp : faCircleChevronDown
+            }
+          />
+        )}
         <p
           dir="auto"
           className={`card__text ${classList?.text ? classList.text : ''}`}
         >
-          {description}
+          {text}
         </p>
-        <a
-          className="card__source"
-          target="_blank"
-          rel="noreferrer"
-          href={link}
-        >
-          {!elementsToHide?.source ? source : ''}
-        </a>
       </div>
+      <a className="card__source" target="_blank" rel="noreferrer" href={link}>
+        {!elementsToHide?.source ? source : ''}
+      </a>
     </article>
   );
 }

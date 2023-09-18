@@ -2,9 +2,11 @@
 
 
 padding-bottom: 24px;
+margin-bottom: 20px;
 }
 @media screen and (max-width: 769px) {
   .card__text-wrapper {
+    margin-bottom: 40px;
     padding-bottom: 16px;
   }
 }

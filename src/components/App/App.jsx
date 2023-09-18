@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React, { useEffect, useState, useRef, createRef } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
-import { Divider, iconButtonClasses } from '@mui/material';
+import { Button, Divider, iconButtonClasses } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
 import ReactionsList from '../ReactionsList/ReactionsList';
 import Userbox from '../Userbox/Userbox';
@@ -18,6 +18,7 @@ import LoginState from '../../constants/enums/LoginState';
 import { ENGLISH_MONTHS, CARDS_PAR_PAGE } from '../../constants/constants';
 // utils
 import ProtectedRoutes from '../../utils/ProtectedRoutes.jsx';
+import frownFaceIcon from '../../images/icons/frown-face.svg';
 // images
 import imageNotAvailable from '../../images/Image_not_available.png';
 // components
@@ -37,6 +38,7 @@ import PopupWithAvatar from '../AvatarPopup/AvatarPopup.jsx';
 import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
 import PopupWithCard from '../PopupWithCard/PopupWithCard.jsx';
 import PopupWithReactionsInfo from '../PopupWithInfo/PopupWithInfo.jsx';
+import jwtDecode from 'jwt-decode';
 ///  pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
@@ -46,6 +48,7 @@ import SearchForm from '../SearchForm/SearchForm';
 import ChatMessage from '../ChatMessage/ChatMessage';
 import SocialShareButton from '../SocialShareButton/SocialShareButton';
 import useMobileDetect from '../../utils/hooks/useMobileDetect';
+import Preloader from '../Preloader/Preloader';
 export default function App() {
   const location = useLocation();
   const token = localStorage.getItem('jwt');
@@ -58,6 +61,7 @@ export default function App() {
   const [savedCards, setSavedCards] = useState([]);
   const [bookmarkCards, setBookmarkCards] = useState([]);
   const [cardsToShow, setCardsToShow] = useState([]);
+  const [isWindowScrolled, setIsWindowScrolled] = useState(true);
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
   const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
@@ -69,6 +73,14 @@ export default function App() {
   const [authErrorMessage, setAuthErrorMessage] = useState({
     message: '',
     visible: false,
+  });
+  const [popupWithPageLoading, setPopupWithPageLoading] = useState({
+    isOpen: false,
+    title: '',
+    text: '',
+    showLoader: false,
+    showOkButton: false,
+    isError: false,
   });
   const [popupWithMessage, setPopupWithMessage] = useState({
     isOpen: false,
@@ -168,9 +180,10 @@ export default function App() {
 
   /// popups
   const closeAllPopups = () => {
+
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
-    setIsPopupWithCardOpen({ isOpen: false, cardData: '' });
+   setIsPopupWithCardOpen(false);
     setAuthErrorMessage({ message: '', visible: false });
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
@@ -220,6 +233,11 @@ export default function App() {
     // localStorage.removeItem('cards');
     setCurrentUser(null);
     setLoggedIn(LoginState.LOGGED_OUT);
+    FB.getLoginStatus(({ status }) => {
+      if (status === 'connected') {
+        FB.logout();
+      }
+    });
   };
 
   /// search
@@ -399,19 +417,60 @@ export default function App() {
     setBookmarkCards(bookmark);
   }, [savedCards]);
   const googleSigninButton = createRef();
-  const handleCredentialResponse = (credential) => {
-    console.log('handleCredentialResponse', credential);
+  const handleCredentialResponse = (googleToken) => {
+    setPopupWithPageLoading({
+      isOpen: true,
+      title: 'Google Signin',
+      text: 'Signing you into the website',
+      showLoader: true,
+      showOkButton: false,
+      isError: false,
+    });
+
     mainApi
-      .signinWithGoogle(credential)
+      .signinWithGoogle(googleToken)
       .then((res) => {
         if (res.token) {
+          const { credential } = googleToken;
+          const googleUser = jwtDecode(credential);
+
           closeAllPopups();
+          setPopupWithPageLoading({
+            isOpen: true,
+            title: 'Google Signin',
+            text: (
+              <>
+                <p className="popup__loader-text_type_success">
+                  Hello {googleUser.name}
+                  <img
+                    src={googleUser.picture}
+                    alt="google user"
+                    className="popup__loader-image"
+                  />
+                </p>
+                <br />
+                Sign in with google succeed
+              </>
+            ),
+            showLoader: false,
+            showOkButton: true,
+            isError: false,
+          });
           localStorage.setItem('jwt', res.token);
           setLoggedIn(LoginState.LOGGED_IN);
         }
       })
-      .catch(({ message }) => {
-        handleMainError({ message, type: 'auth' });
+      .catch((ts) => {
+        console.log(ts);
+
+        setPopupWithPageLoading({
+          isOpen: true,
+          title: 'Google Signin',
+          text: `Sign in with google failed. Please try again later...`,
+          showOkButton: true,
+          showLoader: false,
+          isError: true,
+        });
       });
   };
   useEffect(() => {
@@ -423,13 +482,12 @@ export default function App() {
       callback: handleCredentialResponse,
       scope: 'https://www.googleapis.com/auth/calendar.readonly',
     });
+
+    console.log(google.accounts.id);
     google.accounts.id.renderButton(googleSigninButton.current, {
       theme: 'outline',
       size: 'large',
-
     });
-
-
   }, [window.google, loggedIn]);
 
   const handleCardCommentClick = (card) => {
@@ -438,8 +496,10 @@ export default function App() {
     mainApi
       .getAllArticleComments(card.link)
       .then((res) => {
-        console.log('getAllArticleComments', card);
+        card.comments = res.comments || {};
         card.comments.data = res;
+        console.log('handleCardCommentClick', 'empty result');
+
         setSelectedCard(card);
         setIsPopupWithCardOpen(true);
       })
@@ -454,6 +514,8 @@ export default function App() {
     mainApi
       .saveComment(commentData)
       .then((res) => {
+        console.log('handleCommentSubmit', res);
+        card.comments = res.comments || {};
         card.comments.data = res;
         card.comments.count = res.length;
         handleUpdatedCard(card);
@@ -535,6 +597,110 @@ export default function App() {
       });
   };
 
+  const handleProfileCommentClick = () => {
+    mainApi
+      .getAllUserComments()
+      .then((res) => {
+        console.log('getAllUserComments', res);
+        setCurrentUser((props) => ({ ...props, comments: res }));
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.log('getAllUserComments', err);
+      });
+  };
+
+  useEffect(() => {
+    if (!window.FB) return;
+    FB.init({
+      appId: '259080930351101', // Use your app's ID here
+      cookie: true,
+      xfbml: true,
+      version: 'v17.0',
+    });
+    FB.Event.subscribe('auth.statusChange', (response) => {
+      const { authResponse } = response;
+
+      if (authResponse) {
+        mainApi
+          .signinWithFacebook(authResponse)
+          .then((res) => {
+            if (res.token) {
+              FB.api(
+                '/me?fields=id,name,email,picture.width(320).height(320)',
+                function (facebookUser) {
+                  setPopupWithPageLoading({
+                    isOpen: true,
+                    title: 'Facebook Signin',
+                    text: (
+                      <>
+                        <p className="popup__loader-text_type_success">
+                          Hello {facebookUser.name}
+                          <img
+                            src={facebookUser.picture.data.url}
+                            alt="facebook user"
+                            className="popup__loader-image"
+                          />
+                        </p>
+                        <br />
+                        Sign in with facebook succeed
+                      </>
+                    ),
+                    showLoader: false,
+                    showOkButton: true,
+                    isError: false,
+                  });
+                  closeAllPopups();
+
+                  localStorage.setItem('jwt', res.token);
+
+                  setLoggedIn(LoginState.LOGGED_IN);
+                }
+              );
+            }
+          })
+          .catch((err) => {
+            console.log('signinWithFacebook', err);
+          });
+      }
+    });
+  }, [loggedIn]);
+
+  useEffect(() => {
+    const hasPopupOpen =
+      isSharePopupOpen ||
+      isAvatarPopupOpen ||
+      isSignUpPopupOpen ||
+      isSignInPopupOpen ||
+      isReactionPopupOpen ||
+      popupWithPageLoading.isOpen ||
+      isPopupWithCardOpen;
+
+    setIsWindowScrolled(hasPopupOpen);
+  }, [
+    isSharePopupOpen,
+    isAvatarPopupOpen,
+    isSignUpPopupOpen,
+    isSignInPopupOpen,
+    isReactionPopupOpen,
+    isPopupWithCardOpen,
+    popupWithPageLoading.isOpen,
+  ]);
+
+  useEffect(() => {
+    const body = document.body;
+    if (isWindowScrolled) {
+      body.classList.add('no-scroll-y');
+    } else {
+      body.classList.remove('no-scroll-y');
+    }
+
+    // Clean up the effect by removing the class when the component unmounts
+    return () => {
+      body.classList.remove('no-scroll-y');
+    };
+  }, [isWindowScrolled]);
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>
@@ -605,6 +771,7 @@ export default function App() {
               path="/profile/*"
               element={
                 <ProfileLayout
+                  onProfileCommentClick={handleProfileCommentClick}
                   onProfileEditClick={handleProfileEditClick}
                   onAvatarClick={handleAvatarClick}
                   setAppStyles={setAppStyles}
@@ -616,6 +783,7 @@ export default function App() {
 
         <Footer />
         <SignInPopup
+          id="signin-popup"
           onClose={closeAllPopups}
           title="Sign In"
           isOpen={isSignInPopupOpen}
@@ -624,8 +792,17 @@ export default function App() {
           onError={authErrorMessage}
         >
           <div className="button__google-signin" ref={googleSigninButton}></div>
+
+          <div
+            className="fb-login-button button__facebook-signin"
+            data-max-rows="1"
+            data-size="large"
+            data-button-type="continue_with"
+            data-use-continue-as="true"
+          ></div>
         </SignInPopup>
         <SignUpPopup
+          id="signup-popup"
           onClose={closeAllPopups}
           onSubmit={handleSignUpSubmit}
           title="Sign Up"
@@ -634,6 +811,7 @@ export default function App() {
           onError={authErrorMessage}
         />
         <PopupWithMessage
+          id="navigate-to-signin-popup"
           title={popupWithMessage.title}
           onClose={closeAllPopups}
           isOpen={popupWithMessage.isOpen}
@@ -645,6 +823,63 @@ export default function App() {
             Sign in
           </Link>
         </PopupWithMessage>
+
+        <PopupWithMessage
+          id="page-loading-popup"
+          title={popupWithPageLoading.title}
+          isCloseButtonVisible={false}
+          className={'popup_type_page-loading'}
+          closeOnOutsideClick={false}
+          onClose={() => {
+            setPopupWithPageLoading({
+              isOpen: false,
+              title: '',
+              text: '',
+              showLoader: false,
+              showOkButton: false,
+              isError: false,
+            });
+          }}
+          isOpen={popupWithPageLoading.isOpen}
+        >
+          <div className="popup__loader">
+            {popupWithPageLoading.isError && (
+              <img
+                src={frownFaceIcon}
+                alt="frown face"
+                className="popup__loader-image popup__loader-image_type_error"
+              />
+            )}
+            <p
+              className={`popup__loader-text ${
+                popupWithPageLoading.isError && 'popup__loader-text_type_error'
+              }`}
+            >
+              {popupWithPageLoading.text}
+            </p>
+            <Preloader isVisible={popupWithPageLoading.showLoader} />
+
+            {popupWithPageLoading.showOkButton && (
+              <Button
+                style={{ width: '80%', height: 50 }}
+                variant="contained"
+                color={`${popupWithPageLoading.isError ? 'error' : 'success'}`}
+                onClick={() => {
+                  setPopupWithPageLoading({
+                    isOpen: false,
+                    title: '',
+                    text: '',
+                    showLoader: false,
+                    showOkButton: false,
+                    isError: false,
+                  });
+                }}
+              >
+                OK
+              </Button>
+            )}
+          </div>
+        </PopupWithMessage>
         <Alert
           variant="filled"
           severity={disappearingMessages.severity}
@@ -655,6 +890,7 @@ export default function App() {
         </Alert>
 
         <PopupWithInfo
+          id="share-popup"
           onClose={() => {
             setIsSharePopupOpen(false);
           }}
@@ -663,13 +899,8 @@ export default function App() {
           <SocialShareButton />
         </PopupWithInfo>
 
-        {/*     <PopupWithAvatar
-          onClose={closeAllPopups}
-          isOpen={isAvatarPopupOpen}
-          onSubmit={handleAvatarSubmit}
-        />
- */}
         <PopupWithCard
+          id="card-popup"
           isOpen={isPopupWithCardOpen}
           cardData={selectedCard}
           loggedIn={loggedIn}
@@ -686,12 +917,14 @@ export default function App() {
           onCardShare={handleCardShare}
         ></PopupWithCard>
         <EditProfileInfoModal
+          id="edit-profile-info-modal"
           isOpen={isEditProfileInfoModalOpen}
           onClose={closeAllPopups}
           currentUser={currentUser}
           onSubmit={handleUpdateProfileSubmit}
         ></EditProfileInfoModal>
         <PopupWithInfo
+          id="user-reactions-popup"
           title="Reactions"
           onClose={handlePopupWithReactionClose}
           isOpen={isReactionPopupOpen}

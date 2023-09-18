@@ -7,18 +7,88 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="theme-color" content="#000000" />
   <meta name="no-referrer-when-downgrade" content="origin" />
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
   <meta name="news Explorer" content="News Explorer is a web application that allows users to search for news" />
   <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-
   <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
+  <!-- third party -->
+  <script src="https://accounts.google.com/gsi/client" async defer></script>
 
+  <script async defer crossorigin="anonymous"
+    src="https://connect.facebook.net/he_IL/sdk.js#xfbml=1&version=v17.0&appId=259080930351101&autoLogAppEvents=1"
+    nonce="bVFoaVb5"></script>
+  <!--  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+ -->
   <title>News Explorer</title>
 </head>
 
 <body>
   <noscript>You need to enable JavaScript to run this app.</noscript>
   <div id="root"></div>
+
+  <!--  <script>
+    function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+      debugger;
+      testAPI();
+
+    }
+
+
+    function checkLoginState() {
+      debugger;
+      console.log("asd");            // Called when a person is finished with the Login Button.
+      FB.getLoginStatus(function (response) {   // See the onlogin handler
+        statusChangeCallback(response);
+        debugger;
+      });
+
+    }
+
+
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '259080930351101',
+        autoLogAppEvents: true,
+        status: false,
+        xfbml: true,
+        version: 'v17.0'           // Use this Graph API version for this call.
+      });
+
+
+      FB.getLoginStatus(function (response) {   // Called after the JS SDK has been initialized.
+        statusChangeCallback(response);
+        debugger;       // Returns the login status.
+      });
+    };
+
+    function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+      console.log('Welcome!  Fetching your information.... ');
+      FB.api('/me?fields=name,email', function (response) {
+        debugger;
+        console.log('Successful login for: ' + response.name);
+        document.getElementById('status').innerHTML =
+          'Thanks for logging in, ' + response.name + '!';
+      });
+
+    }
+
+  </script>
+ -->
+  <!--
+  <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+  </fb:login-button>
+
+  <div id="status">
+  </div>
+
+
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+ -->
+
+
+  <!-- The JS SDK Login Button -->
+
+
+
 
 </body>
 

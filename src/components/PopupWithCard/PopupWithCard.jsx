@@ -1,6 +1,6 @@
 /*eslint-disable*/
 import React, { useState, useEffect, useRef } from 'react';
-import Comment from '../Comment/Comment.jsx';
+import CommentInput from '../CommentInput/CommentInput.jsx';
 import ChatMessage from '../ChatMessage/ChatMessage.jsx';
 import CommentsList from '../CommentsList.jsx';
 import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
@@ -9,6 +9,7 @@ import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import NewsCard from '../NewsCard/NewsCard.jsx';
 
 import { Divider } from '@mui/material';
+import { set } from 'animejs';
 
 export default function PopupWithCard({
   cardData,
@@ -25,6 +26,15 @@ export default function PopupWithCard({
   loggedIn,
   onCardShare,
 }) {
+  const handleOnClose = () => {
+    //popup popup_isVisible_${isOpen}
+    setCloseClass('popup close-slide-down popup_isVisible_true');
+    setTimeout(() => {
+      setCloseClass(`popup popup_isVisible_${isOpen}`);
+      onClose();
+    }, 700);
+  };
+
   useCloseOnEscape(isOpen, onClose);
   const messageListRef = useRef(null);
   const handleOnCommentSubmit = (value) => {
@@ -56,15 +66,21 @@ export default function PopupWithCard({
     date: true,
     source: true,
   };
+  const [closeClass, setCloseClass] = useState('popup popup_isVisible_false');
 
+  useEffect(() => {
+    setCloseClass(`popup popup_isVisible_${isOpen}`);
+  }, [isOpen]);
+
+  //    <div className={`popup popup_isVisible_${isOpen} `}>
   return (
-    <div className={`popup popup_isVisible_${isOpen}`}>
+    <div className={`${closeClass}`}>
       <div className="popup__container popup__container_type_card">
         <button
           aria-label="Close Popup"
           className="button button_type_close popup__button-close_type_card"
           type="button"
-          onClick={onClose}
+          onClick={handleOnClose}
         ></button>
         <h2 className="card__title popup__title_type_card">
           {`${cardData.source}`} <br />{' '}
@@ -86,10 +102,11 @@ export default function PopupWithCard({
           loggedIn={loggedIn}
           onCardShare={onCardShare}
         />
-        <Divider />
-        <Divider />
+        <Divider style={{ width: '90%', marginTop: 20 }} />
+
         <div className="popup__comments">
-          <Comment onCommentSubmit={handleOnCommentSubmit} isOpen={true} />
+          <CommentInput onCommentSubmit={handleOnCommentSubmit} isOpen={true} />
+
           <div ref={messageListRef} className="message-list">
             {!cardData.comments?.count > 0 && (
               <h3 className="message-list__empty-title">
@@ -101,8 +118,6 @@ export default function PopupWithCard({
               comments={cardData.comments?.data}
               onThankYou={onThankYou}
             />
-
-
           </div>
         </div>
       </div>

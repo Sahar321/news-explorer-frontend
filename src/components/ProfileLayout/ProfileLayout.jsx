@@ -1,21 +1,30 @@
 /*eslint-disable*/
-import { Routes, Route, Link, useLocation, Navigate, } from 'react-router-dom';
+import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 import React, { useEffect, useContext, useState } from 'react';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
+import CommentsList from '../CommentsList.jsx';
 
 import Profile from '../../pages/Profile.jsx';
 import { NavLink } from 'react-router-dom';
 import './ProfileLayout.css';
-const ProfileLayout = ({ handleAvatarClick, setAppStyles, onProfileEditClick }) => {
+const ProfileLayout = ({
+  handleAvatarClick,
+  setAppStyles,
+  onProfileEditClick,
+  onProfileCommentClick,
+}) => {
   const currentUser = useContext(CurrentUserContext);
   const handleLinkIsActive = ({ isActive }) =>
     isActive ? 'menu__item-link active-link' : 'menu__item-link';
   useEffect(() => {
+    console.log('ProfileLayout', currentUser);
+
     setAppStyles('app_page_saved-articles');
     return () => {
       setAppStyles('');
     };
   }, []);
+
   return (
     <main className="pageS">
       <nav className="menu">
@@ -26,7 +35,12 @@ const ProfileLayout = ({ handleAvatarClick, setAppStyles, onProfileEditClick }) 
             </NavLink>
           </li>
           <li className="menu__item">
-            <NavLink end className={handleLinkIsActive} to="/profile/comments">
+            <NavLink
+              onClick={onProfileCommentClick}
+              end
+              className={handleLinkIsActive}
+              to="/profile/comments"
+            >
               Comments
             </NavLink>
           </li>
@@ -42,7 +56,7 @@ const ProfileLayout = ({ handleAvatarClick, setAppStyles, onProfileEditClick }) 
           path="/"
           element={
             <Profile
-            onProfileEditClick={onProfileEditClick}
+              onProfileEditClick={onProfileEditClick}
               onAvatarClick={handleAvatarClick}
               setAppStyles={setAppStyles}
               currentUser={currentUser}
@@ -50,8 +64,11 @@ const ProfileLayout = ({ handleAvatarClick, setAppStyles, onProfileEditClick }) 
           }
         />
 
-        <Route path="comments" element={<h1 className='profile'>comments</h1>} />
-        <Route path="reactions" element={<h1 className='profile'>reaction</h1>} />
+        <Route path="comments" element={<CommentsList comments={currentUser?.comments} />} />
+        <Route
+          path="reactions"
+          element={<h1 className="profile">reaction</h1>}
+        />
       </Routes>
     </main>
   );

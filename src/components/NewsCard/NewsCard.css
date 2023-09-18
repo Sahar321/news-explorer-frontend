@@ -12,9 +12,8 @@
 @import url(../../blocks/card/__keyword/card__keyword.css);
 @import url(../../blocks/card/__reactions-warper/card__reactions-warper.css);
 
-
-#closeRections{
-color: rgb(246, 82, 53);
+#closeRections {
+  color: rgb(246, 82, 53);
 }
 .card__image_type_popup {
   border-radius: 0;
@@ -70,10 +69,51 @@ color: rgb(246, 82, 53);
   max-height: unset;
 }
 
-@media screen and (max-width: 480px) {
-  .card__title {
-    -webkit-line-clamp: unset;
-    -webkit-box-orient: unset;
-    height: unset;
+.lazy-load-image-loaded {
+  width: 100%;
+  height: 100%;
+}
+
+.preLoae {
+}
+
+.image__preloader {
+  background: linear-gradient(
+    #ffffff,
+    #f2f2f2,
+    #e5e5e5,
+    #d8d8d8,
+    #cccccc
+  );
+width: 100%;
+height: 100%;
+  background-size: 400% 400%;
+  animation: wave 2s linear infinite;
+}
+
+@keyframes wave {
+  0% {
+    background-position: 0% 0%;
   }
+
+  50% {
+    background-position: 100% 100%;
+    transform: scale(1);
+  }
+
+  100% {
+    background-position: 0% 0%;
+  }
+}
+
+.chevron{
+  width: 100%;
+  height: 20px;
+  box-shadow: rgb(0 0 0 / 2%) 0px 7px 11px 0px;
+  padding: 5px 0;
+  cursor: pointer;
+}
+
+.card__title_overflow{
+  display: block;
 }

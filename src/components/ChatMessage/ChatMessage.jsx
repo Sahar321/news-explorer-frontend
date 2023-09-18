@@ -10,10 +10,9 @@ import { DateTime } from 'luxon';
 import './ChatMessage.css';
 import Userbox from '../Userbox/Userbox';
 import thankyouIcon from '../../images/icons/thankyouIcon.png';
-export default function ChatMessage({ cardData, comment, index, onThankYou, id}) {
+export default function ChatMessage({  comment, index, onThankYou, id}) {
   const [commentData, setCommentData] = useState({});
 
-/*  */
   useEffect(() => {
     setCommentData(formatComment(comment));
   }, [comment]);
@@ -41,9 +40,6 @@ export default function ChatMessage({ cardData, comment, index, onThankYou, id})
     };
   }
 
-  useEffect(() => {
-    setCommentData(formatComment(comment));
-  }, [comment]);
 
   return (
     <div id={commentData.index} className="chat-meassge-main">

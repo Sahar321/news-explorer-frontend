@@ -2,7 +2,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import useFormAndValidation from '../../utils/hooks/useFormAndValidation';
-
+import { Divider } from '@mui/material';
 import PopupWithForm from '../PopupWithForm/PopupWithForm.jsx';
 
 export default function SignInPopup(props) {
@@ -18,7 +18,7 @@ export default function SignInPopup(props) {
           Sign up
         </Link>
       </span>
-      <hr className="popup__line" />
+      <Divider  style={{width:"90%", marginBottom:10}} />
       {children}
     </>
   );

@@ -19,12 +19,6 @@ export default function SavedArticles({
   const [keywordText, setKeywordText] = useState('');
 
   useEffect(() => {
-    setAppStyles('app_page_saved-articles');
-    return () => {
-      setAppStyles('');
-    };
-  }, []);
-  useEffect(() => {
     savedCards.forEach((card) => {
       if (!keywords.includes(card.keyword)) {
         keywords.push(card.keyword);

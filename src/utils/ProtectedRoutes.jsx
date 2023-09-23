@@ -1,16 +1,21 @@
+/* eslint-disable*/
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import LoginState from '../constants/enums/LoginState';
 import PagePreloader from '../components/PagePreloader/PagePreloader.jsx';
-
 export default function ProtectedRoutes({ loggedIn }) {
-  if (loggedIn === LoginState.PENDING) {
-    return <PagePreloader />;
-  }
-  if (loggedIn === LoginState.LOGGED_IN) {
-    return <Outlet />;
-  }
-  if (loggedIn === LoginState.LOGGED_OUT) {
-    return <Navigate to="/" state={{ shouldOpenSignInPopup: true }} />;
+  switch (loggedIn) {
+    case LoginState.PENDING:
+      console.log('ProtectedRoutes', 'LoginState.PENDING', loggedIn);
+      return <PagePreloader />;
+    case LoginState.LOGGED_IN:
+      console.log('ProtectedRoutes', 'LoginState.LOGGED_IN', loggedIn);
+      return <Outlet />;
+    case LoginState.LOGGED_OUT:
+      console.log('ProtectedRoutes', 'LoginState.LOGGED_OUT', loggedIn);
+      return <Navigate to="/signin" />;
+    default:
+      console.log('ProtectedRoutes', 'default', loggedIn);
+      return <PagePreloader />;
   }
 }

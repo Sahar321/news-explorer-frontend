@@ -1,21 +1,31 @@
 /*eslint-disable */
-import { useEffect, useState } from 'react';
+import { useEffect, useState,useCallback  } from 'react';
 import pulseLoading from '../../images/loading/pulse-multiple.svg';
+/**
+ * Custom hook to load and display an image in a React component.
+ * Handles loading and error states, and returns the image source or a loading placeholder.
+ *
+ * @param {string} imageSource - The URL of the image to be loaded.
+ * @param {string} imageErrorPlaceholder - The URL of the placeholder image to be displayed in case of an error.
+ * @param {boolean} showLoadingPlaceholder - Determines whether to show a loading placeholder while the image is being loaded. Defaults to `true`.
+ * @returns {string} - The URL of the loaded image or the placeholder image.
+ */
 export default function useImage(
   imageSource,
   imageErrorPlaceholder,
   showLoadingPlaceholder = true
 ) {
   const [imageResult, setImageResult] = useState(
-    showLoadingPlaceholder && pulseLoading
+    showLoadingPlaceholder ? pulseLoading : null
   );
-  const handleImageError = () => {
-    setImageResult(imageErrorPlaceholder);
-  };
 
-  const handleImageLoad = () => {
+  const handleImageError = useCallback(() => {
+    setImageResult(imageErrorPlaceholder);
+  }, [imageErrorPlaceholder]);
+
+  const handleImageLoad = useCallback(() => {
     setImageResult(imageSource);
-  };
+  }, [imageSource]);
 
   useEffect(() => {
     const image = new Image();
@@ -27,7 +37,7 @@ export default function useImage(
       image.removeEventListener('load', handleImageLoad);
       image.removeEventListener('error', handleImageError);
     };
-  }, [imageSource]); // Empty dependency array, so this effect runs once when the component mounts
+  }, [imageSource]);
 
   return imageResult;
 }

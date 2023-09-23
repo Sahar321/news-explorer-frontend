@@ -10,8 +10,8 @@
   position: fixed;
   top: 0px;
   padding-top: 0;
-/*   overflow-y: auto;
-  backdrop-filter: blur(10px); */
+  overflow-y: auto;
+  backdrop-filter: blur(10px);
 
 }
 

@@ -84,10 +84,6 @@ export default function NewsCard({
     }
   };
 
-  useEffect(() => {
-    console.log('selectedReaction', selectedReaction);
-  }, [selectedReaction]);
-
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
   const isBookmarkActiveClass = isBookmark
     ? 'button__bookmark_type_active'
@@ -304,10 +300,11 @@ export default function NewsCard({
         {isTitleOverflow && (
           <FontAwesomeIcon
             onClick={toggleExpandTitle}
-            className="chevron"
-            icon={
+            className={`chevron ${!isTitleOverflowVisible && 'chevron_type_up'}`}
+            icon={faCircleChevronUp}
+            /*  icon={
               isTitleOverflowVisible ? faCircleChevronUp : faCircleChevronDown
-            }
+            } */
           />
         )}
         <p

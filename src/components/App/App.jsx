@@ -881,13 +881,13 @@ export default function App() {
                 className="popup__loader-image popup__loader-image_type_error"
               />
             )}
-            <p
+            <div
               className={`popup__loader-text ${
                 popupWithPageLoading.isError && 'popup__loader-text_type_error'
               }`}
             >
               {popupWithPageLoading.text}
-            </p>
+            </div>
             <Preloader isVisible={popupWithPageLoading.showLoader} />
 
             {popupWithPageLoading.showOkButton && (

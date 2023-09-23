@@ -5,7 +5,7 @@ import './PagePreloader.css';
 export default function PagePreloader() {
   return (
     <div className="page-preloader">
-      <Preloader />
+      <Preloader isVisible={true} />
     </div>
   );
 }

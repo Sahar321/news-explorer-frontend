@@ -16,14 +16,7 @@ const ProfileLayout = ({
   const currentUser = useContext(CurrentUserContext);
   const handleLinkIsActive = ({ isActive }) =>
     isActive ? 'menu__item-link active-link' : 'menu__item-link';
-  useEffect(() => {
-    console.log('ProfileLayout', currentUser);
 
-    setAppStyles('app_page_saved-articles');
-    return () => {
-      setAppStyles('');
-    };
-  }, []);
 
   return (
     <main className="pageS">

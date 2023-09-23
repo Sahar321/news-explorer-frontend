@@ -42,21 +42,27 @@ import jwtDecode from 'jwt-decode';
 ///  pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
-
+import useAppStyles from '../../utils/hooks/useAppStyles';
 import { Alert, AlertTitle } from '@mui/material';
 import SearchForm from '../SearchForm/SearchForm';
 import ChatMessage from '../ChatMessage/ChatMessage';
 import SocialShareButton from '../SocialShareButton/SocialShareButton';
 import useMobileDetect from '../../utils/hooks/useMobileDetect';
 import Preloader from '../Preloader/Preloader';
+/**
+ * The main component of the application, `App`, handles the state and logic of the entire application. It includes various hooks, state variables, and functions to manage user authentication, card data, popups, and API calls.
+ *
+ * @returns {JSX.Element} The rendered JSX code of the application.
+ */
 export default function App() {
   const location = useLocation();
   const token = localStorage.getItem('jwt');
   const isMobile = useMobileDetect();
+
   /*   const [cardComments, setCardComments] = useState([]); */
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
-  const [appStyles, setAppStyles] = useState('');
+  const [appStyles, headerStyles] = useAppStyles();
   const [cards, setCards] = useState([]);
   const [savedCards, setSavedCards] = useState([]);
   const [bookmarkCards, setBookmarkCards] = useState([]);
@@ -180,10 +186,9 @@ export default function App() {
 
   /// popups
   const closeAllPopups = () => {
-
     setSignUpPopupOpen(false);
     setSignInPopupOpen(false);
-   setIsPopupWithCardOpen(false);
+    setIsPopupWithCardOpen(false);
     setAuthErrorMessage({ message: '', visible: false });
     setPopupWithMessage({ isOpen: false, title: '' });
     setHideMobileMenuButton(false);
@@ -228,8 +233,9 @@ export default function App() {
         handleMainError({ message, type: 'auth' });
       });
   };
-  const handleSignOutClick = () => {
+  const handleSignOut = () => {
     localStorage.removeItem('jwt');
+
     // localStorage.removeItem('cards');
     setCurrentUser(null);
     setLoggedIn(LoginState.LOGGED_OUT);
@@ -347,6 +353,10 @@ export default function App() {
   }, [location]);
 
   useEffect(() => {
+    const loadingApp = document.querySelector('.loading-app__container');
+    if (loadingApp) {
+      loadingApp.style.display = 'none';
+    }
     const cardsStorage = JSON.parse(localStorage.getItem('cards'));
     if (cards && cardsStorage) {
       setCards(cardsStorage);
@@ -705,7 +715,8 @@ export default function App() {
     <CurrentUserContext.Provider value={currentUser}>
       <div className={`app ${appStyles}`}>
         <Header
-          onSignOutClick={handleSignOutClick}
+          className={headerStyles}
+          onSignOut={handleSignOut}
           onSignInClick={handleSignInClick}
           onSignUpClick={handleSignUpClick}
           loggedIn={loggedIn}
@@ -758,7 +769,6 @@ export default function App() {
                   onCardShare={handleCardShare}
                   onCommentClick={handleCardCommentClick}
                   savedCards={savedCards}
-                  setAppStyles={setAppStyles}
                   onUniqueReactionsClick={handleUniqueReactionsClick}
                   onReactionSelect={handleReactionSelect}
                   onRemoveReaction={handleRemoveReaction}
@@ -774,7 +784,6 @@ export default function App() {
                   onProfileCommentClick={handleProfileCommentClick}
                   onProfileEditClick={handleProfileEditClick}
                   onAvatarClick={handleAvatarClick}
-                  setAppStyles={setAppStyles}
                 />
               }
             />

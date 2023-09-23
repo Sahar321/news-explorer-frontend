@@ -1,7 +1,7 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Navigation from '../Navigation/Navigation.jsx';
+import HeaderNavigation from '../HeaderNavigation/HeaderNavigation.jsx';
 import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import { SCREEN_WIDTHS } from '../../constants/constants';
 
@@ -9,11 +9,41 @@ import './Header.css';
 
 export default function Header({
   onSignInClick,
-  onSignOutClick,
+  onSignOut,
   hideMobileMenuButton,
   loggedIn,
+  className,
 }) {
-  const screenWidth = useScreenWidth();
+  return (
+    <header className={`header ${className}`}>
+      <span className={`header__title `}>NewsExplorer</span>
+      <button
+        aria-label="Mobile Menu"
+        type="button"
+        className={`button header_type_mobile `}
+      />
+      <HeaderNavigation
+        onSignInClick={onSignInClick}
+        onSignOut={onSignOut}
+        loggedIn={loggedIn}
+      />
+    </header>
+  );
+}
+
+/*
+
+
+    ${selectedPage}
+   ${headerMobileMenuClass}
+  ${isMobileMenuButtonClass}
+  ${isMobileMenuOpen ? 'button_type_close' : mobileMenuButtonColor}
+
+  showMobileMenu={isMobileMenuOpen}
+  isMobileType={isMobileType}
+  itemsMobileColor={itemsMobileColor}
+  onItemClick={handleItemClick}
+const screenWidth = useScreenWidth();
   const { pathname } = useLocation();
   const { MOBILE_MENU_WIDTH } = SCREEN_WIDTHS;
   const [selectedPage, setSelectedPage] = useState('');
@@ -75,30 +105,4 @@ export default function Header({
 
   const handleItemClick = () => {
     setIsMobileMenuOpen(false);
-  };
-
-  return (
-    <header className={`header ${selectedPage}`}>
-      <span className={`header__title ${headerMobileMenuClass}`}>
-        NewsExplorer
-      </span>
-      <button
-        aria-label="Mobile Menu"
-        type="button"
-        className={`button header_type_mobile ${isMobileMenuButtonClass} ${
-          isMobileMenuOpen ? 'button_type_close' : mobileMenuButtonColor
-        }`}
-        onClick={handleMenuClick}
-      />
-      <Navigation
-        onSignInClick={handleSignInClick}
-        onSignOutClick={onSignOutClick}
-        showMobileMenu={isMobileMenuOpen}
-        isMobileType={isMobileType}
-        itemsMobileColor={itemsMobileColor}
-        onItemClick={handleItemClick}
-        loggedIn={loggedIn}
-      />
-    </header>
-  );
-}
+  }; */

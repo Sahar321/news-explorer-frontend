@@ -2,7 +2,7 @@
 import React from 'react';
 import { Outlet, Navigate } from 'react-router-dom';
 import LoginState from '../constants/enums/LoginState';
-import PagePreloader from '../components/PagePreloader/PagePreloader.jsx';
+import PagePreloader from './PagePreloader/PagePreloader.jsx';
 export default function ProtectedRoutes({ loggedIn }) {
   switch (loggedIn) {
     case LoginState.PENDING:

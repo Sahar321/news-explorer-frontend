@@ -78,15 +78,9 @@
 }
 
 .image__preloader {
-  background: linear-gradient(
-    #ffffff,
-    #f2f2f2,
-    #e5e5e5,
-    #d8d8d8,
-    #cccccc
-  );
-width: 100%;
-height: 100%;
+  background: linear-gradient(#ffffff, #f2f2f2, #e5e5e5, #d8d8d8, #cccccc);
+  width: 100%;
+  height: 100%;
   background-size: 400% 400%;
   animation: wave 2s linear infinite;
 }
@@ -106,14 +100,17 @@ height: 100%;
   }
 }
 
-.chevron{
+.chevron {
   width: 100%;
   height: 20px;
-  box-shadow: rgb(0 0 0 / 2%) 0px 7px 11px 0px;
   padding: 5px 0;
   cursor: pointer;
+  transition: transform 1s;
 }
 
-.card__title_overflow{
+.card__title_overflow {
   display: block;
+}
+.chevron_type_up {
+  transform: rotate(180deg);
 }

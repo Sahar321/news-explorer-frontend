@@ -1,27 +1,29 @@
 /*eslint-disable*/
 import React, { useEffect, useState, useRef, createRef } from 'react';
 import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
-import { Button, Divider, iconButtonClasses } from '@mui/material';
-import Autocomplete from '@mui/material/Autocomplete';
-import ReactionsList from '../ReactionsList/ReactionsList';
-import Userbox from '../Userbox/Userbox';
-import EditProfileInfoModal from '../EditProfileInfoModal/EditProfileInfoModal';
+
 import './App.css';
 
-// apis
+// APIs
 import mainApi from '../../utils/MainApi';
 import newsApi from '../../utils/NewsApi';
-// contexts
+
+// Contexts
 import CurrentUserContext from '../../contexts/CurrentUserContext';
-// constants
+
+// Constants
 import LoginState from '../../constants/enums/LoginState';
 import { ENGLISH_MONTHS, CARDS_PAR_PAGE } from '../../constants/constants';
-// utils
-import ProtectedRoutes from '../../utils/ProtectedRoutes.jsx';
+
+// Utils
+
 import frownFaceIcon from '../../images/icons/frown-face.svg';
-// images
+
+// Images
 import imageNotAvailable from '../../images/Image_not_available.png';
-// components
+
+// Components
+import ProtectedRoutes from '../ProtectedRoutes.jsx';
 import Header from '../Header/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
@@ -29,7 +31,12 @@ import PageNotFound from '../PageNotFound/PageNotFound.jsx';
 import UserReactionList from '../UserReactionList/UserReactionList';
 import CommentsList from '../CommentsList.jsx';
 import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy.jsx';
-///  popups components
+import { Button, Divider, iconButtonClasses } from '@mui/material';
+import Autocomplete from '@mui/material/Autocomplete';
+import ReactionsList from '../ReactionsList/ReactionsList';
+import EditProfileInfoModal from '../EditProfileInfoModal/EditProfileInfoModal';
+
+// Popups Components
 import ProfileLayout from '../ProfileLayout/ProfileLayout';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 import SignInPopup from '../SignInPopup/SignInPopup.jsx';
@@ -39,7 +46,8 @@ import PopupWithMessage from '../PopupWithMessage/PopupWithMessage.jsx';
 import PopupWithCard from '../PopupWithCard/PopupWithCard.jsx';
 import PopupWithReactionsInfo from '../PopupWithInfo/PopupWithInfo.jsx';
 import jwtDecode from 'jwt-decode';
-///  pages
+
+// Pages
 import Main from '../Main/Main.jsx';
 import SavedArticles from '../../pages/SavedArticles.jsx';
 import useAppStyles from '../../utils/hooks/useAppStyles';
@@ -49,33 +57,47 @@ import ChatMessage from '../ChatMessage/ChatMessage';
 import SocialShareButton from '../SocialShareButton/SocialShareButton';
 import useMobileDetect from '../../utils/hooks/useMobileDetect';
 import Preloader from '../Preloader/Preloader';
+
 /**
- * The main component of the application, `App`, handles the state and logic of the entire application. It includes various hooks, state variables, and functions to manage user authentication, card data, popups, and API calls.
+ * The main component of the application, `App`, handles the state and logic of the entire application.
+ * It includes various hooks, state variables, and functions to manage user authentication, card data, popups, and API calls.
  *
  * @returns {JSX.Element} The rendered JSX code of the application.
  */
 export default function App() {
+  // State Declarations
   const location = useLocation();
   const token = localStorage.getItem('jwt');
   const isMobile = useMobileDetect();
 
-  /*   const [cardComments, setCardComments] = useState([]); */
+  // Authentication State
   const [loggedIn, setLoggedIn] = useState(LoginState.PENDING);
   const [currentUser, setCurrentUser] = useState(null);
+
+  // Styles
   const [appStyles, headerStyles] = useAppStyles();
+
+  // Card State
   const [cards, setCards] = useState([]);
   const [savedCards, setSavedCards] = useState([]);
   const [bookmarkCards, setBookmarkCards] = useState([]);
   const [cardsToShow, setCardsToShow] = useState([]);
+
+  // Window Scroll State
   const [isWindowScrolled, setIsWindowScrolled] = useState(true);
+
+  // Popup State
   const [isSignInPopupOpen, setSignInPopupOpen] = useState(false);
   const [isSignUpPopupOpen, setSignUpPopupOpen] = useState(false);
   const [isAvatarPopupOpen, setIsAvatarPopupOpen] = useState(false);
   const [isSearchPreloaderVisible, setSearchPreloaderVisible] = useState(false);
   const [isSearchNotFoundVisible, setIsSearchNotFoundVisible] = useState(false);
   const [isSharePopupOpen, setIsSharePopupOpen] = useState(false);
+
+  // Mobile Menu Button
   const [hideMobileMenuButton, setHideMobileMenuButton] = useState(false);
 
+  // Other State Variables (Add comments to describe their purpose)
   const [authErrorMessage, setAuthErrorMessage] = useState({
     message: '',
     visible: false,

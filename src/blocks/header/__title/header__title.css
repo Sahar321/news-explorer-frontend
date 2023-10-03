@@ -7,7 +7,7 @@
   color: inherit;
 
   margin: 0 0 0 104px;
-  z-index: 10;
+  z-index: 9999;
 }
 
 @media screen and (max-width: 769px) {

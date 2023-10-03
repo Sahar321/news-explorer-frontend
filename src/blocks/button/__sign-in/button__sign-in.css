@@ -17,7 +17,7 @@
   .button__sign-in {
     font-size: 16px;
     height: 40px;
-    width: 152px;
+    width: 120px;
   }
 }
 @media screen and (max-width: 590px) {

@@ -4,15 +4,23 @@ import React, { useEffect, useContext, useState } from 'react';
 import EditIcon from '@mui/icons-material/Edit';
 import Button from '@mui/material/Button';
 import InfoTable from '../components/InfoTable/InfoTable';
+import useImage from '../utils/hooks/useImage';
+import avatarPlaceholderIcon from '../images/icons/avatar.svg';
+
 import './Profile.css';
 
-export default function Profile({ onProfileEditClick, currentUser, onPersonalInfoSubmit }) {
+export default function Profile({
+  onProfileEditClick,
+  currentUser,
+  onPersonalInfoSubmit,
+}) {
+  const userAvatar = useImage(currentUser?.avatar, avatarPlaceholderIcon);
   return (
     <section className="profile">
       <div className="profile__info-wrapper">
         <h2 className="profile__header">Profile</h2>
         <img
-          src={currentUser?.avatar}
+          src={userAvatar}
           alt="User Avatar"
           className="profile__avatar"
         />
@@ -28,7 +36,11 @@ export default function Profile({ onProfileEditClick, currentUser, onPersonalInf
         </Button>
       </div>
 
-      <InfoTable currentUser={currentUser} onSubmit={onPersonalInfoSubmit} header={'Personal Information'} />
+      <InfoTable
+        currentUser={currentUser}
+        onSubmit={onPersonalInfoSubmit}
+        header={'Personal Information'}
+      />
 
       {/*         <section className="personal-info">
           <h3 className="personal-info__header">Personal Information</h3>

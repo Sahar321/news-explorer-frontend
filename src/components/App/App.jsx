@@ -75,7 +75,7 @@ export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
 
   // Styles
-  const [appStyles, headerStyles] = useAppStyles();
+  const { appStyles, headerStyles } = useAppStyles();
 
   // Card State
   const [cards, setCards] = useState([]);
@@ -125,13 +125,28 @@ export default function App() {
     visible: false,
     severity: 'info', // default value
     title: '',
+    interval: 5000
   });
   // Functions
   /// error handling
 
-  const handleMainError = ({ message, type }) => {
+  const handleMainError = (error) => {
+    const { message, type } = error;
+
     if (type === 'auth') {
       setAuthErrorMessage({ message, visible: true });
+      return;
+    }
+    if (message === 'Too Many Requests') {
+      setDisappearingMessages({
+        message:
+          "Sorry, but we've received too many requests from you at the moment. Please wait 15 minutes and try agin... yeah, to much information, but is demo site :)",
+        visible: true,
+        severity: 'error',
+        title: 'Server Error',
+        interval: 50000
+      });
+
       return;
     }
     if (type === 'SERVER_NOT_AVAILABLE') {
@@ -359,8 +374,9 @@ export default function App() {
           visible: false,
           severity: '',
           title: '',
+          interval: 5000
         });
-      }, 5000);
+      }, disappearingMessages.interval);
   }, [disappearingMessages]);
   useEffect(() => {
     const { shouldOpenSignInPopup, shouldOpenSignUpPopup } =
@@ -375,10 +391,10 @@ export default function App() {
   }, [location]);
 
   useEffect(() => {
-    const loadingApp = document.querySelector('.loading-app__container');
+    /*     const loadingApp = document.querySelector('.loading-app__container');
     if (loadingApp) {
-      loadingApp.style.display = 'none';
-    }
+      loadingApp.remove();
+    } */
     const cardsStorage = JSON.parse(localStorage.getItem('cards'));
     if (cards && cardsStorage) {
       setCards(cardsStorage);

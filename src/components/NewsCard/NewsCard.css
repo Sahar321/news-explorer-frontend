@@ -12,6 +12,9 @@
 @import url(../../blocks/card/__keyword/card__keyword.css);
 @import url(../../blocks/card/__reactions-warper/card__reactions-warper.css);
 
+.reaction__icon-select{
+  cursor: pointer;
+}
 #closeRections {
   color: rgb(246, 82, 53);
 }

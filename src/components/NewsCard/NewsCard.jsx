@@ -57,7 +57,7 @@ export default function NewsCard({
 
   const reactionsRef = useRef(null);
 
-  useClickOutside(reactionsRef, () => {
+  useClickOutside(reactionsRef, false, () => {
     setIsReactionsOpen(false);
   });
 
@@ -223,35 +223,35 @@ export default function NewsCard({
             alt="lol"
             id="LOL"
             width="30px"
-            className="animate__animated animate__bounceIn"
+            className="reaction__icon-select animate__animated animate__bounceIn"
             src={ReactionType['LOL']}
           />
           <img
             alt="wow"
             id="WOW"
             width="30px"
-            className="animate__animated animate__bounceIn"
+            className="reaction__icon-select animate__animated animate__bounceIn"
             src={ReactionType['WOW']}
           />
           <img
             alt="LIKE"
             id="LIKE"
             width="30px"
-            className="animate__animated animate__bounceIn"
+            className="reaction__icon-select animate__animated animate__bounceIn"
             src={ReactionType['LIKE']}
           />
           <img
             alt="SAD"
             id="SAD"
             width="30px"
-            className="animate__animated animate__bounceIn"
+            className="reaction__icon-select animate__animated animate__bounceIn"
             src={ReactionType['SAD']}
           />
           <img
             alt="love"
             id="LOVE"
             width="30px"
-            className="animate__animated animate__bounceIn"
+            className="reaction__icon-select animate__animated animate__bounceIn"
             src={ReactionType['LOVE']}
           />
         </div>

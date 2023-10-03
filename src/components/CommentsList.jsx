@@ -6,9 +6,7 @@ const CommentsList = ({ comments, onThankYou }) => {
   const renderRow = ({ index, style }) => {
     const comment = comments[comments?.length - index - 1];
 
-    useEffect(() => {
-      console.log(style);
-    }, [style]);
+
     return (
       <div style={style}>
         <ChatMessage

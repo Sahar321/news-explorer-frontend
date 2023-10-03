@@ -5,13 +5,15 @@ import ReplyIcon from '@mui/icons-material/Reply';
 import ReportIcon from '@mui/icons-material/Report';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
-import userAvatar from '../../images/icons/user_avatar.svg';
+import avatarPlaceholderIcon from '../../images/icons/avatar.svg';
+import useImage from '../../utils/hooks/useImage';
 import { DateTime } from 'luxon';
 import './ChatMessage.css';
-import Userbox from '../Userbox/Userbox';
+
 import thankyouIcon from '../../images/icons/thankyouIcon.png';
-export default function ChatMessage({  comment, index, onThankYou, id}) {
+export default function ChatMessage({ comment, index, onThankYou, id }) {
   const [commentData, setCommentData] = useState({});
+  const userAvatar = useImage(commentData.user?.avatar, avatarPlaceholderIcon);
 
   useEffect(() => {
     setCommentData(formatComment(comment));
@@ -40,15 +42,12 @@ export default function ChatMessage({  comment, index, onThankYou, id}) {
     };
   }
 
-
   return (
     <div id={commentData.index} className="chat-meassge-main">
-
-
       <div className="comment-box">
         <h3 className="comment-box__username">{commentData.user?.name}</h3>
         <span className="comment-box__date">{commentData.date}</span>
-        <img src={commentData.user?.avatar} className="comment-box__avatar"></img>
+        <img src={userAvatar} className="comment-box__avatar"></img>
         <p className="comment-box__text">{commentData.text}</p>
         <div className="comment-box__buttons">
           <IconButton aria-label="Reply" title="Reply">

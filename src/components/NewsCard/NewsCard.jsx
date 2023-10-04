@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useDebugValue, useEffect, forwardRef, useRef } from 'react';
+import React, { useState, useEffect, forwardRef, useRef } from 'react';
 import './NewsCard.css';
 import CardType from '../../constants/enums/CardType';
 import Button from '@mui/material/Button';
@@ -10,20 +10,15 @@ import ReactionType from '../../constants/enums/ReactionType';
 import AddReactionIcon from '@mui/icons-material/AddReaction';
 import ShareIcon from '@mui/icons-material/Share';
 import CommentIcon from '@mui/icons-material/Comment';
-import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
 import { formatNumberWithLetter } from '../../utils/helpers';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import imageNotAvailable from '../../images/Image_not_available.png';
-import anime from 'animejs/lib/anime.es.js';
-import Preloader from '../Preloader/Preloader';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-  faCircleChevronDown,
-  faCircleChevronUp,
-} from '@fortawesome/free-solid-svg-icons';
+import ExpandableTitle from '../ExpandableTitle/ExpandableTitle';
+import SaveOrRemoveButton from '../SaveOrRemoveButton/SaveOrRemoveButton';
+import { faCircleChevronUp } from '@fortawesome/free-solid-svg-icons';
 import 'animate.css';
-import { set } from 'animejs';
 export default function NewsCard({
   cardData,
   cardType,
@@ -40,14 +35,12 @@ export default function NewsCard({
   elementsToHide,
   onCardShare,
 }) {
-  const titleRef = useRef(null);
-  const [isTitleOverflow, setIsTitleOverflow] = React.useState(false);
-  const [isTitleOverflowVisible, setIsTitleOverflowVisible] =
-    React.useState(false);
   const { keyword, title, date, source, link, image, reactions, text } =
     cardData;
   const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
   const [selectedReaction, setSelectedReaction] = React.useState(null);
+
+  const isBookmark = bookmarkCards?.includes(link) ? true : false;
 
   const [isImageLoaded, setIsImageLoaded] = React.useState(false);
   useEffect(() => {
@@ -60,73 +53,6 @@ export default function NewsCard({
   useClickOutside(reactionsRef, false, () => {
     setIsReactionsOpen(false);
   });
-
-  const handleOnCardShare = () => {
-    onCardShare(cardData);
-  };
-
-  useEffect(() => {
-    if (!titleRef.current || !title) return;
-    checkOverflow();
-    window.addEventListener('resize', checkOverflow);
-
-    return () => {
-      window.removeEventListener('resize', checkOverflow);
-    };
-  }, []);
-  const checkOverflow = () => {
-    const titleHeight = titleRef.current.offsetHeight;
-    const titleScrollHeight = titleRef.current.scrollHeight;
-    if (titleHeight + 4 < titleScrollHeight) {
-      setIsTitleOverflow(true);
-    } else {
-      setIsTitleOverflow(false);
-    }
-  };
-
-  const isBookmark = bookmarkCards?.includes(link) ? true : false;
-  const isBookmarkActiveClass = isBookmark
-    ? 'button__bookmark_type_active'
-    : '';
-  const isBookmarkDisabledClass = !loggedIn
-    ? 'button__bookmark_type_disabled'
-    : '';
-  const handleCardBookmarkClick = () => {
-    onCardBookmarkClick(cardData, isBookmark);
-  };
-  const handleCardRemoveClick = () => {
-    onCardRemoveClick(cardData);
-  };
-  useEffect(() => {
-    if (isBookmark) {
-      console.log('cardData', cardData);
-    }
-  }, [isBookmark]);
-  const bookmarkButton = (
-    <>
-      <button
-        aria-label="bookmark Card"
-        className={`button button__bookmark card__button  ${
-          isBookmarkActiveClass + isBookmarkDisabledClass
-        }`}
-        onClick={handleCardBookmarkClick}
-      />
-      {!loggedIn && (
-        <span className="card__tooltip">Sign in to save articles</span>
-      )}
-    </>
-  );
-
-  const removeButton = (
-    <>
-      <button
-        aria-label="remove Card"
-        className="button button_type_remove card__button"
-        onClick={handleCardRemoveClick}
-      />
-      <span className="card__tooltip">Remove from saved</span>
-    </>
-  );
 
   const handleReactionsClick = (evt) => {
     if (!evt.target.id) {
@@ -147,43 +73,35 @@ export default function NewsCard({
     setIsReactionsOpen(false);
   };
 
-  const handleOnCommentClick = (e) => {
-    onCommentClick(cardData);
-  };
+
 
   const handleOnUniqueReactionsClick = () => {
-    console.log('handleOnUniqueReactionsClick');
     onUniqueReactionsClick(cardData);
-  };
-  const toggleExpandTitle = () => {
-    setIsTitleOverflowVisible(!isTitleOverflowVisible);
   };
 
   return (
-    <article className={`card ${classList?.card ? classList.card : ''}`}>
-      <div
-        className={`card__image-wrapper ${
-          classList?.imageWrapper ? classList.imageWrapper : ''
-        }`}
-      >
+    <article className={`card ${classList?.card}`}>
+      <div className={`card__image-wrapper ${classList?.imageWrapper}`}>
         <div className={`card__controls-wrapper`}>
-          {cardType === CardType.REMOVE ? removeButton : bookmarkButton}
+          <SaveOrRemoveButton
+            onSaveClick={() => onCardBookmarkClick(cardData, isBookmark)}
+            onRemoveClick={() => onCardRemoveClick(cardData)}
+            loggedIn={loggedIn}
+            type={cardType}
+            isSaved={isBookmark}
+          />
           {showKeyword && <span className="card__keyword">{keyword}</span>}
         </div>
 
         {!isImageLoaded && (
-          <img
-            className={`card__image ${
-              classList?.image ? classList.image : ''
-            } image__preloader`}
-          />
+          <img className={`card__image ${classList?.image} image__preloader`} />
         )}
 
         <LazyLoadImage
-          className={`card__image ${classList?.image ? classList.image : ''}`}
+          className={`card__image ${classList?.image}`}
           src={image || imageNotAvailable}
           effect="blur"
-          onLoad={(e) => {
+          onLoad={() => {
             setIsImageLoaded(true);
           }}
         />
@@ -255,11 +173,11 @@ export default function NewsCard({
             src={ReactionType['LOVE']}
           />
         </div>
-        <Button onClick={handleOnCardShare}>
+        <Button onClick={() => onCardShare(cardData)}>
           <ShareIcon />
         </Button>
         {!elementsToHide?.comment ? (
-          <Button onClick={handleOnCommentClick}>
+          <Button onClick={() => onCommentClick(cardData)}>
             <CommentIcon />{' '}
             <span className="reaction__text-button">
               {formatNumberWithLetter(cardData?.comments?.count)}
@@ -286,36 +204,15 @@ export default function NewsCard({
           classList?.textWrapper ? classList.textWrapper : ''
         }`}
       >
-        {!elementsToHide?.date ? <p className="card__date">{date}</p> : ''}
+        <p className="card__date">{date}</p>
+        <ExpandableTitle title={title} />
 
-        <h3
-          ref={titleRef}
-          dir="auto"
-          className={`card__title ${classList?.title ? classList.title : ''} ${
-            isTitleOverflowVisible && 'card__title_overflow'
-          }`}
-        >
-          {title}
-        </h3>
-        {isTitleOverflow && (
-          <FontAwesomeIcon
-            onClick={toggleExpandTitle}
-            className={`chevron ${!isTitleOverflowVisible && 'chevron_type_up'}`}
-            icon={faCircleChevronUp}
-            /*  icon={
-              isTitleOverflowVisible ? faCircleChevronUp : faCircleChevronDown
-            } */
-          />
-        )}
-        <p
-          dir="auto"
-          className={`card__text ${classList?.text ? classList.text : ''}`}
-        >
+        <p dir="auto" className={`card__text ${classList?.text}`}>
           {text}
         </p>
       </div>
       <a className="card__source" target="_blank" rel="noreferrer" href={link}>
-        {!elementsToHide?.source ? source : ''}
+        {source}
       </a>
     </article>
   );

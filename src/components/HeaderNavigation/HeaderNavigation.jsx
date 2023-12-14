@@ -12,9 +12,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import useClickOutside from '../../utils/hooks/useClickOutside';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import {
-  faHouse,
-} from '@fortawesome/free-solid-svg-icons';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
 
 import './HeaderNavigation.css';
 
@@ -46,28 +44,22 @@ export default function HeaderNavigation({
   };
   const renderLoginButton = () => {
     return loggedIn ? (
-      <>
-        <AvatarWithMenu
-          data-name="header-menu"
-          data-menu-type="desktop"
-          onSignOut={onSignOut}
-          avatar={currentUser?.avatar}
-          name={currentUser?.name}
-        />
-        <BurgerMenu
-          menuOpen={isMobileMenuOpen}
-          onMenuStateChange={handleMenuStateChange}
-          data-name="header-menu"
-          data-menu-type="mobile"
-        />
-      </>
+      <button
+        data-item="true"
+        className="button header-navigation__button"
+        onClick={handleOnSignOut}
+      >
+        <ExitToAppIcon sx={{ width: '32px', height: 'auto' }} />
+        Log Out
+      </button>
     ) : (
       <button
-        aria-label="Sign In"
+        data-item="true"
+        className="button header-navigation__button"
         onClick={onSignInClick}
-        className="button button__sign-in"
       >
-        Sign in
+        <ExitToAppIcon sx={{ width: '32px', height: 'auto' }} />
+        Log In
       </button>
     );
   };
@@ -96,57 +88,66 @@ export default function HeaderNavigation({
             isMobileMenuOpen && 'header-navigation__avatar_type_mobile'
           }`}
         >
-          {renderLoginButton()}
+          {loggedIn ? (
+            <AvatarWithMenu
+              data-name="header-menu"
+              data-menu-type="desktop"
+              onSignOut={onSignOut}
+              avatar={currentUser?.avatar}
+              name={currentUser?.name}
+            />
+          ) : (
+            <button
+              aria-label="Sign In"
+              onClick={onSignInClick}
+              className="button button__sign-in mobile-hide-590px"
+            >
+              Sign in
+            </button>
+          )}
+          <BurgerMenu
+            menuOpen={isMobileMenuOpen}
+            onMenuStateChange={handleMenuStateChange}
+            data-name="header-menu"
+            data-menu-type="mobile"
+          />
         </div>
         <ul
           className={`header-navigation__list ${
             isMobileMenuOpen && 'header-navigation__list_type_mobile'
           }`}
         >
-          <li className="header-navigation__item">
-            <NavLink
-              className={handleActiveItem}
-              onClick={handleOnItemClick}
-              to="/"
-            >
-              <FontAwesomeIcon icon={faHouse} style={{color: "#000000",}} />
+          <li onClick={handleOnItemClick} className="header-navigation__item">
+            <NavLink className={handleActiveItem} to="/">
+              {/*       <FontAwesomeIcon icon={faHouse} style={{ color: '#000000' }} /> */}
               Home
             </NavLink>
           </li>
-          <li className="header-navigation__item">
-            <NavLink
-              className={handleActiveItem}
-              onClick={handleOnItemClick}
-              to="/SavedArticles"
-            >
+          <li onClick={handleOnItemClick} className="header-navigation__item">
+            <NavLink className={handleActiveItem} to="/SavedArticles">
               Saved articles
             </NavLink>
           </li>
-          <li
-            data-menu-type="mobile"
-            className={`header-navigation__item ${
-              isMobileMenuOpen && 'header-navigation__item_type_mobile'
-            }`}
-          >
-            <SettingsIcon sx={{ width: '32px', height: 'auto' }} />
-            <NavLink
-              data-item="true"
+          {loggedIn && (
+            <li
               onClick={handleOnItemClick}
-              className={handleActiveItem} /* "header-navigation__item-link" */
-              to="/profile"
+              data-menu-type="mobile"
+              className={`header-navigation__item ${
+                isMobileMenuOpen && 'header-navigation__item_type_mobile'
+              }`}
             >
-              Profile
-            </NavLink>
-          </li>
-          <li data-menu-type="mobile" className="header-navigation__item">
-            <ExitToAppIcon sx={{ width: '32px', height: 'auto' }} />
-            <button
-              data-item="true"
-              className="button header-navigation__button"
-              onClick={handleOnSignOut}
-            >
-              Log Out
-            </button>
+              <NavLink
+                data-item="true"
+                className={handleActiveItem}
+                to="/profile"
+              >
+                <SettingsIcon sx={{ width: '32px', height: 'auto' }} />
+                Profile
+              </NavLink>
+            </li>
+          )}
+          <li   onClick={handleOnItemClick} data-menu-type="mobile" className="header-navigation__item">
+            {renderLoginButton()}
           </li>
         </ul>
       </nav>

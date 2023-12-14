@@ -5,7 +5,7 @@ import './UserReactionList.css';
 import Userbox from '../Userbox/Userbox';
 import Button from '@mui/material/Button';
 import imageNotAvailable from '../../images/Image_not_available.png';
-import ReactionStats from '../ReactionStats/ReactionStats';
+import ReactionDetailPopup from '../ReactionDetailPopup/ReactionDetailPopup';
 import { Height } from '@mui/icons-material';
 
 export default function UserReactionList({ data }) {
@@ -111,7 +111,7 @@ export default function UserReactionList({ data }) {
               username={stats.name}
               avatar={stats.avatar || imageNotAvailable}
             >
-              <ReactionStats stats={stats} />
+              <ReactionDetailPopup stats={stats} />
             </Userbox>
           </li>
         ))}

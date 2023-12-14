@@ -33,9 +33,9 @@ import CommentsList from '../CommentsList.jsx';
 import PrivacyPolicy from '../PrivacyPolicy/PrivacyPolicy.jsx';
 import { Button, Divider, iconButtonClasses } from '@mui/material';
 import Autocomplete from '@mui/material/Autocomplete';
-import ReactionsList from '../ReactionsList/ReactionsList';
+import ReactionBadge from '../ReactionBadge/ReactionBadge';
 import EditProfileInfoModal from '../EditProfileInfoModal/EditProfileInfoModal';
-
+import jwt_decode from 'jwt-decode';
 // Popups Components
 import ProfileLayout from '../ProfileLayout/ProfileLayout';
 import PopupWithInfo from '../PopupWithInfo/PopupWithInfo.jsx';
@@ -125,7 +125,7 @@ export default function App() {
     visible: false,
     severity: 'info', // default value
     title: '',
-    interval: 5000
+    interval: 5000,
   });
   // Functions
   /// error handling
@@ -144,7 +144,7 @@ export default function App() {
         visible: true,
         severity: 'error',
         title: 'Server Error',
-        interval: 50000
+        interval: 50000,
       });
 
       return;
@@ -273,7 +273,7 @@ export default function App() {
   const handleSignOut = () => {
     localStorage.removeItem('jwt');
 
-    // localStorage.removeItem('cards');
+    localStorage.removeItem('cards');
     setCurrentUser(null);
     setLoggedIn(LoginState.LOGGED_OUT);
     FB.getLoginStatus(({ status }) => {
@@ -374,7 +374,7 @@ export default function App() {
           visible: false,
           severity: '',
           title: '',
-          interval: 5000
+          interval: 5000,
         });
       }, disappearingMessages.interval);
   }, [disappearingMessages]);
@@ -391,10 +391,26 @@ export default function App() {
   }, [location]);
 
   useEffect(() => {
-    /*     const loadingApp = document.querySelector('.loading-app__container');
+    const isJwtTokenExpired = () => {
+      const token = localStorage.getItem('jwt');
+      if (!token) return false;
+      const decodedToken = jwt_decode(token);
+      const currentTime = Date.now() / 1000; // Convert current time to seconds
+
+      return decodedToken.exp < currentTime;
+    };
+
+    if (isJwtTokenExpired()) {
+      setPopupWithMessage({
+        isOpen: true,
+        title: 'Token has expired. Please log in again.',
+      });
+     handleSignOut();
+    }
+    const loadingApp = document.querySelector('.loading-app__container');
     if (loadingApp) {
       loadingApp.remove();
-    } */
+    }
     const cardsStorage = JSON.parse(localStorage.getItem('cards'));
     if (cards && cardsStorage) {
       setCards(cardsStorage);

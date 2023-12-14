@@ -4,10 +4,8 @@ import './NewsCard.css';
 import CardType from '../../constants/enums/CardType';
 import Button from '@mui/material/Button';
 import { Divider, setRef } from '@mui/material';
-import useClickOutside from '../../utils/hooks/useClickOutside';
-import ReactionsList from '../ReactionsList/ReactionsList';
+import ReactionBadge from '../ReactionBadge/ReactionBadge';
 import ReactionType from '../../constants/enums/ReactionType';
-import AddReactionIcon from '@mui/icons-material/AddReaction';
 import ShareIcon from '@mui/icons-material/Share';
 import CommentIcon from '@mui/icons-material/Comment';
 import { formatNumberWithLetter } from '../../utils/helpers';
@@ -17,6 +15,7 @@ import imageNotAvailable from '../../images/Image_not_available.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ExpandableTitle from '../ExpandableTitle/ExpandableTitle';
 import SaveOrRemoveButton from '../SaveOrRemoveButton/SaveOrRemoveButton';
+import ReactionPicker from '../ReactionPicker/ReactionPicker';
 import { faCircleChevronUp } from '@fortawesome/free-solid-svg-icons';
 import 'animate.css';
 export default function NewsCard({
@@ -37,32 +36,24 @@ export default function NewsCard({
 }) {
   const { keyword, title, date, source, link, image, reactions, text } =
     cardData;
-  const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
+  /*   const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
   const [selectedReaction, setSelectedReaction] = React.useState(null);
-
+ */
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
 
   const [isImageLoaded, setIsImageLoaded] = React.useState(false);
-  useEffect(() => {
-    if (!reactions) return;
-    setSelectedReaction(ReactionType[reactions.ownerReactionType]);
-  }, [reactions]);
 
-  const reactionsRef = useRef(null);
-
-  useClickOutside(reactionsRef, false, () => {
+  /*   const reactionsRef = useRef(null);
+   */
+  /*   useClickOutside(reactionsRef, false, () => {
     setIsReactionsOpen(false);
-  });
+  }); */
 
-  const handleReactionsClick = (evt) => {
-    if (!evt.target.id) {
-      setIsReactionsOpen(!isReactionsOpen);
-      return;
-    }
+  const handleReactionSelect = ({ type }) => {
+    if (!type) return;
 
-    setIsReactionsOpen(!isReactionsOpen);
     const reactionData = {
-      type: evt.target.id,
+      type,
       link: cardData.link,
     };
     onReactionSelect(reactionData, cardData);
@@ -70,10 +61,7 @@ export default function NewsCard({
 
   const handleRemoveReaction = () => {
     onRemoveReaction(cardData);
-    setIsReactionsOpen(false);
   };
-
-
 
   const handleOnUniqueReactionsClick = () => {
     onUniqueReactionsClick(cardData);
@@ -107,7 +95,7 @@ export default function NewsCard({
         />
 
         {reactions && (
-          <ReactionsList
+          <ReactionBadge
             onUniqueReactionsClick={handleOnUniqueReactionsClick}
             reactionsCountByType={reactions.countByType}
             classList={'reactions__list_type_article'}
@@ -116,8 +104,8 @@ export default function NewsCard({
       </div>
       <Divider />
 
-      <div ref={reactionsRef} className="card__reactions-warper">
-        <div
+      <div className="card__reactions-warper">
+        {/*   <div
           onClick={handleReactionsClick}
           className={`reactions  reactions_visible_${isReactionsOpen}`}
         >
@@ -172,31 +160,24 @@ export default function NewsCard({
             className="reaction__icon-select animate__animated animate__bounceIn"
             src={ReactionType['LOVE']}
           />
-        </div>
+        </div> */}
+
         <Button onClick={() => onCardShare(cardData)}>
           <ShareIcon />
         </Button>
-        {!elementsToHide?.comment ? (
+        {!elementsToHide?.comment && (
           <Button onClick={() => onCommentClick(cardData)}>
             <CommentIcon />{' '}
             <span className="reaction__text-button">
               {formatNumberWithLetter(cardData?.comments?.count)}
             </span>
           </Button>
-        ) : (
-          ''
         )}
-        <Button onClick={handleReactionsClick}>
-          {selectedReaction ? (
-            <img width="30px" src={selectedReaction} />
-          ) : (
-            <AddReactionIcon />
-          )}
-
-          <span className="reaction__text-button">
-            {formatNumberWithLetter(cardData?.reaction?.length)}
-          </span>
-        </Button>
+        <ReactionPicker
+          onReactionSelect={handleReactionSelect}
+          onRemoveReaction={handleRemoveReaction}
+          reaction={reactions?.ownerReactionType}
+        />
       </div>
       <Divider />
       <div

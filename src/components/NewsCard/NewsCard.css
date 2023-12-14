@@ -31,6 +31,10 @@
   max-width: 700px;
   padding: 16px 13px;
   box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: unset;
+  margin-top: 10px;
+  width: 94%;
 }
 .card_type_popup:hover {
   box-shadow: unset;

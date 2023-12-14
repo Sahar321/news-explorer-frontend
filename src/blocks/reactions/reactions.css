@@ -1,4 +1,7 @@
-.reactions {
+.reactions{
+
+}
+.reactions__emojis-container {
   border-radius: 7px;
   box-shadow: rgb(0 0 0 / 16%) 0px 3px 6px, rgb(0 0 0 / 23%) 0px 3px 6px;
   display: none;
@@ -12,7 +15,9 @@
   box-sizing: border-box;
   width: 100%;
   bottom: -4px;
+  left: 0;
 
+  transition: opacity 0.5s ease-in-out;
 }
 
 

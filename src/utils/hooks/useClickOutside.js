@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 const useClickOutside = (ref, isEnabled, onClickOutSide) => {
   const handleClick = (event) => {
     if (ref.current && !ref.current.contains(event.target)) {
+
       onClickOutSide();
     }
   };

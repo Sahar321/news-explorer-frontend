@@ -1,9 +1,37 @@
 .popup_isVisible_true {
   display: grid;
 
-
-  animation: slide-up-animation  0.7s ease-in-out forwards,
-  backgroundBlurAnimation 1s ease-in-out 0.5 forwards,
-  scrollBarVisibilityAnimation  0.3s ease-in-out 1s forwards;
+  animation: backgroundBlurAnimation 0.2s ease-in-out 0.5 forwards,
+    scrollBarVisibilityAnimation 0.3s ease-in-out 1s forwards;
 }
 
+
+.popup_isVisible_true > .popup__container {
+  animation: slide-up-animation 0.7s ease-in-out forwards;
+
+}
+
+@keyframes slide-up-animation {
+  0% {
+    transform: translateY(100vh);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes backgroundBlurAnimation {
+  0% {
+    backdrop-filter: blur(0);
+  }
+  100% {
+    backdrop-filter: blur(40px);
+  }
+}
+
+@keyframes scrollBarVisibilityAnimation  {
+
+  100% {
+    overflow-y: auto;
+  }
+}

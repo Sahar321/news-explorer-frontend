@@ -3,9 +3,9 @@ import React, { useEffect, useState } from 'react';
 import totalPostIcon from '../../images/icons/totalpost.png';
 import thankyouIcon from '../../images/icons/thankyouIcon.png';
 import {formatNumberWithLetter} from '../../utils/helpers';
-import './ReactionStats.css';
+import './ReactionDetailPopup.css';
 
-export default function ReactionStats({ stats }) {
+export default function ReactionDetailPopup({ stats }) {
   const { type } = stats;
   const [totalComments, setTotalComments] = useState(0);
   const [totalThankYou, setTotalThankYou] = useState(0);

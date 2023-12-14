@@ -31,10 +31,7 @@
 @import url(./blocks/icon/_reaction/icon_reaction_lol.css);
 @import url(./blocks/icon/_reaction/icon_reaction_like.css);
 
-
-
 @import url(./blocks/input/input.css);
-
 
 @import url(./blocks/saved-articles/saved-articles.css);
 @import url(./blocks/saved-articles/__keywords/saved-articles__keywords.css);
@@ -46,9 +43,11 @@
 @import url(./blocks/reactions/reactions.css);
 @import url(./blocks/reactions/_visible/reactions_visible_true.css);
 
-
 /* strange google bug after logging; make the screen wider  */
-#g_a11y_announcement{
+#g_a11y_announcement {
   display: none;
 }
 
+* {
+  -webkit-tap-highlight-color: transparent;
+}

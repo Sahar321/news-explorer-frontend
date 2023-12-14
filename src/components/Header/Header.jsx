@@ -18,11 +18,7 @@ export default function Header({
   return (
     <header className={`header ${className}`}>
       <span className={`header__title `}>NewsExplorer</span>
-      <button
-        aria-label="Mobile Menu"
-        type="button"
-        className={`button header_type_mobile `}
-      />
+
       <HeaderNavigation
         onSignInClick={onSignInClick}
         onSignOut={onSignOut}

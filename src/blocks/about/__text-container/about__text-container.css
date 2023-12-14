@@ -5,7 +5,7 @@
   margin-top: 131px;
   gap: 24px;
   grid-area: 1 / 4 / 2 / 5;
-
+user-select: none;
 
 }@media screen and (max-width: 769px) {
   .about__text-container {

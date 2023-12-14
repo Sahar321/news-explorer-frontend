@@ -1,24 +1,29 @@
 /*eslint-disable   */
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Button from '@mui/material/Button';
 import ReactionType from '../../constants/enums/ReactionType';
-import './ReactionsList.css';
+import useClickOutside from '../../utils/hooks/useClickOutside';
 
-export default function ReactionsList({
+import './ReactionBadge.css';
+
+export default function ReactionBadge({
   reactionsCountByType,
   onUniqueReactionsClick,
   classList,
 }) {
+  const reactionListRef = useRef(null);
   const [hasReactions, setHasReactions] = React.useState(false);
+
   useEffect(() => {
     setHasReactions(Object.keys(reactionsCountByType).length > 0);
-  }, []);
+  }, [reactionsCountByType]);
+
 
   return (
     <>
       {hasReactions && (
-        <div className={`reactions__list ${classList}`}>
+        <div ref={reactionListRef} className={`reactions__list ${classList}`}>
           {Object.entries(reactionsCountByType).map(([type, count]) => (
             <button
               key={type}

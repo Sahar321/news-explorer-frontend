@@ -6,7 +6,12 @@
   gap: 0px 0px;
   align-self: baseline;
   position: relative;
-  background-color: #EFF2F5;
+
+  background-color: white;
+  width: 95%;
+  box-shadow: none;
+  max-width: 1000px;
+  min-width: 320px;
 
 }
 

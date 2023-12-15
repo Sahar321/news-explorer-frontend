@@ -15,9 +15,5 @@ export default function Tpage({ className, isVisible }) {
       'https://ares.shiftdelete.net/2023/11/dunya-turkiye-en-cok-kullanilan-sifre-2023-KAPAK-min.jpg',
     text: 'Bu içerik ilk olarak Birincisi bildiğimiz gibi: Türkiye’de en çok kullanılan şifreler belli oldu! adresinde yayınlandı Teknoloji Haberleri - ShiftDelete.Net.',
   };
-  return (
-    <NewsCard
-cardData={data}
-    />
-  );
+  return <NewsCard cardData={data} />;
 }

@@ -74,45 +74,47 @@ export default function PopupWithForm({
       className={`popup popup_isVisible_${isOpen}`}
       onClick={handleOverlayClose}
     >
-      <div
-        className={`popup__container ${
-          isScrenHeightBigger && 'popup__form_fix_hight'
-        }`}
-      >
+      <div className={`popup__container`}>
         <button
           aria-label="Close Popup"
           className="button button_type_close popup__button-close"
           type="button"
           onClick={onClose}
         ></button>
-        <h2 className="popup__title">{title}</h2>
-        <form
-          className="popup__form"
-          noValidate
-          name={name}
-          ref={formRef}
-          onSubmit={onSubmitHandler}
-        >
-          {children}
-          {onError?.visible && (
-            <span className="popup__server-error" id="popup-signin-email-error">
-              {onError?.message }
-            </span>
-          )}
-          <button
-            aria-label="submit"
-            type="submit"
-            disabled={isSubmitButtonDisabled}
-            className="button button_type_submit"
+        <div className="popup__content">
+          <h2 className="popup__title">{title}</h2>
+          <form
+            className="popup__form"
+            noValidate
+            name={name}
+            ref={formRef}
+            onSubmit={onSubmitHandler}
           >
-            <Preloader
-              isVisible={isLoading}
-              className="search-loading__icon search-loading__icon_type_button"
-            />
-            {!isLoading && submitTitle}
-          </button>
-        </form>
-        {bottomChildren}
+            {children}
+            {onError?.visible && (
+              <span
+                className="popup__server-error"
+                id="popup-signin-email-error"
+              >
+                {onError?.message}
+              </span>
+            )}
+            <button
+              aria-label="submit"
+              type="submit"
+              disabled={isSubmitButtonDisabled}
+              className="button button_type_submit"
+            >
+              <Preloader
+                isVisible={isLoading}
+                className="search-loading__icon search-loading__icon_type_button"
+              />
+              {!isLoading && submitTitle}
+            </button>
+          </form>
+
+          {bottomChildren}
+        </div>
       </div>
     </div>
   );

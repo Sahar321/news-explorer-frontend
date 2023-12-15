@@ -1,7 +1,7 @@
 .popup__button-close {
     height: 40px;
     width: 40px;
-    margin-top: -45px;
+/*     margin-top: -45px; */
     display: inline-block;
     background-color: #0088cc;
     border-radius: 50%;

@@ -9,7 +9,8 @@
   .search-form {
     max-width: 448px;
     max-height: 56px;
-    margin-left: min(160px, 21%);
+    margin-left: min(160px, 16%);
+    margin-right: 5%;
   }
 }
 @media screen and (max-width: 480px) {

@@ -16,6 +16,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import ExpandableTitle from '../ExpandableTitle/ExpandableTitle';
 import SaveOrRemoveButton from '../SaveOrRemoveButton/SaveOrRemoveButton';
 import ReactionPicker from '../ReactionPicker/ReactionPicker';
+import useSwipe from '../../utils/hooks/useSwipe';
+
+
 import { faCircleChevronUp } from '@fortawesome/free-solid-svg-icons';
 import 'animate.css';
 export default function NewsCard({
@@ -39,8 +42,16 @@ export default function NewsCard({
   /*   const [isReactionsOpen, setIsReactionsOpen] = React.useState(false);
   const [selectedReaction, setSelectedReaction] = React.useState(null);
  */
+  const [isSwiped, setIsSwiped] = useState(false);
   const isBookmark = bookmarkCards?.includes(link) ? true : false;
-
+  const { onTouchStart, onTouchMove, onTouchEnd } = useSwipe({
+    minSwipeDistance: 80,
+    onSwipeLeft: () => console.log('Swiped left'),
+    onSwipeRight: () => console.log('Swiped right'),
+    onSwipeUp: () => console.log('Swiped up'),
+    onSwipeDown: () => console.log('Swiped down'),
+    onSwipeEnd: () => console.log('Swipe ended'),
+  });
   const [isImageLoaded, setIsImageLoaded] = React.useState(false);
 
   /*   const reactionsRef = useRef(null);
@@ -82,11 +93,17 @@ export default function NewsCard({
         </div>
 
         {!isImageLoaded && (
-          <img className={`card__image ${classList?.image} image__preloader`} />
+          <img
+
+            className={`card__image ${classList?.image} image__preloader`}
+          />
         )}
 
         <LazyLoadImage
           className={`card__image ${classList?.image}`}
+          onTouchStart={onTouchStart}
+          onTouchMove={onTouchMove}
+          onTouchEnd={onTouchEnd}
           src={image || imageNotAvailable}
           effect="blur"
           onLoad={() => {

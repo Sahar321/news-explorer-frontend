@@ -4,6 +4,7 @@ import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 
 import './App.css';
 
+import Tpage from '../Tpage.jsx';
 // APIs
 import mainApi from '../../utils/MainApi';
 import newsApi from '../../utils/NewsApi';
@@ -405,7 +406,7 @@ export default function App() {
         isOpen: true,
         title: 'Token has expired. Please log in again.',
       });
-     handleSignOut();
+      handleSignOut();
     }
     const loadingApp = document.querySelector('.loading-app__container');
     if (loadingApp) {
@@ -806,6 +807,8 @@ export default function App() {
               <Navigate to="/" state={{ shouldOpenSignInPopup: true }} />
             }
           />
+
+          <Route path="/t" element={<Tpage className="asd" />} />
           <Route
             path="/signup"
             element={

@@ -30,7 +30,7 @@
 }
 @media screen and (max-width: 480px) {
   .card__text  {
-width: 258px;
+width: 92%;
 max-width: none;
 margin-top: 14px;
 -webkit-line-clamp: 4;

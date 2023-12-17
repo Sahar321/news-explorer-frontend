@@ -145,7 +145,7 @@ export default function App() {
         visible: true,
         severity: 'error',
         title: 'Server Error',
-        interval: 50000,
+        interval: 5000,
       });
 
       return;
@@ -158,6 +158,7 @@ export default function App() {
         visible: true,
         severity: 'error',
         title: 'Server Error',
+        interval: 5000,
       });
 
       return;

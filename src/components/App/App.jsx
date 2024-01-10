@@ -4,7 +4,7 @@ import { Routes, Route, Link, useLocation, Navigate } from 'react-router-dom';
 
 import './App.css';
 
-import Tpage from '../Tpage.jsx';
+import Carousel from '../Carousel/Carousel.jsx';
 // APIs
 import mainApi from '../../utils/MainApi';
 import newsApi from '../../utils/NewsApi';
@@ -809,7 +809,7 @@ export default function App() {
             }
           />
 
-          <Route path="/t" element={<Tpage className="asd" />} />
+          <Route path="/t" element={<Carousel className="asd" />} />
           <Route
             path="/signup"
             element={

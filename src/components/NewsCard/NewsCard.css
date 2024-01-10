@@ -12,7 +12,7 @@
 @import url(../../blocks/card/__keyword/card__keyword.css);
 @import url(../../blocks/card/__reactions-warper/card__reactions-warper.css);
 
-.reaction__icon-select{
+.reaction__icon-select {
   cursor: pointer;
 }
 #closeRections {
@@ -120,4 +120,8 @@
 }
 .chevron_type_up {
   transform: rotate(180deg);
+}
+
+.display-none {
+  display: none;
 }

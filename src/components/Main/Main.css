@@ -1,0 +1,16 @@
+@keyframes example {
+  from {
+    height: 450px;
+  }
+  to {
+    height: 0;
+
+  }
+}
+
+.StartAnimation {
+  min-height: 0;
+  margin-top  :0;
+  animation: example 1.4s forwards;
+  overflow: hidden;
+}

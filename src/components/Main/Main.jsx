@@ -1,4 +1,5 @@
-import React from 'react';
+/* eslint-disable*/
+import React, { useEffect, useRef } from 'react';
 import SearchForm from '../SearchForm/SearchForm.jsx';
 import SearchPreloader from '../SearchPreloader/SearchPreloader.jsx';
 import About from '../About/About.jsx';
@@ -6,6 +7,8 @@ import CardType from '../../constants/enums/CardType';
 import NewsCardList from '../NewsCardList/NewsCardList.jsx';
 import NotFound from '../NotFound/NotFound.jsx';
 import SearchSection from '../SearchSection/SearchSection.jsx';
+import SearchCards from '../SearchCards/SearchCards.jsx';
+import Carousel from '../Carousel/Carousel.jsx';
 import './Main.css';
 
 export default function Main({
@@ -25,21 +28,44 @@ export default function Main({
   onCardShare,
 }) {
   const hasCardsToShow = cardsToShow.length > 0;
+  const notFoundrRef = useRef(null);
+  useEffect(() => {
+    if (isSearchNotFoundVisible) {
+      notFoundrRef?.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start',
+      });
+      console.log('scroll');
+    }
+  }, [isSearchNotFoundVisible]);
+  const SearchSectionRef = useRef(null);
   return (
     <main className="main">
       <SearchSection
+        ref={SearchSectionRef}
+        cls={`${hasCardsToShow && 'StartAnimation'}`}
         title="What's going on in the world?"
         text="Find the latest news on any topic and save them in your personal
         account."
       >
         <SearchForm onSearchSubmit={onSearchSubmit} />
       </SearchSection>
-      <NotFound isVisible={isSearchNotFoundVisible} />
+      <NotFound
+        ref={notFoundrRef}
+        id="test"
+        isVisible={isSearchNotFoundVisible}
+      />
       <SearchPreloader isVisible={isSearchPreloaderVisible} />
 
       {hasCardsToShow && (
         <>
-          <h2 className={'card-list__search-results'}>Search results</h2>
+          {/*           <h2 className={'card-list__search-results'}>Search results</h2> */}
+          {hasCardsToShow && (
+            <>
+              <SearchCards onSearchSubmit={onSearchSubmit} />
+              <Carousel data={cards} />
+            </>
+          )}
           <NewsCardList
             loggedIn={loggedIn}
             showTitle={true}

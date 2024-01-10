@@ -1,11 +1,14 @@
-import React from 'react';
+/*eslint-disable*/
+import React, { forwardRef } from 'react';
 import './NotFound.css';
 
-export default function NotFound({ isVisible }) {
+const NotFound = forwardRef((props, ref) => {
+  const { isVisible } = props;
+
   return (
     <>
       {isVisible && (
-        <div className="not-found">
+        <div className="not-found" ref={ref}>
           <i className="not-found__icon"></i>
           <h3 className="not-found__title">Nothing found</h3>
           <span className="not-found__text">
@@ -17,4 +20,6 @@ export default function NotFound({ isVisible }) {
       )}
     </>
   );
-}
+});
+
+export default NotFound;

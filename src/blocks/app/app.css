@@ -8,16 +8,24 @@
   flex-direction: column;
   max-width: 100%;
   position: relative;
+  transition: background 0.5s ease-in-out;
 }
 @media screen and (max-width: 769px) {
   .app {
+
     background-image: url(../../images/backgrounds/background-top-main-768-400.png);
+
   }
 }
 
 @media screen and (max-width: 480px) {
   .app {
-    background-image: url(../../images/backgrounds/background-top-main-320-536.png);
+
+    background-image: url(../../images/backgrounds/background-top-main-320-536.png),
+      url(../../images/test/bg/BG1.webp);
     background-size: contain;
-  }
+
+   }
 }
+
+

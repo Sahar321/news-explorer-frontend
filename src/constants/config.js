@@ -1,5 +1,5 @@
 /*eslint-disable */
-const localhost = 'http://localhost:3001';
+const localhost = 'http://10.0.0.16:3001';
 const server = 'https://api.news.saharm.com';
 
 

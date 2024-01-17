@@ -8,21 +8,21 @@ import {
   faChevronLeft,
   faChevronRight,
 } from '@fortawesome/free-solid-svg-icons';
-import top3 from '../../images/test/top3.jpg';
-import top2 from '../../images/test/top2.jpg';
-import bottm22 from '../../images/test/bottm2.jpg';
-import bottm3 from '../../images/test/bottm3.jpg';
-import bottm2 from '../../images/test/bottm2.webp';
-import bottm1 from '../../images/test/bottm1.jpg';
+
 import './Carousel.css';
 export default function Carousel({ data, indexStart = 0 }) {
+  const { onTouchStart, onTouchMove, onTouchEnd } = useSwipe({
+    minSwipeDistance: 80,
+    onSwipeLeft: () => handleBack(),
+    onSwipeRight: () => handleForward(),
+  });
   const slide = useRef(null);
   const [activeDataSlide, setActiveDataSlide] = useState();
   const [slideIndex, setSlideIndex] = useState(indexStart);
   useEffect(() => {
     if (data.length < slideIndex) {
-      slide.current.style.backgroundColor = "red";
-      return
+      slide.current.style.backgroundColor = 'red';
+      return;
     }
     setActiveDataSlide(data[slideIndex]);
   }, [data, slideIndex]);
@@ -48,7 +48,7 @@ export default function Carousel({ data, indexStart = 0 }) {
     }
   };
 
-  const handleForewd = () => {
+  const handleForward = () => {
     moveSlide('right');
   };
   const handleBack = () => {
@@ -56,7 +56,12 @@ export default function Carousel({ data, indexStart = 0 }) {
   };
 
   return (
-    <div className="carousel">
+    <div
+      className="carousel"
+      onTouchStart={onTouchStart}
+      onTouchMove={onTouchMove}
+      onTouchEnd={onTouchEnd}
+    >
       <div ref={slide} className="carousel__container">
         <button
           onClick={handleBack}
@@ -65,15 +70,15 @@ export default function Carousel({ data, indexStart = 0 }) {
           <FontAwesomeIcon icon={faChevronLeft} />
         </button>
         <button
-          onClick={handleForewd}
+          onClick={handleForward}
           className="button carousel__navigation carousel__navigation_right"
         >
           <FontAwesomeIcon icon={faChevronRight} />
         </button>
         <div className="carousel__slide-info">
-          <h2 className="carousel__slide-title">{data.title}</h2>
+          <h2 className="carousel__slide-title">{activeDataSlide?.title}</h2>
 
-          <p className="carousel__slide-text">{data.text} </p>
+          <p className="carousel__slide-text">{activeDataSlide?.text} </p>
         </div>
         {/*       <div className="carousel__items">
         <img className="carousel__item" src={data.image1} alt="carousel item" />

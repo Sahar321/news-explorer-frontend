@@ -559,6 +559,8 @@ export default function App() {
   const handleCardCommentClick = (card) => {
     showSignUpIfNotLoggedIn();
 
+    const index = cards.findIndex((currentCard) => currentCard.link === card.link);
+
     mainApi
       .getAllArticleComments(card.link)
       .then((res) => {
@@ -566,7 +568,7 @@ export default function App() {
         card.comments.data = res;
         console.log('handleCardCommentClick', 'empty result');
 
-        setSelectedCard(card);
+        setSelectedCard(index);
         setIsPopupWithCardOpen(true);
       })
       .catch((err) => {
@@ -952,8 +954,9 @@ export default function App() {
           severity={disappearingMessages.severity}
           className={`alert alert_visible_${disappearingMessages.visible}`}
         >
-          {disappearingMessages.title && <AlertTitle>Server Error</AlertTitle>}
-          {disappearingMessages.message}
+          <AlertTitle>{disappearingMessages.title}</AlertTitle>
+
+          <span className="alert__text">{disappearingMessages.message}</span>
         </Alert>
 
         <PopupWithInfo
@@ -969,7 +972,8 @@ export default function App() {
         <PopupWithCard
           id="card-popup"
           isOpen={isPopupWithCardOpen}
-          cardData={selectedCard}
+          indexStart={selectedCard}
+          cards={cards}
           loggedIn={loggedIn}
           onClose={closeAllPopups}
           onCommentSubmit={handleCommentSubmit}

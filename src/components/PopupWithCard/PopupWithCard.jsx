@@ -7,14 +7,15 @@ import useCloseOnEscape from '../../utils/hooks/useCloseOnEscape';
 import './PopupWithCard.css';
 import useScreenWidth from '../../utils/hooks/useScreenWidth';
 import NewsCard from '../NewsCard/NewsCard.jsx';
-
+import Carousel from '../Carousel/Carousel.jsx';
 import { Divider } from '@mui/material';
 import { set } from 'animejs';
 
 export default function PopupWithCard({
-  cardData,
+  indexStart,
   onClose,
   isOpen,
+  cards,
   onCommentSubmit,
   onThankYou,
   onReactionSelect,
@@ -26,6 +27,11 @@ export default function PopupWithCard({
   loggedIn,
   onCardShare,
 }) {
+  const [cardData, setCardData] = useState();
+
+  useEffect(() => {
+    setCardData(cards[indexStart]);
+  }, [indexStart]);
   const handleOnClose = () => {
     //popup popup_isVisible_${isOpen}
     setCloseClass('popup close-slide-down popup_isVisible_true');
@@ -49,23 +55,8 @@ export default function PopupWithCard({
       top: 0,
       behavior: 'smooth',
     });
-  }, [cardData.comments]);
+  }, [cardData?.comments]);
 
-  const cardClasses = {
-    card: 'card_type_popup',
-    imageWrapper: 'card__image-wrapper_type_popup',
-    image: 'card__image_type_popup',
-    textWrapper: 'card__text-wrapper_type_popup',
-    text: 'card__text_type_popup',
-    title: 'card__title_type_popup',
-  };
-
-  const elementsToHide = {
-    comment: true,
-    title: true,
-    date: true,
-    source: true,
-  };
   const [closeClass, setCloseClass] = useState('popup popup_isVisible_false');
 
   useEffect(() => {
@@ -83,16 +74,18 @@ export default function PopupWithCard({
           onClick={handleOnClose}
         ></button>
         <h2 className="card__title popup__title_type_card">
-          {`${cardData.source}`} <br />{' '}
+          {`${cardData?.source}`} <br />{' '}
           <span
             style={{ fontSize: '14px', marginTop: '5px' }}
-          >{`${cardData.date}`}</span>
+          >{`${cardData?.date}`}</span>
         </h2>
 
-        <NewsCard
+        <Carousel data={cards} indexStart={indexStart} />
+        {/*         <NewsCard
           cardData={cardData}
           elementsToHide={elementsToHide}
           classList={cardClasses}
+
           onReactionSelect={onReactionSelect}
           onUniqueReactionsClick={onUniqueReactionsClick}
           onRemoveReaction={onRemoveReaction}
@@ -101,21 +94,21 @@ export default function PopupWithCard({
           bookmarkCards={bookmarkCards}
           loggedIn={loggedIn}
           onCardShare={onCardShare}
-        />
+        /> */}
         <Divider style={{ width: '90%', marginTop: 20 }} />
 
         <div className="popup__comments">
           <CommentInput onCommentSubmit={handleOnCommentSubmit} isOpen={true} />
 
           <div ref={messageListRef} className="message-list">
-            {!cardData.comments?.count > 0 && (
+            {!cardData?.comments?.count > 0 && (
               <h3 className="message-list__empty-title">
                 Be the first to comment...
               </h3>
             )}
 
             <CommentsList
-              comments={cardData.comments?.data}
+              comments={cardData?.comments?.data}
               onThankYou={onThankYou}
             />
           </div>

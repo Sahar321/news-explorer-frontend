@@ -1,5 +1,5 @@
 /* eslint-disable  */
-import React from 'react';
+import React, { useEffect } from 'react';
 import './NewsCardList.css';
 import NewsCard from '../NewsCard/NewsCard.jsx';
 
@@ -20,6 +20,13 @@ export default function NewsCardList({
   onRemoveReaction,
   onCardShare,
 }) {
+
+
+  const bonShowMoreClick = () => {
+    console.log('cards', cards.length);
+    onShowMoreClick();
+  };
+
   return (
     <section className="card-list">
       <div className={`card-list__cards-wrapper ${pageClassName}`}>
@@ -41,12 +48,12 @@ export default function NewsCardList({
           />
         ))}
       </div>
-      {cards?.length > 0 && (
+      {cards?.length > cardsToShow.length && (
         <button
           aria-label="Show More"
           type="button"
           className="button button__show-more"
-          onClick={onShowMoreClick}
+          onClick={bonShowMoreClick}
         >
           Show more
         </button>

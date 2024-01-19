@@ -30,8 +30,10 @@ export default function PopupWithCard({
   const [cardData, setCardData] = useState();
 
   useEffect(() => {
+    console.log(indexStart);
+    const za = cards[indexStart];
     setCardData(cards[indexStart]);
-  }, [indexStart]);
+  }, [cards, indexStart]);
   const handleOnClose = () => {
     //popup popup_isVisible_${isOpen}
     setCloseClass('popup close-slide-down popup_isVisible_true');
@@ -81,20 +83,7 @@ export default function PopupWithCard({
         </h2>
 
         <Carousel data={cards} indexStart={indexStart} />
-        {/*         <NewsCard
-          cardData={cardData}
-          elementsToHide={elementsToHide}
-          classList={cardClasses}
 
-          onReactionSelect={onReactionSelect}
-          onUniqueReactionsClick={onUniqueReactionsClick}
-          onRemoveReaction={onRemoveReaction}
-          onCardBookmarkClick={onCardBookmarkClick}
-          onCardRemoveClick={onCardRemoveClick}
-          bookmarkCards={bookmarkCards}
-          loggedIn={loggedIn}
-          onCardShare={onCardShare}
-        /> */}
         <Divider style={{ width: '90%', marginTop: 20 }} />
 
         <div className="popup__comments">

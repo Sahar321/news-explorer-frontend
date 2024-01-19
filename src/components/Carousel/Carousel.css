@@ -97,3 +97,9 @@
   background: #0000004a; /* Removed duplicate background property */
 }
 
+.fa-chevron-right{
+  max-width: 50px;
+}
+.fa-chevron-left{
+  max-width: 50px;
+}

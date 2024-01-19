@@ -10,20 +10,38 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import './Carousel.css';
-export default function Carousel({ data, indexStart = 0 }) {
+import { set } from 'animejs';
+export default function Carousel({ data, indexStart }) {
   const { onTouchStart, onTouchMove, onTouchEnd } = useSwipe({
     minSwipeDistance: 80,
     onSwipeLeft: () => handleBack(),
     onSwipeRight: () => handleForward(),
   });
   const slide = useRef(null);
+
+
   const [activeDataSlide, setActiveDataSlide] = useState();
+
   const [slideIndex, setSlideIndex] = useState(indexStart);
+  useEffect(() => {
+    console.log(data.length);
+    console.log(indexStart);
+    if (data.length < indexStart) {
+      setSlideIndex(data.length - 1);
+      return;
+    }
+    if (indexStart <= 0) {
+      setSlideIndex(0);
+      return;
+    }
+  }, [indexStart]);
+
   useEffect(() => {
     if (data.length < slideIndex) {
       slide.current.style.backgroundColor = 'red';
       return;
     }
+    console.log(slideIndex);
     setActiveDataSlide(data[slideIndex]);
   }, [data, slideIndex]);
   useEffect(() => {
